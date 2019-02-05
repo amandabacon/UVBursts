@@ -42,7 +42,9 @@
 ;FOR i = 0, cut_size_174905-1 DO BEGIN
 ;	WINDOW, XSIZE = 900, YSIZE = 700
 ;	PLOT, lambda1394_174905[20:173], REFORM(nspectraRast1394_174905[*,cut_ind_y_174905[i],cut_ind_r_174905[i]]), XTITLE = 'Wavelength['+STRING("305B)+']', YTITLE = 'Instensity [Arb. Units]', XRANGE = [1392.2,1395.3], POSITION = [x0,y0,x0+dx,y0+dy]
+;       PLOTS, [1393.35,1393.35], !Y.CRANGE, COLOR = 170, THICK = 3, LINESTYLE = 1
 ;	ch = ''
+;        PRINT, i
 ;	READ, ch, PROMPT = 'UVB?: '
 ;		IF ch EQ 'y' THEN BEGIN
 ;		is_absorb_174905[i] = 1
@@ -65,6 +67,11 @@ RESTORE, rfname2
 
 ;rfname3 = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/174905/iso_vars_174905.sav'
 ;RESTORE, rfname3
+
+;save new params for mysterious absorption line for Chad
+
+;sfname_safe_clean = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/174905/iso_vars_safe_clean2.sav'
+;SAVE, /VARIABLES, FILENAME = sfname_safe_clean
 
 ;===============================================================================
 

@@ -73,7 +73,7 @@ RESTORE, rfname2
 ;RESTORE, rfname3
 
 ;===============================================================================
-;removing non-UVBs
+;getting mysterious absorption feature
 
 ;UVB_ind_ry = ARRAY_INDICES([raster_052046,yposition_052046], UVB_ind_052046, /DIMENSIONS)
 ;PRINT, SIZE(UVB_ind_ry) ;2D,2,2534

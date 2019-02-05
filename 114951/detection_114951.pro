@@ -185,6 +185,8 @@ coeff_arr_114951 = DBLARR(4, n_img_114951, n_ypos_114951)
 rfname = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/114951/coeff_arr_114951.sav'
 RESTORE, rfname, /VERBOSE
 
+;get effective and binning spectrograph
+
 oea = 2.10179 ;at 1395 angstrom--cm^2--original effective area
 oasr = 0.02544 ;A/pxl original average spectral resolution
 orig_peak_min = 7 ;from 050945
