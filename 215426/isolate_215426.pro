@@ -3,7 +3,7 @@
 ;Written by: Amanda Bacon (amandabacon@bennington.edu)
 ;Date: 2019/01/09
 ;USING INDICES FROM CUT IN 4-D PARAMETER SPACE TO GET UVB POPULATION
-;REGION, MANUALLY ITERATING THROUGH SPECTRA LOOKING FOR SIGNS OF NI II
+;REGION, THEN MANUALLY ITERATING THROUGH SPECTRA LOOKING FOR SIGNS OF NI II
 ;ABSORPTION TO USE FOR ANALYSIS PART OF PROJECT.
 
 ;PRO isolate_215426
@@ -42,14 +42,18 @@
 ;FOR i = 0, cut_size_215426-1 DO BEGIN
 ;	WINDOW, XSIZE = 900, YSIZE = 700
 ;	PLOT, lambda1394_215426[19:173], REFORM(nspectraRast1394_215426[*,cut_ind_y_215426[i],cut_ind_r_215426[i]]), XTITLE = 'Wavelength['+STRING("305B)+']', YTITLE = 'Instensity [Arb. Units]', XRANGE = [1392.2,1395.3], POSITION = [x0,y0,x0+dx,y0+dy]
+;	PLOTS, [1393.35,1393.35], !Y.CRANGE, COLOR = 170, THICK = 3, LINESTYLE = 1
 ;	ch = ''
+;	PRINT, i
 ;	READ, ch, PROMPT = 'UVB?: '
 ;		IF ch EQ 'y' THEN BEGIN
 ;		is_absorb_215426[i] = 1
 ;		ind_absorb_215426 = WHERE(is_absorb_215426 EQ 1)
 ;		UVB_ind_215426 = cut_ind_215426[ind_absorb_215426]
 ;		ENDIF
+;		IF ch EQ 'q' THEN BREAK
 ;ENDFOR
+;PRINT, 'VALUE LEFT OFF: ', i
 ;TOC ;1.08 hrs
 
 ;save new params
@@ -110,12 +114,206 @@ sig_lw = sigma_coeff_arr[2,*,*]
 lw = coeff_arr_215426_UV[2,*,*]
 sig_p_int = sigma_coeff_arr[0,*,*]
 
+;===============================================================================
+;introduce limit to parameter values to see how they contribute to
+;electron density
+;from detection_obs#.pro (need gamma_215426 & wave0_215426)--in rfname2
+
+limit_gamma_215426 = gamma_215426
+limit_wave0_215426 = wave0_215426
+
+limit_p_int = coeff_arr_215426_UV[0,*,*]
+PRINT, "limit_p_int"
+PRINT, N_ELEMENTS(limit_p_int) ;196
+PRINT, limit_p_int
+
+limit_sig_p_int = sigma_coeff_arr[0,*,*]
+PRINT, "limit_sig_p_int"
+PRINT, N_ELEMENTS(limit_sig_p_int) ;196
+PRINT, limit_sig_p_int
+
+limit_lw = coeff_arr_215426_UV[2,*,*]
+PRINT, "limit_lw"
+PRINT, N_ELEMENTS(limit_lw) ;196
+PRINT, limit_lw
+
+limit_sig_lw = sigma_coeff_arr[2,*,*]
+PRINT, "limit_sig_lw"
+PRINT, N_ELEMENTS(limit_sig_lw) ;196
+PRINT, limit_sig_lw
+
+limit_vel_width_215426 = (coeff_arr_215426_UV[2,*,*]/limit_wave0_215426) * 3e5 * sqrt(2) ;exponential line width--km*s^-1
+PRINT, "limit_vel_width_215426"
+PRINT, N_ELEMENTS(limit_vel_width_215426) ;196
+PRINT, limit_vel_width_215426
+
+limit_velocity_215426 = ((coeff_arr_215426_UV[1,*,*]-limit_wave0_215426)/limit_wave0_215426) * 3e5 ;doppler shift--km*s^-1, pos-away, neg-toward
+PRINT, "limit_velocity_215426"
+PRINT, N_ELEMENTS(limit_velocity_215426) ;196
+PRINT, limit_velocity_215426
+
+;highest velocity lines--80-1000 km/s
+limit_e_dens_215426 = WHERE((limit_vel_width_215426 GE 80) AND (limit_p_int GE new_peak_min) AND (limit_vel_width_215426 LE 1000) AND (limit_lw GE 0) AND (limit_sig_p_int GE 0) AND (limit_sig_lw GE 0) AND (ABS(limit_velocity_215426 LE (limit_gamma_215426/limit_wave0_215426) * 3e5)), COMPLEMENT = not_limit_e_dens_215426, count)
+PRINT, "limit_e_dens_215426--limit_vel_width"
+PRINT, N_ELEMENTS(limit_vel_width_215426[limit_e_dens_215426])
+PRINT, limit_vel_width_215426[limit_e_dens_215426] ;11
+
+PRINT, "limit_e_dens_215426--limit_p_int"
+PRINT, N_ELEMENTS(limit_p_int[limit_e_dens_215426])
+PRINT, limit_p_int[limit_e_dens_215426] ;11
+
+PRINT, "limit_e_dens_215426--limit_velocity"
+PRINT, N_ELEMENTS(limit_velocity_215426[limit_e_dens_215426])
+PRINT, ABS(limit_velocity_215426[limit_e_dens_215426]) ;11
+
+PRINT, "limit_e_dens_215426--limit_lw"
+PRINT, N_ELEMENTS(limit_lw[limit_e_dens_215426])
+PRINT, limit_lw[limit_e_dens_215426] ;11
+
+PRINT, "limit_e_dens_215426--limit_sig_p_int"
+PRINT, N_ELEMENTS(limit_sig_p_int[limit_e_dens_215426])
+PRINT, limit_sig_p_int[limit_e_dens_215426] ;11
+
+PRINT, "limit_e_dens_215426--limit_sig_lw"
+PRINT, N_ELEMENTS(limit_sig_lw[limit_e_dens_215426])
+PRINT, limit_sig_lw[limit_e_dens_215426] ;11
+
+;70.0-80.0 km/s velocity lines
+limit_70_80_e_dens_215426 = WHERE((limit_vel_width_215426 GE 70.0) AND (limit_p_int GE new_peak_min) AND (limit_vel_width_215426 LE 80.0) AND (limit_lw GE 0.0) AND (limit_sig_p_int GE 0.0) AND (limit_sig_lw GE 0.0) AND (ABS(limit_velocity_215426 LE (limit_gamma_215426/limit_wave0_215426) * 3e5)), COMPLEMENT = not_limit_med_70_80_e_dens_215426, count)
+PRINT, "limit_70_80_e_dens_215426--limit_vel_width"
+PRINT, N_ELEMENTS(limit_vel_width_215426[limit_70_80_e_dens_215426])
+PRINT, limit_vel_width_215426[limit_70_80_e_dens_215426] ;25
+
+PRINT, "limit_70_80_e_dens_215426--limit_p_int"
+PRINT, N_ELEMENTS(limit_p_int[limit_70_80_e_dens_215426])
+PRINT, limit_p_int[limit_70_80_e_dens_215426] ;25
+
+PRINT, "limit_70_80_e_dens_215426--limit_velocity"
+PRINT, N_ELEMENTS(limit_velocity_215426[limit_70_80_e_dens_215426])
+PRINT, ABS(limit_velocity_215426[limit_70_80_e_dens_215426]) ;25
+
+PRINT, "limit_70_80_e_dens_215426--limit_lw"
+PRINT, N_ELEMENTS(limit_lw[limit_70_80_e_dens_215426])
+PRINT, limit_lw[limit_70_80_e_dens_215426] ;25
+
+PRINT, "limit_70_80_e_dens_215426--limit_sig_p_int"
+PRINT, N_ELEMENTS(limit_sig_p_int[limit_70_80_e_dens_215426])
+PRINT, limit_sig_p_int[limit_70_80_e_dens_215426] ;25
+
+PRINT, "limit_70_80_e_dens_215426--limit_sig_lw"
+PRINT, N_ELEMENTS(limit_sig_lw[limit_70_80_e_dens_215426])
+PRINT, limit_sig_lw[limit_70_80_e_dens_215426] ;25
+
+;60.0-70.0 km/s velocity lines
+limit_60_70_e_dens_215426 = WHERE((limit_vel_width_215426 GE 60.0) AND (limit_p_int GE new_peak_min) AND (limit_vel_width_215426 LE 70.0) AND (limit_lw GE 0.0) AND (limit_sig_p_int GE 0.0) AND (limit_sig_lw GE 0.0) AND (ABS(limit_velocity_215426 LE (limit_gamma_215426/limit_wave0_215426) * 3e5)), COMPLEMENT = not_limit_60_70_e_dens_215426, count)
+PRINT, "limit_60_70_e_dens_215426--limit_vel_width"
+PRINT, N_ELEMENTS(limit_vel_width_215426[limit_60_70_e_dens_215426])
+PRINT, limit_vel_width_215426[limit_60_70_e_dens_215426] ;43
+
+PRINT, "limit_60_70_e_dens_215426--limit_p_int"
+PRINT, N_ELEMENTS(limit_p_int[limit_60_70_e_dens_215426])
+PRINT, limit_p_int[limit_60_70_e_dens_215426] ;43
+
+PRINT, "limit_60_70_e_dens_215426--limit_velocity"
+PRINT, N_ELEMENTS(limit_velocity_215426[limit_60_70_e_dens_215426])
+PRINT, ABS(limit_velocity_215426[limit_60_70_e_dens_215426]) ;43
+
+PRINT, "limit_60_70_e_dens_215426--limit_lw"
+PRINT, N_ELEMENTS(limit_lw[limit_60_70_e_dens_215426])
+PRINT, limit_lw[limit_60_70_e_dens_215426] ;43
+
+PRINT, "limit_60_70_e_dens_215426--limit_sig_p_int"
+PRINT, N_ELEMENTS(limit_sig_p_int[limit_60_70_e_dens_215426])
+PRINT, limit_sig_p_int[limit_60_70_e_dens_215426] ;43
+
+PRINT, "limit_60_70_e_dens_215426--limit_sig_lw"
+PRINT, N_ELEMENTS(limit_sig_lw[limit_60_70_e_dens_215426])
+PRINT, limit_sig_lw[limit_60_70_e_dens_215426] ;43
+
+;50.0-60.0 km/s velocity lines
+limit_50_60_e_dens_215426 = WHERE((limit_vel_width_215426 GE 50.0) AND (limit_p_int GE new_peak_min) AND (limit_vel_width_215426 LE 60.0) AND (limit_lw GE 0.0) AND (limit_sig_p_int GE 0.0) AND (limit_sig_lw GE 0.0) AND (ABS(limit_velocity_215426 LE (limit_gamma_215426/limit_wave0_215426) * 3e5)), COMPLEMENT = not_limit_50_60_e_dens_215426, count)
+PRINT, "limit_50_60_e_dens_215426--limit_vel_width"
+PRINT, N_ELEMENTS(limit_vel_width_215426[limit_50_60_e_dens_215426])
+PRINT, limit_vel_width_215426[limit_50_60_e_dens_215426] ;45
+
+PRINT, "limit_50_60_e_dens_215426--limit_p_int"
+PRINT, N_ELEMENTS(limit_p_int[limit_50_60_e_dens_215426])
+PRINT, limit_p_int[limit_50_60_e_dens_215426] ;45
+
+PRINT, "limit_50_60_e_dens_215426--limit_velocity"
+PRINT, N_ELEMENTS(limit_velocity_215426[limit_50_60_e_dens_215426])
+PRINT, ABS(limit_velocity_215426[limit_50_60_e_dens_215426]) ;45
+
+PRINT, "limit_50_60_e_dens_215426--limit_lw"
+PRINT, N_ELEMENTS(limit_lw[limit_50_60_e_dens_215426])
+PRINT, limit_lw[limit_50_60_e_dens_215426] ;45
+
+PRINT, "limit_50_60_e_dens_215426--limit_sig_p_int"
+PRINT, N_ELEMENTS(limit_sig_p_int[limit_50_60_e_dens_215426])
+PRINT, limit_sig_p_int[limit_50_60_e_dens_215426] ;45
+
+PRINT, "limit_50_60_e_dens_215426--limit_sig_lw"
+PRINT, N_ELEMENTS(limit_sig_lw[limit_50_60_e_dens_215426])
+PRINT, limit_sig_lw[limit_50_60_e_dens_215426] ;45
+
+;calculate total integrated intensity 80-1000 km/s
+
+limit_It_Si_215426 = (sqrt(2.0*!dpi)*limit_p_int[limit_e_dens_215426]*limit_lw[limit_e_dens_215426]) ;total integrated intensity 
+PRINT, "limit_It_Si_215426"
+PRINT, limit_It_Si_215426
+
+;calculate integrated intensity uncertainty 80-1000 km/s
+
+limit_int_int_unc_Si_215426 = [2.0*!dpi*((limit_p_int[limit_e_dens_215426])^2*(limit_sig_lw[limit_e_dens_215426])^2+(limit_lw[limit_e_dens_215426])^2*(limit_sig_p_int[limit_e_dens_215426])^2)]^0.5
+PRINT, "limit_int_int_unc_Si_215426"
+PRINT, limit_int_int_unc_Si_215426
+
+;calculate total integrated intensity 70-80 km/s
+
+limit_70_80_It_Si_215426 = (sqrt(2.0*!dpi)*limit_p_int[limit_70_80_e_dens_215426]*limit_lw[limit_70_80_e_dens_215426]) ;total integrated intensity 
+PRINT, "limit_70_80_It_Si_215426"
+PRINT, limit_70_80_It_Si_215426
+
+;calculate integrated intensity uncertainty 70-80 km/s
+
+limit_70_80_int_int_unc_Si_215426 = [2.0*!dpi*((limit_p_int[limit_70_80_e_dens_215426])^2*(limit_sig_lw[limit_70_80_e_dens_215426])^2+(limit_lw[limit_70_80_e_dens_215426])^2*(limit_sig_p_int[limit_70_80_e_dens_215426])^2)]^0.5
+PRINT, "limit_70_80_int_int_unc_Si_215426"
+PRINT, limit_70_80_int_int_unc_Si_215426
+
+;calculate total integrated intensity 60-70 km/s
+
+limit_60_70_It_Si_215426 = (sqrt(2.0*!dpi)*limit_p_int[limit_60_70_e_dens_215426]*limit_lw[limit_60_70_e_dens_215426]) ;total integrated intensity 
+PRINT, "limit_60_70_It_Si_215426"
+PRINT, limit_60_70_It_Si_215426
+
+;calculate integrated intensity uncertainty 60-70 km/s
+
+limit_60_70_int_int_unc_Si_215426 = [2.0*!dpi*((limit_p_int[limit_60_70_e_dens_215426])^2*(limit_sig_lw[limit_60_70_e_dens_215426])^2+(limit_lw[limit_60_70_e_dens_215426])^2*(limit_sig_p_int[limit_60_70_e_dens_215426])^2)]^0.5
+PRINT, "limit_60_70_int_int_unc_Si_215426"
+PRINT, limit_60_70_int_int_unc_Si_215426
+
+;calculate total integrated intensity 50-60 km/s
+
+limit_50_60_It_Si_215426 = (sqrt(2.0*!dpi)*limit_p_int[limit_50_60_e_dens_215426]*limit_lw[limit_50_60_e_dens_215426]) ;total integrated intensity 
+PRINT, "limit_50_60_It_Si_215426"
+PRINT, limit_50_60_It_Si_215426
+
+;calculate integrated intensity uncertainty 50-60 km/s
+
+limit_50_60_int_int_unc_Si_215426 = [2.0*!dpi*((limit_p_int[limit_50_60_e_dens_215426])^2*(limit_sig_lw[limit_50_60_e_dens_215426])^2+(limit_lw[limit_50_60_e_dens_215426])^2*(limit_sig_p_int[limit_50_60_e_dens_215426])^2)]^0.5
+PRINT, "limit_50_60_int_int_unc_Si_215426"
+PRINT, limit_50_60_int_int_unc_Si_215426
+
+;save parameters from FOR loop
+
+sfname_UV_limit = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/215426/limit_IT_UV_215426.sav'
+SAVE, limit_e_dens_215426, limit_It_Si_215426, limit_int_int_unc_Si_215426, limit_70_80_e_dens_215426, limit_70_80_It_Si_215426, limit_70_80_int_int_unc_Si_215426, limit_60_70_e_dens_215426, limit_60_70_It_Si_215426, limit_60_70_int_int_unc_Si_215426, limit_50_60_e_dens_215426, limit_50_60_It_Si_215426, limit_50_60_int_int_unc_Si_215426, FILENAME = sfname_UV_limit
+
+;===============================================================================
 ;calculate total integrated intensity
 
 It_Si_215426 = (sqrt(2.0*!dpi)*p_int*lw) ;total integrated intensity 
 PRINT, It_Si_215426
-
-PRINT, 'integrated intensity uncertainty'
 
 ;calculate integrated intensity uncertainty
 
