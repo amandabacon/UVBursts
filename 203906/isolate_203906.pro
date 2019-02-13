@@ -147,6 +147,11 @@ PRINT, "limit_vel_width_203906"
 PRINT, N_ELEMENTS(limit_vel_width_203906) ;1235
 PRINT, limit_vel_width_203906
 
+PRINT, 'TEST'
+test = WHERE((limit_vel_width_203906 GE 0.0) AND (limit_vel_width_203906 LE 50.0), count)
+PRINT, limit_vel_width_203906[test]
+PRINT, MIN(limit_vel_width_203906[test]) ;none????
+
 limit_velocity_203906 = ((coeff_arr_203906_UV[1,*,*]-limit_wave0_203906)/limit_wave0_203906) * 3e5 ;doppler shift--km*s^-1, pos-away, neg-toward
 PRINT, "limit_velocity_203906"
 PRINT, N_ELEMENTS(limit_velocity_203906) ;1235
@@ -256,6 +261,32 @@ PRINT, "limit_50_60_e_dens_203906--limit_sig_lw"
 PRINT, N_ELEMENTS(limit_sig_lw[limit_50_60_e_dens_203906])
 PRINT, limit_sig_lw[limit_50_60_e_dens_203906] ;137
 
+;40.0-50.0 km/s velocity lines
+limit_40_50_e_dens_203906 = WHERE((limit_vel_width_203906 GE 40.0) AND (limit_p_int GE new_peak_min) AND (limit_vel_width_203906 LE 50.0) AND (limit_lw GE 0.0) AND (limit_sig_p_int GE 0.0) AND (limit_sig_lw GE 0.0) AND (ABS(limit_velocity_203906 LE (limit_gamma_203906/limit_wave0_203906) * 3e5)), COMPLEMENT = not_limit_40_50_e_dens_203906, count)
+PRINT, "limit_40_50_e_dens_203906--limit_vel_width"
+PRINT, N_ELEMENTS(limit_vel_width_203906[limit_40_50_e_dens_203906])
+PRINT, limit_vel_width_203906[limit_40_50_e_dens_203906] ;1
+
+PRINT, "limit_40_50_e_dens_203906--limit_p_int"
+PRINT, N_ELEMENTS(limit_p_int[limit_40_50_e_dens_203906])
+PRINT, limit_p_int[limit_40_50_e_dens_203906] ;1
+
+PRINT, "limit_40_50_e_dens_203906--limit_velocity"
+PRINT, N_ELEMENTS(limit_velocity_203906[limit_40_50_e_dens_203906])
+PRINT, ABS(limit_velocity_203906[limit_40_50_e_dens_203906]) ;1
+
+PRINT, "limit_40_50_e_dens_203906--limit_lw"
+PRINT, N_ELEMENTS(limit_lw[limit_40_50_e_dens_203906])
+PRINT, limit_lw[limit_40_50_e_dens_203906] ;1
+
+PRINT, "limit_40_50_e_dens_203906--limit_sig_p_int"
+PRINT, N_ELEMENTS(limit_sig_p_int[limit_40_50_e_dens_203906])
+PRINT, limit_sig_p_int[limit_40_50_e_dens_203906] ;1
+
+PRINT, "limit_40_50_e_dens_203906--limit_sig_lw"
+PRINT, N_ELEMENTS(limit_sig_lw[limit_40_50_e_dens_203906])
+PRINT, limit_sig_lw[limit_40_50_e_dens_203906] ;1
+
 ;calculate total integrated intensity 80-1000 km/s
 
 limit_It_Si_203906 = (sqrt(2.0*!dpi)*limit_p_int[limit_e_dens_203906]*limit_lw[limit_e_dens_203906]) ;total integrated intensity 
@@ -306,10 +337,22 @@ limit_50_60_int_int_unc_Si_203906 = [2.0*!dpi*((limit_p_int[limit_50_60_e_dens_2
 PRINT, "limit_50_60_int_int_unc_Si_203906"
 PRINT, limit_50_60_int_int_unc_Si_203906
 
+;calculate total integrated intensity 40-50 km/s
+
+limit_40_50_It_Si_203906 = (sqrt(2.0*!dpi)*limit_p_int[limit_40_50_e_dens_203906]*limit_lw[limit_40_50_e_dens_203906]) ;total integrated intensity 
+PRINT, "limit_40_50_It_Si_203906"
+PRINT, limit_40_50_It_Si_203906
+
+;calculate integrated intensity uncertainty 40-50 km/s
+
+limit_40_50_int_int_unc_Si_203906 = [2.0*!dpi*((limit_p_int[limit_40_50_e_dens_203906])^2*(limit_sig_lw[limit_40_50_e_dens_203906])^2+(limit_lw[limit_40_50_e_dens_203906])^2*(limit_sig_p_int[limit_40_50_e_dens_203906])^2)]^0.5
+PRINT, "limit_40_50_int_int_unc_Si_203906"
+PRINT, limit_40_50_int_int_unc_Si_203906
+
 ;save parameters from FOR loop
 
 sfname_UV_limit = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/203906/limit_IT_UV_203906.sav'
-SAVE, limit_e_dens_203906, limit_It_Si_203906, limit_int_int_unc_Si_203906, limit_70_80_e_dens_203906, limit_70_80_It_Si_203906, limit_70_80_int_int_unc_Si_203906, limit_60_70_e_dens_203906, limit_60_70_It_Si_203906, limit_60_70_int_int_unc_Si_203906, limit_50_60_e_dens_203906, limit_50_60_It_Si_203906, limit_50_60_int_int_unc_Si_203906, FILENAME = sfname_UV_limit
+SAVE, limit_e_dens_203906, limit_It_Si_203906, limit_int_int_unc_Si_203906, limit_70_80_e_dens_203906, limit_70_80_It_Si_203906, limit_70_80_int_int_unc_Si_203906, limit_60_70_e_dens_203906, limit_60_70_It_Si_203906, limit_60_70_int_int_unc_Si_203906, limit_50_60_e_dens_203906, limit_50_60_It_Si_203906, limit_50_60_int_int_unc_Si_203906, limit_40_50_e_dens_203906, limit_40_50_It_Si_203906, limit_40_50_int_int_unc_Si_203906, FILENAME = sfname_UV_limit
 
 ;===============================================================================
 ;calculate total integrated intensity

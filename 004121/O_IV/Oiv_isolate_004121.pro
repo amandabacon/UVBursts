@@ -301,6 +301,11 @@ PRINT, "limit_vel_width_004121_Oiv"
 PRINT, N_ELEMENTS(limit_vel_width_004121_Oiv) ;464
 PRINT, limit_vel_width_004121_Oiv
 
+PRINT, 'TEST'
+test = WHERE((limit_vel_width_004121_Oiv GE 0.0) AND (limit_vel_width_004121_Oiv LE 50.0), count)
+PRINT, limit_vel_width_004121_Oiv[test]
+PRINT, MIN(limit_vel_width_004121_Oiv[test]) ;4.9296307
+
 limit_velocity_004121_Oiv = ((one[coeff_arr_004121_Oiv2_clean]-limit_wave0_004121_Oiv)/limit_wave0_004121_Oiv) * 3e5 ;doppler shift--km*s^-1, pos-away, neg-toward
 PRINT, "limit_velocity_004121_Oiv"
 PRINT, N_ELEMENTS(limit_velocity_004121_Oiv) ;464
@@ -409,6 +414,32 @@ PRINT, limit_sig_p_int_Oiv[limit_50_60_e_dens_004121_Oiv] ;10
 PRINT, "limit_50_60_e_dens_004121_Oiv--limit_sig_lw_Oiv"
 PRINT, N_ELEMENTS(limit_sig_lw_Oiv[limit_50_60_e_dens_004121_Oiv])
 PRINT, limit_sig_lw_Oiv[limit_50_60_e_dens_004121_Oiv] ;10
+
+;40-50 km/s velocity lines
+limit_40_50_e_dens_004121_Oiv = WHERE((limit_vel_width_004121_Oiv GE 40) AND (limit_p_int_Oiv GE new_peak_min) AND (limit_vel_width_004121_Oiv LE 50) AND (limit_lw_Oiv GE 0) AND (limit_sig_p_int_Oiv GE 0) AND (limit_sig_lw_Oiv GE 0) AND (ABS(limit_velocity_004121_Oiv LE (limit_gamma_004121_Oiv/limit_wave0_004121_Oiv) * 3e5)), COMPLEMENT = not_limit_Oiv_40_50_e_dens_004121, count)
+PRINT, "limit_40_50_e_dens_004121_Oiv--limit_vel_width_Oiv"
+PRINT, N_ELEMENTS(limit_vel_width_004121_Oiv[limit_40_50_e_dens_004121_Oiv])
+PRINT, limit_vel_width_004121_Oiv[limit_40_50_e_dens_004121_Oiv] ;23
+
+PRINT, "limit_40_50_e_dens_004121_Oiv--limit_p_int_Oiv"
+PRINT, N_ELEMENTS(limit_p_int_Oiv[limit_40_50_e_dens_004121_Oiv])
+PRINT, limit_p_int_Oiv[limit_40_50_e_dens_004121_Oiv] ;23
+
+PRINT, "limit_40_50_e_dens_004121_Oiv--limit_velocity_Oiv"
+PRINT, N_ELEMENTS(limit_velocity_004121_Oiv[limit_40_50_e_dens_004121_Oiv])
+PRINT, ABS(limit_velocity_004121_Oiv[limit_40_50_e_dens_004121_Oiv]) ;23
+
+PRINT, "limit_40_50_e_dens_004121_Oiv--limit_lw_Oiv"
+PRINT, N_ELEMENTS(limit_lw_Oiv[limit_40_50_e_dens_004121_Oiv])
+PRINT, limit_lw_Oiv[limit_40_50_e_dens_004121_Oiv] ;23
+
+PRINT, "limit_40_50_e_dens_004121_Oiv--limit_sig_p_int_Oiv"
+PRINT, N_ELEMENTS(limit_sig_p_int_Oiv[limit_40_50_e_dens_004121_Oiv])
+PRINT, limit_sig_p_int_Oiv[limit_40_50_e_dens_004121_Oiv] ;23
+
+PRINT, "limit_40_50_e_dens_004121_Oiv--limit_sig_lw_Oiv"
+PRINT, N_ELEMENTS(limit_sig_lw_Oiv[limit_40_50_e_dens_004121_Oiv])
+PRINT, limit_sig_lw_Oiv[limit_40_50_e_dens_004121_Oiv] ;23
 
 ;calculate total integrated intensity (TII) 80-1000 km/s
 
@@ -542,10 +573,43 @@ PRINT, SIZE(limit_50_60_SNR_O_004121) ;10
 limit_50_60_SNR2_O_004121 = WHERE((limit_50_60_SNR_O_004121 LT 100), count) ;removes infinity
 PRINT, SIZE(limit_50_60_SNR_O_004121[limit_50_60_SNR2_O_004121]) ;10
 
+;calculate total integrated intensity (TII) 40-50 km/s
+
+limit_40_50_It_O_004121 = (sqrt(2.0*!dpi)*limit_p_int_Oiv[limit_40_50_e_dens_004121_Oiv]*limit_lw_Oiv[limit_40_50_e_dens_004121_Oiv]) ;total integrated intensity 
+PRINT, "limit_40_50_It_O_004121"
+PRINT, limit_40_50_It_O_004121
+
+;calculate integrated intensity uncertainty 40-50 km/s
+
+limit_40_50_int_int_unc_O_004121 = [2.0*!dpi*((limit_p_int_Oiv[limit_40_50_e_dens_004121_Oiv])^2*(limit_sig_lw_Oiv[limit_40_50_e_dens_004121_Oiv])^2+(limit_lw_Oiv[limit_40_50_e_dens_004121_Oiv])^2*(limit_sig_p_int_Oiv[limit_40_50_e_dens_004121_Oiv])^2)]^0.5
+PRINT, "limit_40_50_int_int_unc_O_004121"
+PRINT, limit_40_50_int_int_unc_O_004121
+
+PRINT, 'SNR by dividing total integrated intensity by uncertainty'
+
+;calculate SNR 40-50 km/s
+
+limit_40_50_SNR_0_O_004121 = (limit_40_50_It_O_004121/limit_40_50_int_int_unc_O_004121)
+PRINT, "limit_40_50_SNR_0_O_004121"
+PRINT, limit_40_50_SNR_0_O_004121
+
+PRINT, 'SNR rearrangement'
+
+;calculate SNR after rearrangement 40-50 km/s
+
+neg = -0.5
+limit_40_50_SNR_O_004121 = (((limit_sig_p_int_Oiv[limit_40_50_e_dens_004121_Oiv])^2/(limit_p_int_Oiv[limit_40_50_e_dens_004121_Oiv])^2)+((limit_sig_lw_Oiv[limit_40_50_e_dens_004121_Oiv])^2/(limit_lw_Oiv[limit_40_50_e_dens_004121_Oiv])^2))^neg
+PRINT, "limit_40_50_SNR_O_004121"
+PRINT, limit_40_50_SNR_O_004121
+
+PRINT, SIZE(limit_40_50_SNR_O_004121) ;23
+limit_40_50_SNR2_O_004121 = WHERE((limit_40_50_SNR_O_004121 LT 100), count) ;removes infinity
+PRINT, SIZE(limit_40_50_SNR_O_004121[limit_40_50_SNR2_O_004121]) ;23
+
 ;save parameters from FOR loop
 
 sfname2_limit = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/004121/O_IV/limit_sigma_coeff_arr_004121_Oiv.sav'
-SAVE, limit_e_dens_004121_Oiv, limit_It_O_004121, limit_int_int_unc_O_004121, limit_SNR_0_O_004121, limit_SNR_O_004121, limit_SNR2_O_004121, limit_70_80_e_dens_004121_Oiv, limit_70_80_It_O_004121, limit_70_80_int_int_unc_O_004121, limit_70_80_SNR_0_O_004121, limit_70_80_SNR_O_004121, limit_70_80_SNR2_O_004121,limit_60_70_e_dens_004121_Oiv, limit_60_70_It_O_004121, limit_60_70_int_int_unc_O_004121, limit_60_70_SNR_0_O_004121, limit_60_70_SNR_O_004121, limit_60_70_SNR2_O_004121,limit_50_60_e_dens_004121_Oiv, limit_50_60_It_O_004121, limit_50_60_int_int_unc_O_004121, limit_50_60_SNR_0_O_004121, limit_50_60_SNR_O_004121, limit_50_60_SNR2_O_004121, FILENAME = sfname2_limit
+SAVE, limit_e_dens_004121_Oiv, limit_It_O_004121, limit_int_int_unc_O_004121, limit_SNR_0_O_004121, limit_SNR_O_004121, limit_SNR2_O_004121, limit_70_80_e_dens_004121_Oiv, limit_70_80_It_O_004121, limit_70_80_int_int_unc_O_004121, limit_70_80_SNR_0_O_004121, limit_70_80_SNR_O_004121, limit_70_80_SNR2_O_004121,limit_60_70_e_dens_004121_Oiv, limit_60_70_It_O_004121, limit_60_70_int_int_unc_O_004121, limit_60_70_SNR_0_O_004121, limit_60_70_SNR_O_004121, limit_60_70_SNR2_O_004121,limit_50_60_e_dens_004121_Oiv, limit_50_60_It_O_004121, limit_50_60_int_int_unc_O_004121, limit_50_60_SNR_0_O_004121, limit_50_60_SNR_O_004121, limit_50_60_SNR2_O_004121, limit_40_50_e_dens_004121_Oiv, limit_40_50_It_O_004121, limit_40_50_int_int_unc_O_004121, limit_40_50_SNR_0_O_004121, limit_40_50_SNR_O_004121, limit_40_50_SNR2_O_004121, FILENAME = sfname2_limit
 
 ;===============================================================================
 ;calculate total integrated intensity (TII)

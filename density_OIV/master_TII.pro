@@ -165,6 +165,8 @@ PRINT, SIZE(num9_three) ;71
 O_163205_a = It_O_163205[SNR2_O_163205]
 O_163205 = O_163205_a[num9_three]
 
+;PRINT, 'pass'
+
 ;restore O IV 174905 TIIs, SNRs, etc.
 
 rfname10_SNR = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/174905/O_IV/sigma_coeff_arr_174905_Oiv.sav'
@@ -282,11 +284,11 @@ num16_three = WHERE((SNR_O_232931[SNR2_O_232931] GT 3.0), count)
 PRINT, SIZE(num16_three) ;28
 
 O_232931_a = It_O_232931[SNR2_O_232931]
-PRINT, "O_232931_a"
-PRINT, O_232931_a
+;PRINT, "O_232931_a"
+;PRINT, O_232931_a
 O_232931 = O_232931_a[num16_three]
-PRINT, "O_232931"
-PRINT, O_232931
+;PRINT, "O_232931"
+;PRINT, O_232931
 
 ;concatenate arrays
 
@@ -304,11 +306,11 @@ RESTORE, rfname
 PRINT, N_ELEMENTS(It_Si_004121[num_three]) ;90
 
 Si_004121_a = It_Si_004121[SNR2_O_004121]
-PRINT, "Si_004121_a"
-PRINT, Si_004121_a
+;PRINT, "Si_004121_a"
+;PRINT, Si_004121_a
 Si_004121 = Si_004121_a[num_three]
-PRINT, "Si_004121"
-PRINT, Si_004121
+;PRINT, "Si_004121"
+;PRINT, Si_004121
 
 ;restore Si IV 050655 TIIs, SNRs, etc.
 
@@ -464,8 +466,8 @@ Si_232931 = Si_232931_a[num16_three]
 ;retrieve Si IV 1393.8/O IV ratios
 
 ratio_004121 = (Si_004121/O_004121)
-PRINT, "ratio_004121"
-PRINT, ratio_004121
+;PRINT, "ratio_004121"
+;PRINT, ratio_004121
 ratio_050655 = (Si_050655/O_050655)
 ratio_050655_1 = (Si_050655_1/O_050655_1)
 ratio_052046 = (Si_052046/O_052046)
@@ -491,8 +493,8 @@ RESTORE, rfname_dens
 ;get size of ratios over each observation
 
 TII_004121_s = N_ELEMENTS(ratio_004121)
-PRINT, "TII_004121_s"
-PRINT, TII_004121_s ;90
+;PRINT, "TII_004121_s"
+;PRINT, TII_004121_s ;90
 TII_050655_s = N_ELEMENTS(ratio_050655)
 TII_050655_1_s = N_ELEMENTS(ratio_050655_1)
 TII_052046_s = N_ELEMENTS(ratio_052046)
@@ -527,7 +529,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_004121 = WHERE((electron_dens_arr_004121 EQ 0.0), count)
+zeros_004121 = WHERE((electron_dens_arr_004121 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_004121)
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -536,22 +538,22 @@ PRINT, SIZE(zeros_004121)
 
 PRINT, "004121"
 
-nin_004121 = WHERE((e_density[electron_dens_arr_004121] GE 1.0000000e+09) AND (e_density[electron_dens_arr_004121] LT 1.0000000e+10), count)
+nin_004121 = WHERE((e_density[electron_dens_arr_004121] GE 1.0000000e+09) AND (e_density[electron_dens_arr_004121] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_004121) ;7
 
-ten_004121 = WHERE((e_density[electron_dens_arr_004121] GE 1.0000000e+10) AND (e_density[electron_dens_arr_004121] LT 1.0000000e+11), count)
+ten_004121 = WHERE((e_density[electron_dens_arr_004121] GE 1.0000000e+10) AND (e_density[electron_dens_arr_004121] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_004121) ;6
 
-elev_004121 = WHERE((e_density[electron_dens_arr_004121] GE 1.0000000e+11) AND (e_density[electron_dens_arr_004121] LT 1.0000000e+12), count)
+elev_004121 = WHERE((e_density[electron_dens_arr_004121] GE 1.0000000e+11) AND (e_density[electron_dens_arr_004121] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_004121) ;50
 
-twel_004121 = WHERE((e_density[electron_dens_arr_004121] GE 1.0000000e+12) AND (e_density[electron_dens_arr_004121] LT 1.0000000e+13), count)
+twel_004121 = WHERE((e_density[electron_dens_arr_004121] GE 1.0000000e+12) AND (e_density[electron_dens_arr_004121] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_004121) ;27
 
-thirt_004121 = WHERE((e_density[electron_dens_arr_004121] GE 1.0000000e+13) AND (e_density[electron_dens_arr_004121] LT 1.0000000e+14), count)
+thirt_004121 = WHERE((e_density[electron_dens_arr_004121] GE 1.0000000e+13) AND (e_density[electron_dens_arr_004121] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_004121) ;0
 
-four_004121 = WHERE((e_density[electron_dens_arr_004121] GE 1.0000000e+14), count)
+four_004121 = WHERE((e_density[electron_dens_arr_004121] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_004121) ;0
 
 PRINT, "STATS"
@@ -569,10 +571,10 @@ stat_twel_004121 = FLOAT((N_ELEMENTS(twel_004121))/FLOAT(N_ELEMENTS(num_three)))
 PRINT, stat_twel_004121 ;30.0000
 
 stat_thirt_004121 = FLOAT((N_ELEMENTS(thirt_004121))/FLOAT(N_ELEMENTS(num_three)))*100
-PRINT, stat_thirt_004121 ;1.11111--0
+PRINT, stat_thirt_004121 ;0
 
 stat_four_004121 = FLOAT((N_ELEMENTS(four_004121))/FLOAT(N_ELEMENTS(num_three)))*100
-PRINT, stat_four_004121 ;1.11111--0
+PRINT, stat_four_004121 ;0
 
 e_dens_004121 = e_density[electron_dens_arr_004121]
 
@@ -592,7 +594,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_050655 = WHERE((electron_dens_arr_050655 EQ 0.0), count)
+zeros_050655 = WHERE((electron_dens_arr_050655 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_050655) ;10
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -602,22 +604,22 @@ PRINT, SIZE(zeros_050655) ;10
 
 PRINT, "050655"
 
-nin_050655 = WHERE((e_density[electron_dens_arr_050655] GE 1.0000000e+09) AND (e_density[electron_dens_arr_050655] LT 1.0000000e+10), count)
+nin_050655 = WHERE((e_density[electron_dens_arr_050655] GE 1.0000000e+09) AND (e_density[electron_dens_arr_050655] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_050655) ;10
 
-ten_050655 = WHERE((e_density[electron_dens_arr_050655] GE 1.0000000e+10) AND (e_density[electron_dens_arr_050655] LT 1.0000000e+11), count)
+ten_050655 = WHERE((e_density[electron_dens_arr_050655] GE 1.0000000e+10) AND (e_density[electron_dens_arr_050655] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_050655) ;5
 
-elev_050655 = WHERE((e_density[electron_dens_arr_050655] GE 1.0000000e+11) AND (e_density[electron_dens_arr_050655] LT 1.0000000e+12), count)
+elev_050655 = WHERE((e_density[electron_dens_arr_050655] GE 1.0000000e+11) AND (e_density[electron_dens_arr_050655] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_050655) ;32
 
-twel_050655 = WHERE((e_density[electron_dens_arr_050655] GE 1.0000000e+12) AND (e_density[electron_dens_arr_050655] LT 1.0000000e+13), count)
+twel_050655 = WHERE((e_density[electron_dens_arr_050655] GE 1.0000000e+12) AND (e_density[electron_dens_arr_050655] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_050655) ;17
 
-thirt_050655 = WHERE((e_density[electron_dens_arr_050655] GE 1.0000000e+13) AND (e_density[electron_dens_arr_050655] LT 1.0000000e+14), count)
+thirt_050655 = WHERE((e_density[electron_dens_arr_050655] GE 1.0000000e+13) AND (e_density[electron_dens_arr_050655] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_050655) ;2
 
-four_050655 = WHERE((e_density[electron_dens_arr_050655] GE 1.0000000e+14), count)
+four_050655 = WHERE((e_density[electron_dens_arr_050655] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_050655) ;0
 
 PRINT, "STATS"
@@ -638,7 +640,7 @@ stat_thirt_050655 = FLOAT((N_ELEMENTS(thirt_050655))/FLOAT(N_ELEMENTS(num2_three
 PRINT, stat_thirt_050655 ;3.03030
 
 stat_four_050655 = FLOAT((N_ELEMENTS(four_050655))/FLOAT(N_ELEMENTS(num2_three)))*100
-PRINT, stat_four_050655 ;1.51515--0
+PRINT, stat_four_050655 ;0
 
 e_dens_050655 = e_density[electron_dens_arr_050655]
 
@@ -658,7 +660,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_050655_1 = WHERE((electron_dens_arr_050655_1 EQ 0.0), count)
+zeros_050655_1 = WHERE((electron_dens_arr_050655_1 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_050655_1) ;8
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -667,22 +669,22 @@ PRINT, SIZE(zeros_050655_1) ;8
 
 PRINT, "050655_1"
 
-nin_050655_1 = WHERE((e_density[electron_dens_arr_050655_1] GE 1.0000000e+09) AND (e_density[electron_dens_arr_050655_1] LT 1.0000000e+10), count)
+nin_050655_1 = WHERE((e_density[electron_dens_arr_050655_1] GE 1.0000000e+09) AND (e_density[electron_dens_arr_050655_1] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_050655_1) ;9
 
-ten_050655_1 = WHERE((e_density[electron_dens_arr_050655_1] GE 1.0000000e+10) AND (e_density[electron_dens_arr_050655_1] LT 1.0000000e+11), count)
+ten_050655_1 = WHERE((e_density[electron_dens_arr_050655_1] GE 1.0000000e+10) AND (e_density[electron_dens_arr_050655_1] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_050655_1) ;8
 
-elev_050655_1 = WHERE((e_density[electron_dens_arr_050655_1] GE 1.0000000e+11) AND (e_density[electron_dens_arr_050655_1] LT 1.0000000e+12), count)
+elev_050655_1 = WHERE((e_density[electron_dens_arr_050655_1] GE 1.0000000e+11) AND (e_density[electron_dens_arr_050655_1] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_050655_1) ;64
 
-twel_050655_1 = WHERE((e_density[electron_dens_arr_050655_1] GE 1.0000000e+12) AND (e_density[electron_dens_arr_050655_1] LT 1.0000000e+13), count)
+twel_050655_1 = WHERE((e_density[electron_dens_arr_050655_1] GE 1.0000000e+12) AND (e_density[electron_dens_arr_050655_1] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_050655_1) ;28
 
-thirt_050655_1 = WHERE((e_density[electron_dens_arr_050655_1] GE 1.0000000e+13) AND (e_density[electron_dens_arr_050655_1] LT 1.0000000e+14), count)
+thirt_050655_1 = WHERE((e_density[electron_dens_arr_050655_1] GE 1.0000000e+13) AND (e_density[electron_dens_arr_050655_1] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_050655_1) ;0
 
-four_050655_1 = WHERE((e_density[electron_dens_arr_050655_1] GE 1.0000000e+14), count)
+four_050655_1 = WHERE((e_density[electron_dens_arr_050655_1] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_050655_1) ;0
 
 PRINT, "STATS"
@@ -700,10 +702,10 @@ stat_twel_050655_1 = FLOAT((N_ELEMENTS(twel_050655_1))/FLOAT(N_ELEMENTS(num3_thr
 PRINT, stat_twel_050655_1 ;25.6881
 
 stat_thirt_050655_1 = FLOAT((N_ELEMENTS(thirt_050655_1))/FLOAT(N_ELEMENTS(num3_three)))*100
-PRINT, stat_thirt_050655_1 ;0.917431--0
+PRINT, stat_thirt_050655_1 ;0
 
 stat_four_050655_1 = FLOAT((N_ELEMENTS(four_050655_1))/FLOAT(N_ELEMENTS(num3_three)))*100
-PRINT, stat_four_050655_1 ;0.917431--0
+PRINT, stat_four_050655_1 ;0
 
 e_dens_050655_1 = e_density[electron_dens_arr_050655_1]
 
@@ -723,7 +725,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_052046 = WHERE((electron_dens_arr_052046 EQ 0.0), count)
+zeros_052046 = WHERE((electron_dens_arr_052046 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_052046) ;355
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -732,22 +734,22 @@ PRINT, SIZE(zeros_052046) ;355
 
 PRINT, "052046"
 
-nin_052046 = WHERE((e_density[electron_dens_arr_052046] GE 1.0000000e+09) AND (e_density[electron_dens_arr_052046] LT 1.0000000e+10), count)
+nin_052046 = WHERE((e_density[electron_dens_arr_052046] GE 1.0000000e+09) AND (e_density[electron_dens_arr_052046] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_052046) ;362
 
-ten_052046 = WHERE((e_density[electron_dens_arr_052046] GE 1.0000000e+10) AND (e_density[electron_dens_arr_052046] LT 1.0000000e+11), count)
+ten_052046 = WHERE((e_density[electron_dens_arr_052046] GE 1.0000000e+10) AND (e_density[electron_dens_arr_052046] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_052046) ;124
 
-elev_052046 = WHERE((e_density[electron_dens_arr_052046] GE 1.0000000e+11) AND (e_density[electron_dens_arr_052046] LT 1.0000000e+12), count)
+elev_052046 = WHERE((e_density[electron_dens_arr_052046] GE 1.0000000e+11) AND (e_density[electron_dens_arr_052046] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_052046) ;513
 
-twel_052046 = WHERE((e_density[electron_dens_arr_052046] GE 1.0000000e+12) AND (e_density[electron_dens_arr_052046] LT 1.0000000e+13), count)
+twel_052046 = WHERE((e_density[electron_dens_arr_052046] GE 1.0000000e+12) AND (e_density[electron_dens_arr_052046] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_052046) ;223
 
-thirt_052046 = WHERE((e_density[electron_dens_arr_052046] GE 1.0000000e+13) AND (e_density[electron_dens_arr_052046] LT 1.0000000e+14), count)
+thirt_052046 = WHERE((e_density[electron_dens_arr_052046] GE 1.0000000e+13) AND (e_density[electron_dens_arr_052046] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_052046) ;9
 
-four_052046 = WHERE((e_density[electron_dens_arr_052046] GE 1.0000000e+14), count)
+four_052046 = WHERE((e_density[electron_dens_arr_052046] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_052046) ;0
 
 PRINT, "STATS"
@@ -768,7 +770,7 @@ stat_thirt_052046 = FLOAT((N_ELEMENTS(thirt_052046))/FLOAT(N_ELEMENTS(num4_three
 PRINT, stat_thirt_052046 ;0.731113
 
 stat_four_052046 = FLOAT((N_ELEMENTS(four_052046))/FLOAT(N_ELEMENTS(num4_three)))*100
-PRINT, stat_four_052046 ;0.0812348--0
+PRINT, stat_four_052046 ;0
 
 e_dens_052046 = e_density[electron_dens_arr_052046]
 
@@ -788,7 +790,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_061606 = WHERE((electron_dens_arr_061606 EQ 0.0), count)
+zeros_061606 = WHERE((electron_dens_arr_061606 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_061606) ;6
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -797,22 +799,22 @@ PRINT, SIZE(zeros_061606) ;6
 
 PRINT, "061606"
 
-nin_061606 = WHERE((e_density[electron_dens_arr_061606] GE 1.0000000e+09) AND (e_density[electron_dens_arr_061606] LT 1.0000000e+10), count)
+nin_061606 = WHERE((e_density[electron_dens_arr_061606] GE 1.0000000e+09) AND (e_density[electron_dens_arr_061606] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_061606) ;7
 
-ten_061606 = WHERE((e_density[electron_dens_arr_061606] GE 1.0000000e+10) AND (e_density[electron_dens_arr_061606] LT 1.0000000e+11), count)
+ten_061606 = WHERE((e_density[electron_dens_arr_061606] GE 1.0000000e+10) AND (e_density[electron_dens_arr_061606] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_061606) ;4
 
-elev_061606 = WHERE((e_density[electron_dens_arr_061606] GE 1.0000000e+11) AND (e_density[electron_dens_arr_061606] LT 1.0000000e+12), count)
+elev_061606 = WHERE((e_density[electron_dens_arr_061606] GE 1.0000000e+11) AND (e_density[electron_dens_arr_061606] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_061606) ;45
 
-twel_061606 = WHERE((e_density[electron_dens_arr_061606] GE 1.0000000e+12) AND (e_density[electron_dens_arr_061606] LT 1.0000000e+13), count)
+twel_061606 = WHERE((e_density[electron_dens_arr_061606] GE 1.0000000e+12) AND (e_density[electron_dens_arr_061606] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_061606) ;52
 
-thirt_061606 = WHERE((e_density[electron_dens_arr_061606] GE 1.0000000e+13) AND (e_density[electron_dens_arr_061606] LT 1.0000000e+14), count)
+thirt_061606 = WHERE((e_density[electron_dens_arr_061606] GE 1.0000000e+13) AND (e_density[electron_dens_arr_061606] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_061606) ;0
 
-four_061606 = WHERE((e_density[electron_dens_arr_061606] GE 1.0000000e+14), count)
+four_061606 = WHERE((e_density[electron_dens_arr_061606] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_061606) ;0
 
 PRINT, "STATS"
@@ -830,10 +832,10 @@ stat_twel_061606 = FLOAT((N_ELEMENTS(twel_061606))/FLOAT(N_ELEMENTS(num5_three))
 PRINT, stat_twel_061606 ;48.1481
 
 stat_thirt_061606 = FLOAT((N_ELEMENTS(thirt_061606))/FLOAT(N_ELEMENTS(num5_three)))*100
-PRINT, stat_thirt_061606 ;0.925926--0
+PRINT, stat_thirt_061606 ;0
 
 stat_four_061606 = FLOAT((N_ELEMENTS(four_061606))/FLOAT(N_ELEMENTS(num5_three)))*100
-PRINT, stat_four_061606 ;0.925926--0
+PRINT, stat_four_061606 ;0
 
 e_dens_061606 = e_density[electron_dens_arr_061606]
 
@@ -853,7 +855,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_114951 = WHERE((electron_dens_arr_114951 EQ 0.0), count)
+zeros_114951 = WHERE((electron_dens_arr_114951 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_114951) ;50
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -862,22 +864,22 @@ PRINT, SIZE(zeros_114951) ;50
 
 PRINT, "114951"
 
-nin_114951 = WHERE((e_density[electron_dens_arr_114951] GE 1.0000000e+09) AND (e_density[electron_dens_arr_114951] LT 1.0000000e+10), count)
+nin_114951 = WHERE((e_density[electron_dens_arr_114951] GE 1.0000000e+09) AND (e_density[electron_dens_arr_114951] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_114951) ;53
 
-ten_114951 = WHERE((e_density[electron_dens_arr_114951] GE 1.0000000e+10) AND (e_density[electron_dens_arr_114951] LT 1.0000000e+11), count)
+ten_114951 = WHERE((e_density[electron_dens_arr_114951] GE 1.0000000e+10) AND (e_density[electron_dens_arr_114951] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_114951) ;6
 
-elev_114951 = WHERE((e_density[electron_dens_arr_114951] GE 1.0000000e+11) AND (e_density[electron_dens_arr_114951] LT 1.0000000e+12), count)
+elev_114951 = WHERE((e_density[electron_dens_arr_114951] GE 1.0000000e+11) AND (e_density[electron_dens_arr_114951] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_114951) ;46
 
-twel_114951 = WHERE((e_density[electron_dens_arr_114951] GE 1.0000000e+12) AND (e_density[electron_dens_arr_114951] LT 1.0000000e+13), count)
+twel_114951 = WHERE((e_density[electron_dens_arr_114951] GE 1.0000000e+12) AND (e_density[electron_dens_arr_114951] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_114951) ;51
 
-thirt_114951 = WHERE((e_density[electron_dens_arr_114951] GE 1.0000000e+13) AND (e_density[electron_dens_arr_114951] LT 1.0000000e+14), count)
+thirt_114951 = WHERE((e_density[electron_dens_arr_114951] GE 1.0000000e+13) AND (e_density[electron_dens_arr_114951] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_114951) ;4
 
-four_114951 = WHERE((e_density[electron_dens_arr_114951] GE 1.0000000e+14), count)
+four_114951 = WHERE((e_density[electron_dens_arr_114951] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_114951) ;0
 
 PRINT, "STATS"
@@ -898,7 +900,7 @@ stat_thirt_114951 = FLOAT((N_ELEMENTS(thirt_114951))/FLOAT(N_ELEMENTS(num6_three
 PRINT, stat_thirt_114951 ;2.50000
 
 stat_four_114951 = FLOAT((N_ELEMENTS(four_114951))/FLOAT(N_ELEMENTS(num6_three)))*100
-PRINT, stat_four_114951 ;0.625000--0
+PRINT, stat_four_114951 ;0
 
 e_dens_114951 = e_density[electron_dens_arr_114951]
 
@@ -918,7 +920,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_122033 = WHERE((electron_dens_arr_122033 EQ 0.0), count)
+zeros_122033 = WHERE((electron_dens_arr_122033 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_122033) ;60
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -927,22 +929,22 @@ PRINT, SIZE(zeros_122033) ;60
 
 PRINT, "122033"
 
-nin_122033 = WHERE((e_density[electron_dens_arr_122033] GE 1.0000000e+09) AND (e_density[electron_dens_arr_122033] LT 1.0000000e+10), count)
+nin_122033 = WHERE((e_density[electron_dens_arr_122033] GE 1.0000000e+09) AND (e_density[electron_dens_arr_122033] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_122033) ;63
 
-ten_122033 = WHERE((e_density[electron_dens_arr_122033] GE 1.0000000e+10) AND (e_density[electron_dens_arr_122033] LT 1.0000000e+11), count)
+ten_122033 = WHERE((e_density[electron_dens_arr_122033] GE 1.0000000e+10) AND (e_density[electron_dens_arr_122033] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_122033) ;29
 
-elev_122033 = WHERE((e_density[electron_dens_arr_122033] GE 1.0000000e+11) AND (e_density[electron_dens_arr_122033] LT 1.0000000e+12), count)
+elev_122033 = WHERE((e_density[electron_dens_arr_122033] GE 1.0000000e+11) AND (e_density[electron_dens_arr_122033] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_122033) ;168
 
-twel_122033 = WHERE((e_density[electron_dens_arr_122033] GE 1.0000000e+12) AND (e_density[electron_dens_arr_122033] LT 1.0000000e+13), count)
+twel_122033 = WHERE((e_density[electron_dens_arr_122033] GE 1.0000000e+12) AND (e_density[electron_dens_arr_122033] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_122033) ;138
 
-thirt_122033 = WHERE((e_density[electron_dens_arr_122033] GE 1.0000000e+13) AND (e_density[electron_dens_arr_122033] LT 1.0000000e+14), count)
+thirt_122033 = WHERE((e_density[electron_dens_arr_122033] GE 1.0000000e+13) AND (e_density[electron_dens_arr_122033] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_122033) ;1
 
-four_122033 = WHERE((e_density[electron_dens_arr_122033] GE 1.0000000e+14), count)
+four_122033 = WHERE((e_density[electron_dens_arr_122033] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_122033) ;0
 
 PRINT, "STATS"
@@ -963,7 +965,7 @@ stat_thirt_122033 = FLOAT((N_ELEMENTS(thirt_122033))/FLOAT(N_ELEMENTS(num7_three
 PRINT, stat_thirt_122033 ;0.250627
 
 stat_four_122033 = FLOAT((N_ELEMENTS(four_122033))/FLOAT(N_ELEMENTS(num7_three)))*100
-PRINT, stat_four_122033 ;0.250627--0
+PRINT, stat_four_122033 ;0
 
 e_dens_122033 = e_density[electron_dens_arr_122033]
 
@@ -983,7 +985,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_160806 = WHERE((electron_dens_arr_160806 EQ 0.0), count)
+zeros_160806 = WHERE((electron_dens_arr_160806 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_160806) ;4
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -992,22 +994,22 @@ PRINT, SIZE(zeros_160806) ;4
 
 PRINT, "160806"
 
-nin_160806 = WHERE((e_density[electron_dens_arr_160806] GE 1.0000000e+09) AND (e_density[electron_dens_arr_160806] LT 1.0000000e+10), count)
+nin_160806 = WHERE((e_density[electron_dens_arr_160806] GE 1.0000000e+09) AND (e_density[electron_dens_arr_160806] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_160806) ;4
 
-ten_160806 = WHERE((e_density[electron_dens_arr_160806] GE 1.0000000e+10) AND (e_density[electron_dens_arr_160806] LT 1.0000000e+11), count)
+ten_160806 = WHERE((e_density[electron_dens_arr_160806] GE 1.0000000e+10) AND (e_density[electron_dens_arr_160806] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_160806) ;3
 
-elev_160806 = WHERE((e_density[electron_dens_arr_160806] GE 1.0000000e+11) AND (e_density[electron_dens_arr_160806] LT 1.0000000e+12), count)
+elev_160806 = WHERE((e_density[electron_dens_arr_160806] GE 1.0000000e+11) AND (e_density[electron_dens_arr_160806] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_160806) ;76
 
-twel_160806 = WHERE((e_density[electron_dens_arr_160806] GE 1.0000000e+12) AND (e_density[electron_dens_arr_160806] LT 1.0000000e+13), count)
+twel_160806 = WHERE((e_density[electron_dens_arr_160806] GE 1.0000000e+12) AND (e_density[electron_dens_arr_160806] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_160806) ;71
 
-thirt_160806 = WHERE((e_density[electron_dens_arr_160806] GE 1.0000000e+13) AND (e_density[electron_dens_arr_160806] LT 1.0000000e+14), count)
+thirt_160806 = WHERE((e_density[electron_dens_arr_160806] GE 1.0000000e+13) AND (e_density[electron_dens_arr_160806] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_160806) ;3
 
-four_160806 = WHERE((e_density[electron_dens_arr_160806] GE 1.0000000e+14), count)
+four_160806 = WHERE((e_density[electron_dens_arr_160806] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_160806) ;0
 
 PRINT, "STATS"
@@ -1028,7 +1030,7 @@ stat_thirt_160806 = FLOAT((N_ELEMENTS(thirt_160806))/FLOAT(N_ELEMENTS(num8_three
 PRINT, stat_thirt_160806 ;1.91083
 
 stat_four_160806 = FLOAT((N_ELEMENTS(four_160806))/FLOAT(N_ELEMENTS(num8_three)))*100
-PRINT, stat_four_160806 ;0.636943--0
+PRINT, stat_four_160806 ;0
 
 e_dens_160806 = e_density[electron_dens_arr_160806]
 
@@ -1048,7 +1050,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_163205 = WHERE((electron_dens_arr_163205 EQ 0.0), count)
+zeros_163205 = WHERE((electron_dens_arr_163205 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_163205) ;9
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -1057,22 +1059,22 @@ PRINT, SIZE(zeros_163205) ;9
 
 PRINT, "163205"
 
-nin_163205 = WHERE((e_density[electron_dens_arr_163205] GE 1.0000000e+09) AND (e_density[electron_dens_arr_163205] LT 1.0000000e+10), count)
+nin_163205 = WHERE((e_density[electron_dens_arr_163205] GE 1.0000000e+09) AND (e_density[electron_dens_arr_163205] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_163205) ;10
 
-ten_163205 = WHERE((e_density[electron_dens_arr_163205] GE 1.0000000e+10) AND (e_density[electron_dens_arr_163205] LT 1.0000000e+11), count)
+ten_163205 = WHERE((e_density[electron_dens_arr_163205] GE 1.0000000e+10) AND (e_density[electron_dens_arr_163205] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_163205) ;6
 
-elev_163205 = WHERE((e_density[electron_dens_arr_163205] GE 1.0000000e+11) AND (e_density[electron_dens_arr_163205] LT 1.0000000e+12), count)
+elev_163205 = WHERE((e_density[electron_dens_arr_163205] GE 1.0000000e+11) AND (e_density[electron_dens_arr_163205] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_163205) ;37
 
-twel_163205 = WHERE((e_density[electron_dens_arr_163205] GE 1.0000000e+12) AND (e_density[electron_dens_arr_163205] LT 1.0000000e+13), count)
+twel_163205 = WHERE((e_density[electron_dens_arr_163205] GE 1.0000000e+12) AND (e_density[electron_dens_arr_163205] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_163205) ;16
 
-thirt_163205 = WHERE((e_density[electron_dens_arr_163205] GE 1.0000000e+13) AND (e_density[electron_dens_arr_163205] LT 1.0000000e+14), count)
+thirt_163205 = WHERE((e_density[electron_dens_arr_163205] GE 1.0000000e+13) AND (e_density[electron_dens_arr_163205] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_163205) ;2
 
-four_163205 = WHERE((e_density[electron_dens_arr_163205] GE 1.0000000e+14), count)
+four_163205 = WHERE((e_density[electron_dens_arr_163205] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_163205) ;0
 
 PRINT, "STATS"
@@ -1093,7 +1095,7 @@ stat_thirt_163205 = FLOAT((N_ELEMENTS(thirt_163205))/FLOAT(N_ELEMENTS(num9_three
 PRINT, stat_thirt_163205 ;2.81690
 
 stat_four_163205 = FLOAT((N_ELEMENTS(four_163205))/FLOAT(N_ELEMENTS(num9_three)))*100
-PRINT, stat_four_163205 ;1.40845--0
+PRINT, stat_four_163205 ;0
 
 e_dens_163205 = e_density[electron_dens_arr_163205]
 
@@ -1113,7 +1115,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_174905 = WHERE((electron_dens_arr_174905 EQ 0.0), count)
+zeros_174905 = WHERE((electron_dens_arr_174905 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_174905) ;12
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -1122,22 +1124,22 @@ PRINT, SIZE(zeros_174905) ;12
 
 PRINT, "174905"
 
-nin_174905 = WHERE((e_density[electron_dens_arr_174905] GE 1.0000000e+09) AND (e_density[electron_dens_arr_174905] LT 1.0000000e+10), count)
+nin_174905 = WHERE((e_density[electron_dens_arr_174905] GE 1.0000000e+09) AND (e_density[electron_dens_arr_174905] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_174905) ;13
 
-ten_174905 = WHERE((e_density[electron_dens_arr_174905] GE 1.0000000e+10) AND (e_density[electron_dens_arr_174905] LT 1.0000000e+11), count)
+ten_174905 = WHERE((e_density[electron_dens_arr_174905] GE 1.0000000e+10) AND (e_density[electron_dens_arr_174905] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_174905) ;13
 
-elev_174905 = WHERE((e_density[electron_dens_arr_174905] GE 1.0000000e+11) AND (e_density[electron_dens_arr_174905] LT 1.0000000e+12), count)
+elev_174905 = WHERE((e_density[electron_dens_arr_174905] GE 1.0000000e+11) AND (e_density[electron_dens_arr_174905] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_174905) ;139
 
-twel_174905 = WHERE((e_density[electron_dens_arr_174905] GE 1.0000000e+12) AND (e_density[electron_dens_arr_174905] LT 1.0000000e+13), count)
+twel_174905 = WHERE((e_density[electron_dens_arr_174905] GE 1.0000000e+12) AND (e_density[electron_dens_arr_174905] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_174905) ;78
 
-thirt_174905 = WHERE((e_density[electron_dens_arr_174905] GE 1.0000000e+13) AND (e_density[electron_dens_arr_174905] LT 1.0000000e+14), count)
+thirt_174905 = WHERE((e_density[electron_dens_arr_174905] GE 1.0000000e+13) AND (e_density[electron_dens_arr_174905] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_174905) ;1
 
-four_174905 = WHERE((e_density[electron_dens_arr_174905] GE 1.0000000e+14), count)
+four_174905 = WHERE((e_density[electron_dens_arr_174905] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_174905) ;0
 
 PRINT, "STATS"
@@ -1158,7 +1160,7 @@ stat_thirt_174905 = FLOAT((N_ELEMENTS(thirt_174905))/FLOAT(N_ELEMENTS(num10_thre
 PRINT, stat_thirt_174905 ;0.409836
 
 stat_four_174905 = FLOAT((N_ELEMENTS(four_174905))/FLOAT(N_ELEMENTS(num10_three)))*100
-PRINT, stat_four_174905 ;0.409836--0
+PRINT, stat_four_174905 ;0
 
 e_dens_174905 = e_density[electron_dens_arr_174905]
 
@@ -1178,7 +1180,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_181205 = WHERE((electron_dens_arr_181205 EQ 0.0), count)
+zeros_181205 = WHERE((electron_dens_arr_181205 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_181205) ;2
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -1187,22 +1189,22 @@ PRINT, SIZE(zeros_181205) ;2
 
 PRINT, "181205"
 
-nin_181205 = WHERE((e_density[electron_dens_arr_181205] GE 1.0000000e+09) AND (e_density[electron_dens_arr_181205] LT 1.0000000e+10), count)
+nin_181205 = WHERE((e_density[electron_dens_arr_181205] GE 1.0000000e+09) AND (e_density[electron_dens_arr_181205] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_181205) ;3
 
-ten_181205 = WHERE((e_density[electron_dens_arr_181205] GE 1.0000000e+10) AND (e_density[electron_dens_arr_181205] LT 1.0000000e+11), count)
+ten_181205 = WHERE((e_density[electron_dens_arr_181205] GE 1.0000000e+10) AND (e_density[electron_dens_arr_181205] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_181205) ;2
 
-elev_181205 = WHERE((e_density[electron_dens_arr_181205] GE 1.0000000e+11) AND (e_density[electron_dens_arr_181205] LT 1.0000000e+12), count)
+elev_181205 = WHERE((e_density[electron_dens_arr_181205] GE 1.0000000e+11) AND (e_density[electron_dens_arr_181205] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_181205) ;28
 
-twel_181205 = WHERE((e_density[electron_dens_arr_181205] GE 1.0000000e+12) AND (e_density[electron_dens_arr_181205] LT 1.0000000e+13), count)
+twel_181205 = WHERE((e_density[electron_dens_arr_181205] GE 1.0000000e+12) AND (e_density[electron_dens_arr_181205] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_181205) ;38
 
-thirt_181205 = WHERE((e_density[electron_dens_arr_181205] GE 1.0000000e+13) AND (e_density[electron_dens_arr_181205] LT 1.0000000e+14), count)
+thirt_181205 = WHERE((e_density[electron_dens_arr_181205] GE 1.0000000e+13) AND (e_density[electron_dens_arr_181205] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_181205) ;0
 
-four_181205 = WHERE((e_density[electron_dens_arr_181205] GE 1.0000000e+14), count)
+four_181205 = WHERE((e_density[electron_dens_arr_181205] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_181205) ;0
 
 PRINT, "STATS"
@@ -1220,10 +1222,10 @@ stat_twel_181205 = FLOAT((N_ELEMENTS(twel_181205))/FLOAT(N_ELEMENTS(num11_three)
 PRINT, stat_twel_181205 ;53.5211
 
 stat_thirt_181205 = FLOAT((N_ELEMENTS(thirt_181205))/FLOAT(N_ELEMENTS(num11_three)))*100
-PRINT, stat_thirt_181205 ;1.40845--0
+PRINT, stat_thirt_181205 ;0
 
 stat_four_181205 = FLOAT((N_ELEMENTS(four_181205))/FLOAT(N_ELEMENTS(num11_three)))*100
-PRINT, stat_four_181205 ;1.40845--0
+PRINT, stat_four_181205 ;0
 
 e_dens_181205 = e_density[electron_dens_arr_181205]
 
@@ -1243,7 +1245,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_201925 = WHERE((electron_dens_arr_201925 EQ 0.0), count)
+zeros_201925 = WHERE((electron_dens_arr_201925 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_201925) ;7
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -1252,22 +1254,22 @@ PRINT, SIZE(zeros_201925) ;7
 
 PRINT, "201925"
 
-nin_201925 = WHERE((e_density[electron_dens_arr_201925] GE 1.0000000e+09) AND (e_density[electron_dens_arr_201925] LT 1.0000000e+10), count)
+nin_201925 = WHERE((e_density[electron_dens_arr_201925] GE 1.0000000e+09) AND (e_density[electron_dens_arr_201925] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_201925) ;7
 
-ten_201925 = WHERE((e_density[electron_dens_arr_201925] GE 1.0000000e+10) AND (e_density[electron_dens_arr_201925] LT 1.0000000e+11), count)
+ten_201925 = WHERE((e_density[electron_dens_arr_201925] GE 1.0000000e+10) AND (e_density[electron_dens_arr_201925] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_201925) ;5
 
-elev_201925 = WHERE((e_density[electron_dens_arr_201925] GE 1.0000000e+11) AND (e_density[electron_dens_arr_201925] LT 1.0000000e+12), count)
+elev_201925 = WHERE((e_density[electron_dens_arr_201925] GE 1.0000000e+11) AND (e_density[electron_dens_arr_201925] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_201925) ;21
 
-twel_201925 = WHERE((e_density[electron_dens_arr_201925] GE 1.0000000e+12) AND (e_density[electron_dens_arr_201925] LT 1.0000000e+13), count)
+twel_201925 = WHERE((e_density[electron_dens_arr_201925] GE 1.0000000e+12) AND (e_density[electron_dens_arr_201925] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_201925) ;20
 
-thirt_201925 = WHERE((e_density[electron_dens_arr_201925] GE 1.0000000e+13) AND (e_density[electron_dens_arr_201925] LT 1.0000000e+14), count)
+thirt_201925 = WHERE((e_density[electron_dens_arr_201925] GE 1.0000000e+13) AND (e_density[electron_dens_arr_201925] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_201925) ;6
 
-four_201925 = WHERE((e_density[electron_dens_arr_201925] GE 1.0000000e+14), count)
+four_201925 = WHERE((e_density[electron_dens_arr_201925] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_201925) ;0
 
 PRINT, "STATS"
@@ -1288,7 +1290,7 @@ stat_thirt_201925 = FLOAT((N_ELEMENTS(thirt_201925))/FLOAT(N_ELEMENTS(num12_thre
 PRINT, stat_thirt_201925 ;10.1695
 
 stat_four_201925 = FLOAT((N_ELEMENTS(four_201925))/FLOAT(N_ELEMENTS(num12_three)))*100
-PRINT, stat_four_201925 ;1.69492--0
+PRINT, stat_four_201925 ;0
 
 e_dens_201925 = e_density[electron_dens_arr_201925]
 
@@ -1308,7 +1310,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_201925_1 = WHERE((electron_dens_arr_201925_1 EQ 0.0), count)
+zeros_201925_1 = WHERE((electron_dens_arr_201925_1 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_201925_1) ;2
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -1317,22 +1319,22 @@ PRINT, SIZE(zeros_201925_1) ;2
 
 PRINT, "201925_1"
 
-nin_201925_1 = WHERE((e_density[electron_dens_arr_201925_1] GE 1.0000000e+09) AND (e_density[electron_dens_arr_201925_1] LT 1.0000000e+10), count)
+nin_201925_1 = WHERE((e_density[electron_dens_arr_201925_1] GE 1.0000000e+09) AND (e_density[electron_dens_arr_201925_1] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_201925_1) ;2
 
-ten_201925_1 = WHERE((e_density[electron_dens_arr_201925_1] GE 1.0000000e+10) AND (e_density[electron_dens_arr_201925_1] LT 1.0000000e+11), count)
+ten_201925_1 = WHERE((e_density[electron_dens_arr_201925_1] GE 1.0000000e+10) AND (e_density[electron_dens_arr_201925_1] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_201925_1) ;5
 
-elev_201925_1 = WHERE((e_density[electron_dens_arr_201925_1] GE 1.0000000e+11) AND (e_density[electron_dens_arr_201925_1] LT 1.0000000e+12), count)
+elev_201925_1 = WHERE((e_density[electron_dens_arr_201925_1] GE 1.0000000e+11) AND (e_density[electron_dens_arr_201925_1] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_201925_1) ;22
 
-twel_201925_1 = WHERE((e_density[electron_dens_arr_201925_1] GE 1.0000000e+12) AND (e_density[electron_dens_arr_201925_1] LT 1.0000000e+13), count)
+twel_201925_1 = WHERE((e_density[electron_dens_arr_201925_1] GE 1.0000000e+12) AND (e_density[electron_dens_arr_201925_1] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_201925_1) ;25
 
-thirt_201925_1 = WHERE((e_density[electron_dens_arr_201925_1] GE 1.0000000e+13) AND (e_density[electron_dens_arr_201925_1] LT 1.0000000e+14), count)
+thirt_201925_1 = WHERE((e_density[electron_dens_arr_201925_1] GE 1.0000000e+13) AND (e_density[electron_dens_arr_201925_1] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_201925_1) ;4
 
-four_201925_1 = WHERE((e_density[electron_dens_arr_201925_1] GE 1.0000000e+14), count)
+four_201925_1 = WHERE((e_density[electron_dens_arr_201925_1] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_201925_1) ;0
 
 PRINT, "STATS"
@@ -1353,7 +1355,7 @@ stat_thirt_201925_1 = FLOAT((N_ELEMENTS(thirt_201925_1))/FLOAT(N_ELEMENTS(num13_
 PRINT, stat_thirt_201925_1 ;6.89655
 
 stat_four_201925_1 = FLOAT((N_ELEMENTS(four_201925_1))/FLOAT(N_ELEMENTS(num13_three)))*100
-PRINT, stat_four_201925_1 ;1.72414--0
+PRINT, stat_four_201925_1 ;0
 
 e_dens_201925_1 = e_density[electron_dens_arr_201925_1]
 
@@ -1373,7 +1375,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_203906 = WHERE((electron_dens_arr_203906 EQ 0.0), count)
+zeros_203906 = WHERE((electron_dens_arr_203906 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_203906) ;40
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -1382,22 +1384,22 @@ PRINT, SIZE(zeros_203906) ;40
 
 PRINT, "203906"
 
-nin_203906 = WHERE((e_density[electron_dens_arr_203906] GE 1.0000000e+09) AND (e_density[electron_dens_arr_203906] LT 1.0000000e+10), count)
+nin_203906 = WHERE((e_density[electron_dens_arr_203906] GE 1.0000000e+09) AND (e_density[electron_dens_arr_203906] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_203906) ;41
 
-ten_203906 = WHERE((e_density[electron_dens_arr_203906] GE 1.0000000e+10) AND (e_density[electron_dens_arr_203906] LT 1.0000000e+11), count)
+ten_203906 = WHERE((e_density[electron_dens_arr_203906] GE 1.0000000e+10) AND (e_density[electron_dens_arr_203906] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_203906) ;41
 
-elev_203906 = WHERE((e_density[electron_dens_arr_203906] GE 1.0000000e+11) AND (e_density[electron_dens_arr_203906] LT 1.0000000e+12), count)
+elev_203906 = WHERE((e_density[electron_dens_arr_203906] GE 1.0000000e+11) AND (e_density[electron_dens_arr_203906] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_203906) ;157
 
-twel_203906 = WHERE((e_density[electron_dens_arr_203906] GE 1.0000000e+12) AND (e_density[electron_dens_arr_203906] LT 1.0000000e+13), count)
+twel_203906 = WHERE((e_density[electron_dens_arr_203906] GE 1.0000000e+12) AND (e_density[electron_dens_arr_203906] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_203906) ;96
 
-thirt_203906 = WHERE((e_density[electron_dens_arr_203906] GE 1.0000000e+13) AND (e_density[electron_dens_arr_203906] LT 1.0000000e+14), count)
+thirt_203906 = WHERE((e_density[electron_dens_arr_203906] GE 1.0000000e+13) AND (e_density[electron_dens_arr_203906] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_203906) ;5
 
-four_203906 = WHERE((e_density[electron_dens_arr_203906] GE 1.0000000e+14), count)
+four_203906 = WHERE((e_density[electron_dens_arr_203906] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_203906) ;0
 
 PRINT, "STATS"
@@ -1418,7 +1420,7 @@ stat_thirt_203906 = FLOAT((N_ELEMENTS(thirt_203906))/FLOAT(N_ELEMENTS(num14_thre
 PRINT, stat_thirt_203906 ;1.47059
 
 stat_four_203906 = FLOAT((N_ELEMENTS(four_203906))/FLOAT(N_ELEMENTS(num14_three)))*100
-PRINT, stat_four_203906 ;0.294118--0
+PRINT, stat_four_203906 ;0
 
 e_dens_203906 = e_density[electron_dens_arr_203906]
 
@@ -1438,7 +1440,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_215426 = WHERE((electron_dens_arr_215426 EQ 0.0), count)
+zeros_215426 = WHERE((electron_dens_arr_215426 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_215426) ;3
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -1447,22 +1449,22 @@ PRINT, SIZE(zeros_215426) ;3
 
 PRINT, "215426"
 
-nin_215426 = WHERE((e_density[electron_dens_arr_215426] GE 1.0000000e+09) AND (e_density[electron_dens_arr_215426] LT 1.0000000e+10), count)
+nin_215426 = WHERE((e_density[electron_dens_arr_215426] GE 1.0000000e+09) AND (e_density[electron_dens_arr_215426] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_215426) ;3
 
-ten_215426 = WHERE((e_density[electron_dens_arr_215426] GE 1.0000000e+10) AND (e_density[electron_dens_arr_215426] LT 1.0000000e+11), count)
+ten_215426 = WHERE((e_density[electron_dens_arr_215426] GE 1.0000000e+10) AND (e_density[electron_dens_arr_215426] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_215426) ;0
 
-elev_215426 = WHERE((e_density[electron_dens_arr_215426] GE 1.0000000e+11) AND (e_density[electron_dens_arr_215426] LT 1.0000000e+12), count)
+elev_215426 = WHERE((e_density[electron_dens_arr_215426] GE 1.0000000e+11) AND (e_density[electron_dens_arr_215426] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_215426) ;18
 
-twel_215426 = WHERE((e_density[electron_dens_arr_215426] GE 1.0000000e+12) AND (e_density[electron_dens_arr_215426] LT 1.0000000e+13), count)
+twel_215426 = WHERE((e_density[electron_dens_arr_215426] GE 1.0000000e+12) AND (e_density[electron_dens_arr_215426] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_215426) ;5
 
-thirt_215426 = WHERE((e_density[electron_dens_arr_215426] GE 1.0000000e+13) AND (e_density[electron_dens_arr_215426] LT 1.0000000e+14), count)
+thirt_215426 = WHERE((e_density[electron_dens_arr_215426] GE 1.0000000e+13) AND (e_density[electron_dens_arr_215426] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_215426) ;0
 
-four_215426 = WHERE((e_density[electron_dens_arr_215426] GE 1.0000000e+14), count)
+four_215426 = WHERE((e_density[electron_dens_arr_215426] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_215426) ;0
 
 PRINT, "STATS"
@@ -1471,7 +1473,7 @@ stat_nin_215426 = FLOAT((N_ELEMENTS(nin_215426))/FLOAT(N_ELEMENTS(num15_three)))
 PRINT, stat_nin_215426 ;11.5385
 
 stat_ten_215426 = FLOAT((N_ELEMENTS(ten_215426))/FLOAT(N_ELEMENTS(num15_three)))*100
-PRINT, stat_ten_215426 ;3.84615--0
+PRINT, stat_ten_215426 ;0
 
 stat_elev_215426 = FLOAT((N_ELEMENTS(elev_215426))/FLOAT(N_ELEMENTS(num15_three)))*100
 PRINT, stat_elev_215426 ;69.2308
@@ -1480,10 +1482,10 @@ stat_twel_215426 = FLOAT((N_ELEMENTS(twel_215426))/FLOAT(N_ELEMENTS(num15_three)
 PRINT, stat_twel_215426 ;19.2308
 
 stat_thirt_215426 = FLOAT((N_ELEMENTS(thirt_215426))/FLOAT(N_ELEMENTS(num15_three)))*100
-PRINT, stat_thirt_215426 ;3.84615--0
+PRINT, stat_thirt_215426 ;0
 
 stat_four_215426 = FLOAT((N_ELEMENTS(four_215426))/FLOAT(N_ELEMENTS(num15_three)))*100
-PRINT, stat_four_215426 ;3.84615--0
+PRINT, stat_four_215426 ;0
 
 e_dens_215426 = e_density[electron_dens_arr_215426]
 
@@ -1503,7 +1505,7 @@ ENDFOR
 
 PRINT, "ZEROS"
 
-zeros_232931 = WHERE((electron_dens_arr_232931 EQ 0.0), count)
+zeros_232931 = WHERE((electron_dens_arr_232931 EQ 0.0), count, /NULL)
 PRINT, SIZE(zeros_232931) ;0
 
 ;PRINT, "E_DENSITY[ABOVE]"
@@ -1512,31 +1514,31 @@ PRINT, SIZE(zeros_232931) ;0
 
 PRINT, "232931"
 
-nin_232931 = WHERE((e_density[electron_dens_arr_232931] GE 1.0000000e+09) AND (e_density[electron_dens_arr_232931] LT 1.0000000e+10), count)
+nin_232931 = WHERE((e_density[electron_dens_arr_232931] GE 1.0000000e+09) AND (e_density[electron_dens_arr_232931] LT 1.0000000e+10), count, /NULL)
 PRINT, SIZE(nin_232931) ;0
 
-ten_232931 = WHERE((e_density[electron_dens_arr_232931] GE 1.0000000e+10) AND (e_density[electron_dens_arr_232931] LT 1.0000000e+11), count)
+ten_232931 = WHERE((e_density[electron_dens_arr_232931] GE 1.0000000e+10) AND (e_density[electron_dens_arr_232931] LT 1.0000000e+11), count, /NULL)
 PRINT, SIZE(ten_232931) ;0
 
-elev_232931 = WHERE((e_density[electron_dens_arr_232931] GE 1.0000000e+11) AND (e_density[electron_dens_arr_232931] LT 1.0000000e+12), count)
+elev_232931 = WHERE((e_density[electron_dens_arr_232931] GE 1.0000000e+11) AND (e_density[electron_dens_arr_232931] LT 1.0000000e+12), count, /NULL)
 PRINT, SIZE(elev_232931) ;23
 
-twel_232931 = WHERE((e_density[electron_dens_arr_232931] GE 1.0000000e+12) AND (e_density[electron_dens_arr_232931] LT 1.0000000e+13), count)
+twel_232931 = WHERE((e_density[electron_dens_arr_232931] GE 1.0000000e+12) AND (e_density[electron_dens_arr_232931] LT 1.0000000e+13), count, /NULL)
 PRINT, SIZE(twel_232931) ;5
 
-thirt_232931 = WHERE((e_density[electron_dens_arr_232931] GE 1.0000000e+13) AND (e_density[electron_dens_arr_232931] LT 1.0000000e+14), count)
+thirt_232931 = WHERE((e_density[electron_dens_arr_232931] GE 1.0000000e+13) AND (e_density[electron_dens_arr_232931] LT 1.0000000e+14), count, /NULL)
 PRINT, SIZE(thirt_232931) ;0
 
-four_232931 = WHERE((e_density[electron_dens_arr_232931] GE 1.0000000e+14), count)
+four_232931 = WHERE((e_density[electron_dens_arr_232931] GE 1.0000000e+14), count, /NULL)
 PRINT, SIZE(four_232931) ;0
 
 PRINT, "STATS"
 
 stat_nin_232931 = FLOAT((N_ELEMENTS(nin_232931))/FLOAT(N_ELEMENTS(num16_three)))*100
-PRINT, stat_nin_232931 ;3.57143--0
+PRINT, stat_nin_232931 ;0
 
 stat_ten_232931 = FLOAT((N_ELEMENTS(ten_232931))/FLOAT(N_ELEMENTS(num16_three)))*100
-PRINT, stat_ten_232931 ;3.57143--0
+PRINT, stat_ten_232931 ;0
 
 stat_elev_232931 = FLOAT((N_ELEMENTS(elev_232931))/FLOAT(N_ELEMENTS(num16_three)))*100
 PRINT, stat_elev_232931 ;82.1429
@@ -1545,10 +1547,10 @@ stat_twel_232931 = FLOAT((N_ELEMENTS(twel_232931))/FLOAT(N_ELEMENTS(num16_three)
 PRINT, stat_twel_232931 ;17.8571
 
 stat_thirt_232931 = FLOAT((N_ELEMENTS(thirt_232931))/FLOAT(N_ELEMENTS(num16_three)))*100
-PRINT, stat_thirt_232931 ;3.57143--0
+PRINT, stat_thirt_232931 ;0
 
 stat_four_232931 = FLOAT((N_ELEMENTS(four_232931))/FLOAT(N_ELEMENTS(num16_three)))*100
-PRINT, stat_four_232931 ;3.57143--0
+PRINT, stat_four_232931 ;0
 
 e_dens_232931 = e_density[electron_dens_arr_232931]
 
