@@ -148,7 +148,7 @@ PRINT, N_ELEMENTS(limit_vel_width_232931) ;228
 PRINT, limit_vel_width_232931
 
 PRINT, 'TEST'
-test = WHERE((limit_vel_width_232931 GE 0.0) AND (limit_vel_width_232931 LE 50.0), count)
+test = WHERE((limit_vel_width_232931 GE 0.0) AND (limit_vel_width_232931 LT 50.0), count)
 PRINT, limit_vel_width_232931[test]
 PRINT, MIN(limit_vel_width_232931[test]) ;40.159074
 
@@ -158,7 +158,7 @@ PRINT, N_ELEMENTS(limit_velocity_232931) ;228
 PRINT, limit_velocity_232931
 
 ;highest velocity lines--80-1000 km/s
-limit_e_dens_232931 = WHERE((limit_vel_width_232931 GE 80) AND (limit_p_int GE new_peak_min) AND (limit_vel_width_232931 LE 1000) AND (limit_lw GE 0) AND (limit_sig_p_int GE 0) AND (limit_sig_lw GE 0) AND (ABS(limit_velocity_232931 LE (limit_gamma_232931/limit_wave0_232931) * 3e5)), COMPLEMENT = not_limit_e_dens_232931, count)
+limit_e_dens_232931 = WHERE((limit_vel_width_232931 GE 80) AND (limit_p_int GE new_peak_min) AND (limit_vel_width_232931 LT 1000) AND (limit_lw GE 0) AND (limit_sig_p_int GE 0) AND (limit_sig_lw GE 0) AND (ABS(limit_velocity_232931 LE (limit_gamma_232931/limit_wave0_232931) * 3e5)), COMPLEMENT = not_limit_e_dens_232931, count)
 PRINT, "limit_e_dens_232931--limit_vel_width"
 PRINT, N_ELEMENTS(limit_vel_width_232931[limit_e_dens_232931])
 PRINT, limit_vel_width_232931[limit_e_dens_232931] ;2
@@ -184,7 +184,7 @@ PRINT, N_ELEMENTS(limit_sig_lw[limit_e_dens_232931])
 PRINT, limit_sig_lw[limit_e_dens_232931] ;2
 
 ;70.0-80.0 km/s velocity lines
-limit_70_80_e_dens_232931 = WHERE((limit_vel_width_232931 GE 70.0) AND (limit_p_int GE new_peak_min) AND (limit_vel_width_232931 LE 80.0) AND (limit_lw GE 0.0) AND (limit_sig_p_int GE 0.0) AND (limit_sig_lw GE 0.0) AND (ABS(limit_velocity_232931 LE (limit_gamma_232931/limit_wave0_232931) * 3e5)), COMPLEMENT = not_limit_med_70_80_e_dens_232931, count)
+limit_70_80_e_dens_232931 = WHERE((limit_vel_width_232931 GE 70.0) AND (limit_p_int GE new_peak_min) AND (limit_vel_width_232931 LT 80.0) AND (limit_lw GE 0.0) AND (limit_sig_p_int GE 0.0) AND (limit_sig_lw GE 0.0) AND (ABS(limit_velocity_232931 LE (limit_gamma_232931/limit_wave0_232931) * 3e5)), COMPLEMENT = not_limit_med_70_80_e_dens_232931, count)
 PRINT, "limit_70_80_e_dens_232931--limit_vel_width"
 PRINT, N_ELEMENTS(limit_vel_width_232931[limit_70_80_e_dens_232931])
 PRINT, limit_vel_width_232931[limit_70_80_e_dens_232931] ;18
@@ -210,7 +210,7 @@ PRINT, N_ELEMENTS(limit_sig_lw[limit_70_80_e_dens_232931])
 PRINT, limit_sig_lw[limit_70_80_e_dens_232931] ;18
 
 ;60.0-70.0 km/s velocity lines
-limit_60_70_e_dens_232931 = WHERE((limit_vel_width_232931 GE 60.0) AND (limit_p_int GE new_peak_min) AND (limit_vel_width_232931 LE 70.0) AND (limit_lw GE 0.0) AND (limit_sig_p_int GE 0.0) AND (limit_sig_lw GE 0.0) AND (ABS(limit_velocity_232931 LE (limit_gamma_232931/limit_wave0_232931) * 3e5)), COMPLEMENT = not_limit_60_70_e_dens_232931, count)
+limit_60_70_e_dens_232931 = WHERE((limit_vel_width_232931 GE 60.0) AND (limit_p_int GE new_peak_min) AND (limit_vel_width_232931 LT 70.0) AND (limit_lw GE 0.0) AND (limit_sig_p_int GE 0.0) AND (limit_sig_lw GE 0.0) AND (ABS(limit_velocity_232931 LE (limit_gamma_232931/limit_wave0_232931) * 3e5)), COMPLEMENT = not_limit_60_70_e_dens_232931, count)
 PRINT, "limit_60_70_e_dens_232931--limit_vel_width"
 PRINT, N_ELEMENTS(limit_vel_width_232931[limit_60_70_e_dens_232931])
 PRINT, limit_vel_width_232931[limit_60_70_e_dens_232931] ;38
@@ -236,7 +236,7 @@ PRINT, N_ELEMENTS(limit_sig_lw[limit_60_70_e_dens_232931])
 PRINT, limit_sig_lw[limit_60_70_e_dens_232931] ;38
 
 ;50.0-60.0 km/s velocity lines
-limit_50_60_e_dens_232931 = WHERE((limit_vel_width_232931 GE 50.0) AND (limit_p_int GE new_peak_min) AND (limit_vel_width_232931 LE 60.0) AND (limit_lw GE 0.0) AND (limit_sig_p_int GE 0.0) AND (limit_sig_lw GE 0.0) AND (ABS(limit_velocity_232931 LE (limit_gamma_232931/limit_wave0_232931) * 3e5)), COMPLEMENT = not_limit_50_60_e_dens_232931, count)
+limit_50_60_e_dens_232931 = WHERE((limit_vel_width_232931 GE 50.0) AND (limit_p_int GE new_peak_min) AND (limit_vel_width_232931 LT 60.0) AND (limit_lw GE 0.0) AND (limit_sig_p_int GE 0.0) AND (limit_sig_lw GE 0.0) AND (ABS(limit_velocity_232931 LE (limit_gamma_232931/limit_wave0_232931) * 3e5)), COMPLEMENT = not_limit_50_60_e_dens_232931, count)
 PRINT, "limit_50_60_e_dens_232931--limit_vel_width"
 PRINT, N_ELEMENTS(limit_vel_width_232931[limit_50_60_e_dens_232931])
 PRINT, limit_vel_width_232931[limit_50_60_e_dens_232931] ;46
@@ -262,7 +262,7 @@ PRINT, N_ELEMENTS(limit_sig_lw[limit_50_60_e_dens_232931])
 PRINT, limit_sig_lw[limit_50_60_e_dens_232931] ;46
 
 ;40.0-50.0 km/s velocity lines
-limit_40_50_e_dens_232931 = WHERE((limit_vel_width_232931 GE 40.0) AND (limit_p_int GE new_peak_min) AND (limit_vel_width_232931 LE 50.0) AND (limit_lw GE 0.0) AND (limit_sig_p_int GE 0.0) AND (limit_sig_lw GE 0.0) AND (ABS(limit_velocity_232931 LE (limit_gamma_232931/limit_wave0_232931) * 3e5)), COMPLEMENT = not_limit_40_50_e_dens_232931, count)
+limit_40_50_e_dens_232931 = WHERE((limit_vel_width_232931 GE 40.0) AND (limit_p_int GE new_peak_min) AND (limit_vel_width_232931 LT 50.0) AND (limit_lw GE 0.0) AND (limit_sig_p_int GE 0.0) AND (limit_sig_lw GE 0.0) AND (ABS(limit_velocity_232931 LE (limit_gamma_232931/limit_wave0_232931) * 3e5)), COMPLEMENT = not_limit_40_50_e_dens_232931, count)
 PRINT, "limit_40_50_e_dens_232931--limit_vel_width"
 PRINT, N_ELEMENTS(limit_vel_width_232931[limit_40_50_e_dens_232931])
 PRINT, limit_vel_width_232931[limit_40_50_e_dens_232931] ;124
@@ -474,6 +474,162 @@ TVLCT, [[255], [255], [255]], 1
 
 COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,75], /YLOG, YTICKS = 10, POSITION = [0.32,0.91,0.70,0.92], /TOP, COLOR = 1
 
+;===============================================================================
+PRINT, '80-1000 km/s velocity'
+
+;BYTSCL() TO SHOW UVB OVERPLOT IN BLUE 80-1000 km/s
+
+limit_byte_scale_232931 = BYTSCL(coeff_arr_232931_clean, MIN = 5, MAX = 75, TOP = 254)
+
+PRINT, SIZE(limit_byte_scale_232931[UVB_ind_232931[limit_p_int[limit_e_dens_232931]]]) ;1D 2
+
+limit_byte_scale_232931[UVB_ind_232931[limit_p_int[limit_e_dens_232931]]] = 255
+
+WINDOW, XSIZE = 900, YSIZE = 700
+
+EIS_COLORS, /INTENSITY
+
+TVLCT, rv, gv, bv, /GET
+rv[255] = 255
+gv[255] = 127
+bv[255] = 80
+
+TVLCT, rv, gv, bv
+
+PRINT, SIZE(REFORM(limit_byte_scale_232931)) ;2D 400,1093
+
+PLOT_IMAGE, REFORM(limit_byte_scale_232931), ORIGIN = [SolarX1400_232931[0], SolarY1400_232931[0]], SCALE = [ResX1400_232931, ResY1400_232931], XTITLE = 'Solar X [arcsec]', YTITLE = 'Solar Y [arcsec]', POSITION = [x0,y0,x0+dx,y0+dy], /NORMAL, /NOSCALE
+
+TVLCT, [[255], [255], [255]], 1
+
+COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,75], /YLOG, YTICKS = 10, POSITION = [0.32,0.91,0.70,0.92], /TOP, COLOR = 1
+
+;-------------------------------------------------------------------------------
+
+PRINT, '70-80 km/s velocity'
+
+;BYTSCL() TO SHOW UVB OVERPLOT IN BLUE 70-80 km/s
+
+limit_70_80_byte_scale_232931 = BYTSCL(coeff_arr_232931_clean, MIN = 5, MAX = 75, TOP = 254)
+
+PRINT, SIZE(limit_70_80_byte_scale_232931[UVB_ind_232931[limit_p_int[limit_70_80_e_dens_232931]]]) ;1D 18
+
+limit_70_80_byte_scale_232931[UVB_ind_232931[limit_p_int[limit_70_80_e_dens_232931]]] = 255
+
+WINDOW, XSIZE = 900, YSIZE = 700
+
+EIS_COLORS, /INTENSITY
+
+TVLCT, rv, gv, bv, /GET
+rv[255] = 255
+gv[255] = 0
+bv[255] = 255
+
+TVLCT, rv, gv, bv
+
+PRINT, SIZE(REFORM(limit_70_80_byte_scale_232931)) ;2D 400,1093
+
+PLOT_IMAGE, REFORM(limit_70_80_byte_scale_232931), ORIGIN = [SolarX1400_232931[0], SolarY1400_232931[0]], SCALE = [ResX1400_232931, ResY1400_232931], XTITLE = 'Solar X [arcsec]', YTITLE = 'Solar Y [arcsec]', POSITION = [x0,y0,x0+dx,y0+dy], /NORMAL, /NOSCALE
+
+TVLCT, [[255], [255], [255]], 1
+
+COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,75], /YLOG, YTICKS = 10, POSITION = [0.32,0.91,0.70,0.92], /TOP, COLOR = 1
+
+;-------------------------------------------------------------------------------
+
+PRINT, '60-70 km/s velocity'
+
+;BYTSCL() TO SHOW UVB OVERPLOT IN BLUE 60-70 km/s
+
+limit_60_70_byte_scale_232931 = BYTSCL(coeff_arr_232931_clean, MIN = 5, MAX = 75, TOP = 254)
+
+PRINT, SIZE(limit_60_70_byte_scale_232931[UVB_ind_232931[limit_p_int[limit_60_70_e_dens_232931]]]) ;1D 38
+
+limit_60_70_byte_scale_232931[UVB_ind_232931[limit_p_int[limit_60_70_e_dens_232931]]] = 255
+
+WINDOW, XSIZE = 900, YSIZE = 700
+
+EIS_COLORS, /INTENSITY
+
+TVLCT, rv, gv, bv, /GET
+rv[255] = 138
+gv[255] = 43
+bv[255] = 226
+
+TVLCT, rv, gv, bv
+
+PRINT, SIZE(REFORM(limit_60_70_byte_scale_232931)) ;2D 400,1093
+
+PLOT_IMAGE, REFORM(limit_60_70_byte_scale_232931), ORIGIN = [SolarX1400_232931[0], SolarY1400_232931[0]], SCALE = [ResX1400_232931, ResY1400_232931], XTITLE = 'Solar X [arcsec]', YTITLE = 'Solar Y [arcsec]', POSITION = [x0,y0,x0+dx,y0+dy], /NORMAL, /NOSCALE
+
+TVLCT, [[255], [255], [255]], 1
+
+COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,75], /YLOG, YTICKS = 10, POSITION = [0.32,0.91,0.70,0.92], /TOP, COLOR = 1
+
+;-------------------------------------------------------------------------------
+
+PRINT, '50-60 km/s velocity'
+
+;BYTSCL() TO SHOW UVB OVERPLOT IN BLUE 50-60 km/s
+
+limit_50_60_byte_scale_232931 = BYTSCL(coeff_arr_232931_clean, MIN = 5, MAX = 75, TOP = 254)
+
+PRINT, SIZE(limit_50_60_byte_scale_232931[UVB_ind_232931[limit_p_int[limit_50_60_e_dens_232931]]]) ;1D 46
+
+limit_50_60_byte_scale_232931[UVB_ind_232931[limit_p_int[limit_50_60_e_dens_232931]]] = 255
+
+WINDOW, XSIZE = 900, YSIZE = 700
+
+EIS_COLORS, /INTENSITY
+
+TVLCT, rv, gv, bv, /GET
+rv[255] = 255
+gv[255] = 165
+bv[255] = 0
+
+TVLCT, rv, gv, bv
+
+PRINT, SIZE(REFORM(limit_50_60_byte_scale_232931)) ;2D 400,1093
+
+PLOT_IMAGE, REFORM(limit_50_60_byte_scale_232931), ORIGIN = [SolarX1400_232931[0], SolarY1400_232931[0]], SCALE = [ResX1400_232931, ResY1400_232931], XTITLE = 'Solar X [arcsec]', YTITLE = 'Solar Y [arcsec]', POSITION = [x0,y0,x0+dx,y0+dy], /NORMAL, /NOSCALE
+
+TVLCT, [[255], [255], [255]], 1
+
+COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,75], /YLOG, YTICKS = 10, POSITION = [0.32,0.91,0.70,0.92], /TOP, COLOR = 1
+
+;-------------------------------------------------------------------------------
+
+PRINT, '40-50 km/s velocity'
+
+;BYTSCL() TO SHOW UVB OVERPLOT IN BLUE 40-50 km/s
+
+limit_40_50_byte_scale_232931 = BYTSCL(coeff_arr_232931_clean, MIN = 5, MAX = 75, TOP = 254)
+
+PRINT, SIZE(limit_40_50_byte_scale_232931[UVB_ind_232931[limit_p_int[limit_40_50_e_dens_232931]]]) ;1D 124
+
+limit_40_50_byte_scale_232931[UVB_ind_232931[limit_p_int[limit_40_50_e_dens_232931]]] = 255
+
+WINDOW, XSIZE = 900, YSIZE = 700
+
+EIS_COLORS, /INTENSITY
+
+TVLCT, rv, gv, bv, /GET
+rv[255] = 255
+gv[255] = 105
+bv[255] = 180
+
+TVLCT, rv, gv, bv
+
+PRINT, SIZE(REFORM(limit_40_50_byte_scale_232931)) ;2D 400,1093
+
+PLOT_IMAGE, REFORM(limit_40_50_byte_scale_232931), ORIGIN = [SolarX1400_232931[0], SolarY1400_232931[0]], SCALE = [ResX1400_232931, ResY1400_232931], XTITLE = 'Solar X [arcsec]', YTITLE = 'Solar Y [arcsec]', POSITION = [x0,y0,x0+dx,y0+dy], /NORMAL, /NOSCALE
+
+TVLCT, [[255], [255], [255]], 1
+
+COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,75], /YLOG, YTICKS = 10, POSITION = [0.32,0.91,0.70,0.92], /TOP, COLOR = 1
+
+;===============================================================================
+
 ;save as png
 
 ;WINDOW, XSIZE = 900, YSIZE = 700, RETAIN = 2
@@ -500,6 +656,7 @@ COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,7
 
 !P.FONT = 1
 
+;normal
 SET_PLOT, 'ps'
 DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/232931/intensity_UVB_232931.eps', /ENCAPSULATED
 
@@ -517,6 +674,113 @@ PLOT_IMAGE, REFORM(byte_scale_232931), ORIGIN = [solarx1400_232931[0], solary140
 COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,75], /YLOG, YTICKS = 10, POSITION = [0.35,0.91,0.70,0.92], /TOP, CHARSIZE = 1.4
 
 DEVICE, /CLOSE
+
+;-------------------------------------------------------------------------------
+
+;80-1000 km/s velocity
+SET_PLOT, 'ps'
+DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/232931/intensity_80_1000_UVB_232931.eps', /ENCAPSULATED
+
+EIS_COLORS, /INTENSITY
+
+TVLCT, rv, gv, bv, /GET
+rv[255] = 255
+gv[255] = 0
+bv[255] = 0
+
+TVLCT, rv, gv, bv
+
+PLOT_IMAGE, REFORM(limit_byte_scale_232931), ORIGIN = [SolarX1400_232931[0], SolarY1400_232931[0]], SCALE = [ResX1400_232931, ResY1400_232931], XTITLE = 'Solar X [arcsec]', YTITLE = 'Solar Y [arcsec]', POSITION = [x0,y0,x0+dx,y0+dy], /NORMAL, /NOSCALE, XTHICK = 10, YTHICK = 10, XCHARSIZE = 1.5, YCHARSIZE = 1.5, CHARSIZE = 1.5
+
+COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,75], /YLOG, YTICKS = 10, POSITION = [0.35,0.91,0.70,0.92], /TOP, CHARSIZE = 1.4
+
+DEVICE, /CLOSE
+
+;-------------------------------------------------------------------------------
+
+;70-80 km/s velocity
+SET_PLOT, 'ps'
+DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/232931/intensity_70_80_UVB_232931.eps', /ENCAPSULATED
+
+EIS_COLORS, /INTENSITY
+
+TVLCT, rv, gv, bv, /GET
+rv[255] = 255
+gv[255] = 0
+bv[255] = 0
+
+TVLCT, rv, gv, bv
+
+PLOT_IMAGE, REFORM(limit_70_80_byte_scale_232931), ORIGIN = [SolarX1400_232931[0], SolarY1400_232931[0]], SCALE = [ResX1400_232931, ResY1400_232931], XTITLE = 'Solar X [arcsec]', YTITLE = 'Solar Y [arcsec]', POSITION = [x0,y0,x0+dx,y0+dy], /NORMAL, /NOSCALE, XTHICK = 10, YTHICK = 10, XCHARSIZE = 1.5, YCHARSIZE = 1.5, CHARSIZE = 1.5
+
+COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,75], /YLOG, YTICKS = 10, POSITION = [0.35,0.91,0.70,0.92], /TOP, CHARSIZE = 1.4
+
+DEVICE, /CLOSE
+
+;-------------------------------------------------------------------------------
+
+;60-70 km/s velocity
+SET_PLOT, 'ps'
+DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/232931/intensity_60_70_UVB_232931.eps', /ENCAPSULATED
+
+EIS_COLORS, /INTENSITY
+
+TVLCT, rv, gv, bv, /GET
+rv[255] = 255
+gv[255] = 0
+bv[255] = 0
+
+TVLCT, rv, gv, bv
+
+PLOT_IMAGE, REFORM(limit_60_70_byte_scale_232931), ORIGIN = [SolarX1400_232931[0], SolarY1400_232931[0]], SCALE = [ResX1400_232931, ResY1400_232931], XTITLE = 'Solar X [arcsec]', YTITLE = 'Solar Y [arcsec]', POSITION = [x0,y0,x0+dx,y0+dy], /NORMAL, /NOSCALE, XTHICK = 10, YTHICK = 10, XCHARSIZE = 1.5, YCHARSIZE = 1.5, CHARSIZE = 1.5
+
+COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,75], /YLOG, YTICKS = 10, POSITION = [0.35,0.91,0.70,0.92], /TOP, CHARSIZE = 1.4
+
+DEVICE, /CLOSE
+
+;-------------------------------------------------------------------------------
+
+;50-60 km/s velocity
+SET_PLOT, 'ps'
+DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/232931/intensity_50_60_UVB_232931.eps', /ENCAPSULATED
+
+EIS_COLORS, /INTENSITY
+
+TVLCT, rv, gv, bv, /GET
+rv[255] = 255
+gv[255] = 0
+bv[255] = 0
+
+TVLCT, rv, gv, bv
+
+PLOT_IMAGE, REFORM(limit_50_60_byte_scale_232931), ORIGIN = [SolarX1400_232931[0], SolarY1400_232931[0]], SCALE = [ResX1400_232931, ResY1400_232931], XTITLE = 'Solar X [arcsec]', YTITLE = 'Solar Y [arcsec]', POSITION = [x0,y0,x0+dx,y0+dy], /NORMAL, /NOSCALE, XTHICK = 10, YTHICK = 10, XCHARSIZE = 1.5, YCHARSIZE = 1.5, CHARSIZE = 1.5
+
+COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,75], /YLOG, YTICKS = 10, POSITION = [0.35,0.91,0.70,0.92], /TOP, CHARSIZE = 1.4
+
+DEVICE, /CLOSE
+
+;-------------------------------------------------------------------------------
+
+;40-50 km/s velocity
+SET_PLOT, 'ps'
+DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/232931/intensity_40_50_UVB_232931.eps', /ENCAPSULATED
+
+EIS_COLORS, /INTENSITY
+
+TVLCT, rv, gv, bv, /GET
+rv[255] = 255
+gv[255] = 0
+bv[255] = 0
+
+TVLCT, rv, gv, bv
+
+PLOT_IMAGE, REFORM(limit_40_50_byte_scale_232931), ORIGIN = [SolarX1400_232931[0], SolarY1400_232931[0]], SCALE = [ResX1400_232931, ResY1400_232931], XTITLE = 'Solar X [arcsec]', YTITLE = 'Solar Y [arcsec]', POSITION = [x0,y0,x0+dx,y0+dy], /NORMAL, /NOSCALE, XTHICK = 10, YTHICK = 10, XCHARSIZE = 1.5, YCHARSIZE = 1.5, CHARSIZE = 1.5
+
+COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,75], /YLOG, YTICKS = 10, POSITION = [0.35,0.91,0.70,0.92], /TOP, CHARSIZE = 1.4
+
+DEVICE, /CLOSE
+
+;2+18+38+46+124=228 (all UVBs)
 
 OBJ_DESTROY, dataRast_232931
 OBJ_DESTROY, data1400_232931

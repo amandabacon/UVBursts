@@ -185,6 +185,8 @@ coeff_arr_004121 = DBLARR(4, n_img_004121, n_ypos_004121)
 rfname = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/004121/coeff_arr_004121.sav'
 RESTORE, rfname, /VERBOSE
 
+;get effective and binning spectrograph
+
 oea = 2.10179 ;at 1395 angstrom--cm^2--original effective area
 oasr = 0.02544 ;A/pxl original average spectral resolution
 orig_peak_min = 7 ;from 050945
@@ -210,11 +212,22 @@ PRINT, new_peak_min ;4.4117594
 
 ;velocity conversion
 
-vel_width_004121 = (coeff_arr_004121[2,*,*]/wave0_004121) * 3e5 * sqrt(2)
+vel_width_004121 = (coeff_arr_004121[2,*,*]/wave0_004121) * 3e5 * sqrt(2) ;exponential line width
+
+;PRINT, "vel_width_004121"
+;PRINT, vel_width_004121
 
 ;perform limits
 
 coeff_arr_peak_004121 = coeff_arr_004121[0,*,*]
+
+;PRINT, "coeff_arr_peak_004121"
+;PRINT, coeff_arr_peak_004121
+
+coeff_arr_lw_004121 = coeff_arr_004121[2,*,*]
+
+;PRINT, "coeff_arr_lw_004121"
+;PRINT, coeff_arr_lw_004121
 
 ;PRINT, lambda1394_004121[19:173]
 
@@ -227,7 +240,10 @@ gamma_004121 = MAX([lam2_004121,lam1_004121])
 ;PRINT, gamma_004121
 ;PRINT, (gamma_004121/wave0_004121)
 
-velocity_004121 = ((coeff_arr_004121[1,*,*]-wave0_004121)/wave0_004121) * 3e5 ; from param_maps
+velocity_004121 = ((coeff_arr_004121[1,*,*]-wave0_004121)/wave0_004121) * 3e5 ; from param_maps--doppler shift
+
+;PRINT, "velocity_004121"
+;PRINT, velocity_004121
 
 cut_ind_004121 = WHERE((coeff_arr_peak_004121 GE new_peak_min) AND (vel_width_004121 GE 46) AND (vel_width_004121 LE 1000) AND (ABS(velocity_004121 LE (gamma_004121/wave0_004121) * 3e5)), COMPLEMENT = not_cut_ind_004121, count)
 

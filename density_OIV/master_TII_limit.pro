@@ -50,22 +50,6 @@ limit_60_70_one = limit_60_70_SNR_O_004121[limit_60_70_SNR2_O_004121]
 limit_60_70_t_O_004121 = limit_60_70_SNR_O_004121[limit_60_70_SNR2_O_004121]
 limit_60_70_num_three = WHERE((limit_60_70_t_O_004121 GT 3.0), count, /NULL)
 
-;-------------------------------------------------------------------------------
-
-;PRINT, 'CONDITIONAL ALTERING ARRAY'
-;limit_60_70_t_O_004121[WHERE((limit_60_70_t_O_004121 LT 3.0), count, /NULL)] = 0.0
-;PRINT, limit_60_70_t_O_004121[limit_60_70_t_O_004121] ;0.0000000
-
-;limit_60_70_num_three = WHERE((limit_60_70_SNR_O_004121[limit_60_70_SNR2_O_004121] GT 3.0), count, /NULL)
-
-;limit_60_70_SNR_O_004121[WHERE((limit_60_70_SNR_O_004121[limit_60_70_SNR2_O_004121] LT 3.0), count, /NULL)] = 0.0
-;PRINT, limit_60_70_SNR_O_004121[limit_60_70_SNR_O_004121]
-
-;limit_60_70_O_004121_a = limit_60_70_It_O_004121[limit_60_70_SNR2_O_004121]
-;limit_60_70_O_004121 = limit_60_70_O_004121_a[limit_60_70_num_three]
-;PRINT, limit_60_70_O_004121
-;-------------------------------------------------------------------------------
-
 limit_60_70_num_three = WHERE((limit_60_70_SNR_O_004121[limit_60_70_SNR2_O_004121] GT 3.0), count);, /NULL)
 PRINT, SIZE(limit_60_70_num_three) ;0
 PRINT, limit_60_70_SNR_O_004121[limit_60_70_num_three] ;0.696
