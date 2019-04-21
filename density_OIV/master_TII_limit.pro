@@ -3,7 +3,7 @@
 ;Written by: Amanda Bacon (amandabacon@bennington.edu)
 ;Date: 2019/02/05
 ;FROM Si IV TII CALCULATIONS AND UNCERTAINTIES, AS WELL AS SNRs AND
-;TIIs FROM O IV, TAKE THE RATIO B/W THE RESONANCE SI IV 1394 AND O IV
+;TIIs FROM O IV, TAKE THE RATIO B/W THE RESONANT SI IV 1394 AND O IV
 ;1401 LINE TO GET THE ELECTRON DENSITIES OF THESE O IV EMISSION LINES
 ;IN UVB SPECTRA. (highest velocities and doppler shifts)
 
@@ -45,6 +45,7 @@ limit_70_80_O_004121_a = limit_70_80_It_O_004121[limit_70_80_SNR2_O_004121]
 limit_70_80_O_004121 = limit_70_80_O_004121_a[limit_70_80_num_three]
 
 ;60-70 km/s velocity
+IF limit_60_70_SNR_O_004121[limit_60_70_SNR2_O_004121] NE undefined THEN BEGIN
 limit_60_70_one = limit_60_70_SNR_O_004121[limit_60_70_SNR2_O_004121]
 
 limit_60_70_t_O_004121 = limit_60_70_SNR_O_004121[limit_60_70_SNR2_O_004121]
@@ -56,6 +57,7 @@ PRINT, limit_60_70_SNR_O_004121[limit_60_70_num_three] ;0.696
 
 limit_60_70_O_004121_a = limit_60_70_It_O_004121[limit_60_70_SNR2_O_004121]
 limit_60_70_O_004121 = limit_60_70_O_004121_a[limit_60_70_num_three]
+ENDIF
 
 ;50-60 km/s velocity
 limit_50_60_one = limit_50_60_SNR_O_004121[limit_50_60_SNR2_O_004121]

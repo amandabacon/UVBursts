@@ -244,17 +244,60 @@ p_int = zero[coeff_arr_232931_Siv2_clean]
 sig_lw = sig2[coeff_arr_232931_Siv2_clean]
 lw = two[coeff_arr_232931_Siv2_clean]
 sig_p_int = sig0[coeff_arr_232931_Siv2_clean]
+;===============================================================================
+;introduce limit to parameter values to see how they contribute to
+;electron density
+;from detection_obs#.pro (gamma_232931 & new_peak_min)
+
+rfname2_limit = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/232931/iso_vars_safe_232931.sav'
+RESTORE, rfname2_limit;, /VERBOSE
+
+limit_gamma_232931_Siv = gamma_232931
+limit_wave0_232931_Siv = wave0_232931_Siv
+
+limit_p_int_Siv = zero[coeff_arr_232931_Siv2_clean]
+PRINT, "limit_p_int_Siv"
+PRINT, N_ELEMENTS(limit_p_int_Siv) ;189
+PRINT, limit_p_int_Siv
+
+limit_sig_p_int_Siv = sig0[coeff_arr_232931_Siv2_clean]
+PRINT, "limit_sig_p_int_Siv"
+PRINT, N_ELEMENTS(limit_sig_p_int_Siv) ;189
+PRINT, limit_sig_p_int_Siv
+
+limit_lw_Siv = two[coeff_arr_232931_Siv2_clean]
+PRINT, "limit_lw_Siv"
+PRINT, N_ELEMENTS(limit_lw_Siv) ;189
+PRINT, limit_lw_Siv
+
+limit_sig_lw_Siv = sig2[coeff_arr_232931_Siv2_clean]
+PRINT, "limit_sig_lw_Siv"
+PRINT, N_ELEMENTS(limit_sig_lw_Siv) ;189
+PRINT, limit_sig_lw_Siv
+
+limit_vel_width_232931_Siv = (two[coeff_arr_232931_Siv2_clean]/limit_wave0_232931_Siv) * 3e5 * sqrt(2) ;exponential line width--km*s^-1
+PRINT, "limit_vel_width_232931_Siv"
+PRINT, N_ELEMENTS(limit_vel_width_232931_Siv) ;189
+PRINT, limit_vel_width_232931_Siv
+
+limit_velocity_232931_Siv = ((one[coeff_arr_232931_Siv2_clean]-limit_wave0_232931_Siv)/limit_wave0_232931_Siv) * 3e5 ;doppler shift--km*s^-1, pos-away, neg-toward
+PRINT, "limit_velocity_232931_Siv"
+PRINT, N_ELEMENTS(limit_velocity_232931_Siv) ;189
+PRINT, limit_velocity_232931_Siv
 
 ;calculate total integrated intensity (TII)
 
 It_S_232931 = (sqrt(2.0*!dpi)*p_int*lw) ;total integrated intensity 
-
-PRINT, 'integrated intensity uncertainty'
+PRINT, "It_S_232931"
+PRINT, It_S_232931
+PRINT, SIZE(It_S_232931) ;1D,189
 
 ;calculate integrated intensity uncertainty
 
 int_int_unc_S_232931 = [2.0*!dpi*((p_int)^2*(sig_lw)^2+(lw)^2*(sig_p_int)^2)]^0.5
+PRINT, "int_int_unc_S_232931"
 PRINT, int_int_unc_S_232931
+PRINT, SIZE(int_int_unc_S_232931) ;1D,189
 
 PRINT, 'SNR by dividing total integrated intensity by uncertainty'
 
@@ -317,7 +360,7 @@ PRINT, 'MEAN: ', MOM[0] & PRINT, 'VARIANCE: ', MOM[1] & PRINT, 'SKEWNESS: ', MOM
 ;save parameters from FOR loop
 
 sfname2 = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/232931/S_IV/sigma_coeff_arr_232931_Siv.sav'
-SAVE, coeff_232931_Siv2, inst_unc_S_232931, sigma_coeff, sigma_coeff_arr, coeff_arr_232931_Siv2, It_S_232931, int_int_unc_S_232931, SNR_0_S_232931, SNR_S_232931, SNR2_S_232931, FILENAME = sfname2
+SAVE, coeff_232931_Siv2, inst_unc_S_232931, sigma_coeff, sigma_coeff_arr, coeff_arr_232931_Siv2, It_S_232931, int_int_unc_S_232931, SNR_0_S_232931, SNR_S_232931, SNR2_S_232931, limit_vel_width_232931_Siv, limit_velocity_232931_Siv, p_int, sig_lw, lw, sig_p_int, FILENAME = sfname2
 
 OBJ_DESTROY, dataRast_232931_Siv
 OBJ_DESTROY, data1400_232931_Siv

@@ -3,13 +3,15 @@
 ;Written by: Amanda Bacon (amandabacon@bennington.edu)
 ;Date: 2019/01/24
 ;FROM Si IV TII CALCULATIONS AND UNCERTAINTIES, AS WELL AS SNRs AND
-;TIIs FROM O IV, TAKE THE RATIO B/W THE RESONANCE SI IV 1394 AND O IV
+;TIIs FROM O IV, TAKE THE RATIO B/W THE RESONANT SI IV 1394 AND O IV
 ;1401 LINE TO GET THE ELECTRON DENSITIES OF THESE O IV EMISSION LINES
 ;IN UVB SPECTRA.
 
 ;PRO master_TII
 
 ;SNR O IV vals
+
+PRINT, 'continue'
 
 ;restore O IV 004121 TIIs, SNRs, etc.
 
@@ -29,6 +31,8 @@ PRINT, SIZE(num_three) ;90
 O_004121_a = It_O_004121[SNR2_O_004121] ;It = total integrated intensity
 O_004121 = O_004121_a[num_three]
 
+PRINT, 'continue'
+
 ;restore O IV 050655 TIIs, SNRs, etc.
 
 rfname2_SNR = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/050655/raster/O_IV/sigma_coeff_arr_050655_Oiv.sav'
@@ -45,6 +49,8 @@ PRINT, SIZE(num2_three) ;66
 
 O_050655_a = It_O_050655[SNR2_O_050655]
 O_050655 = O_050655_a[num2_three]
+
+PRINT, 'continue'
 
 ;restore O IV 050655_1 TIIs, SNRs, etc.
 
@@ -63,6 +69,8 @@ PRINT, SIZE(num3_three) ;109
 O_050655_1_a = It_O_050655_1[SNR2_O_050655_1]
 O_050655_1 = O_050655_1_a[num3_three]
 
+PRINT, 'continue'
+
 ;restore O IV 052046 TIIs, SNRs, etc.
 
 rfname4_SNR = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/052046/O_IV/sigma_coeff_arr_052046_Oiv.sav'
@@ -79,6 +87,8 @@ PRINT, SIZE(num4_three) ;1231
 
 O_052046_a = It_O_052046[SNR2_O_052046]
 O_052046 = O_052046_a[num4_three]
+
+PRINT, 'continue'
 
 ;restore O IV 061606 TIIs, SNRs, etc.
 
@@ -97,6 +107,8 @@ PRINT, SIZE(num5_three) ;108
 O_061606_a = It_O_061606[SNR2_O_061606]
 O_061606 = O_061606_a[num5_three]
 
+PRINT, 'continue'
+
 ;restore O IV 114951 TIIs, SNRs, etc.
 
 rfname6_SNR = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/114951/O_IV/sigma_coeff_arr_114951_Oiv.sav'
@@ -113,6 +125,8 @@ PRINT, SIZE(num6_three) ;160
 
 O_114951_a = It_O_114951[SNR2_O_114951]
 O_114951 = O_114951_a[num6_three]
+
+PRINT, 'continue'
 
 ;restore O IV 122033 TIIs, SNRs, etc.
 
@@ -131,6 +145,8 @@ PRINT, SIZE(num7_three) ;399
 O_122033_a = It_O_122033[SNR2_O_122033]
 O_122033 = O_122033_a[num7_three]
 
+PRINT, 'continue'
+
 ;restore O IV 160806 TIIs, SNRs, etc.
 
 rfname8_SNR = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/160806/O_IV/sigma_coeff_arr_160806_Oiv.sav'
@@ -147,6 +163,8 @@ PRINT, SIZE(num8_three) ;157
 
 O_160806_a = It_O_160806[SNR2_O_160806]
 O_160806 = O_160806_a[num8_three]
+
+PRINT, 'continue'
 
 ;restore O IV 163205 TIIs, SNRs, etc.
 
@@ -165,7 +183,7 @@ PRINT, SIZE(num9_three) ;71
 O_163205_a = It_O_163205[SNR2_O_163205]
 O_163205 = O_163205_a[num9_three]
 
-;PRINT, 'pass'
+PRINT, 'continue'
 
 ;restore O IV 174905 TIIs, SNRs, etc.
 
@@ -184,6 +202,8 @@ PRINT, SIZE(num10_three) ;244
 O_174905_a = It_O_174905[SNR2_O_174905]
 O_174905 = O_174905_a[num10_three]
 
+PRINT, 'continue'
+
 ;restore O IV 181205 TIIs, SNRs, etc.
 
 rfname11_SNR = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/181205/O_IV/sigma_coeff_arr_181205_Oiv.sav'
@@ -200,6 +220,8 @@ PRINT, SIZE(num11_three) ;71
 
 O_181205_a = It_O_181205[SNR2_O_181205]
 O_181205 = O_181205_a[num11_three]
+
+PRINT, 'continue'
 
 ;restore O IV 201925 TIIs, SNRs, etc.
 
@@ -218,6 +240,8 @@ PRINT, SIZE(num12_three) ;59
 O_201925_a = It_O_201925[SNR2_O_201925]
 O_201925 = O_201925_a[num12_three]
 
+PRINT, 'continue'
+
 ;restore O IV 201925_1 TIIs, SNRs, etc.
 
 rfname13_SNR = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/201925/raster1/O_IV/sigma_coeff_arr_201925_1_Oiv.sav'
@@ -234,6 +258,8 @@ PRINT, SIZE(num13_three) ;58
 
 O_201925_1_a = It_O_201925_1[SNR2_O_201925_1]
 O_201925_1 = O_201925_1_a[num13_three]
+
+PRINT, 'continue'
 
 ;restore O IV 203906 TIIs, SNRs, etc.
 
@@ -252,6 +278,8 @@ PRINT, SIZE(num14_three) ;340
 O_203906_a = It_O_203906[SNR2_O_203906]
 O_203906 = O_203906_a[num14_three]
 
+PRINT, 'continue'
+
 ;restore O IV 215426 TIIs, SNRs, etc.
 
 rfname15_SNR = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/215426/O_IV/sigma_coeff_arr_215426_Oiv.sav'
@@ -268,6 +296,8 @@ PRINT, SIZE(num15_three) ;26
 
 O_215426_a = It_O_215426[SNR2_O_215426]
 O_215426 = O_215426_a[num15_three]
+
+PRINT, 'continue'
 
 ;restore O IV 232931 TIIs, SNRs, etc.
 
@@ -466,8 +496,8 @@ Si_232931 = Si_232931_a[num16_three]
 ;retrieve Si IV 1393.8/O IV ratios
 
 ratio_004121 = (Si_004121/O_004121)
-;PRINT, "ratio_004121"
-;PRINT, ratio_004121
+PRINT, "ratio_004121"
+PRINT, ratio_004121
 ratio_050655 = (Si_050655/O_050655)
 ratio_050655_1 = (Si_050655_1/O_050655_1)
 ratio_052046 = (Si_052046/O_052046)
@@ -493,8 +523,8 @@ RESTORE, rfname_dens
 ;get size of ratios over each observation
 
 TII_004121_s = N_ELEMENTS(ratio_004121)
-;PRINT, "TII_004121_s"
-;PRINT, TII_004121_s ;90
+PRINT, "TII_004121_s"
+PRINT, TII_004121_s ;90
 TII_050655_s = N_ELEMENTS(ratio_050655)
 TII_050655_1_s = N_ELEMENTS(ratio_050655_1)
 TII_052046_s = N_ELEMENTS(ratio_052046)
@@ -1585,6 +1615,18 @@ PLOT, x_hist, D_hist, PSYM = 10, XTITLE = "Electron Density (cm^-3)", YTITLE = "
 TVLCT, [[0],[0],[0]], 1
 SET_PLOT, 'ps'
 DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/density_OIV/elec_dens_histogram.eps', /ENCAPSULATED
+
+PLOT, x_hist, D_hist, PSYM = 10, XTITLE = "Electron Density (cm^-3)", YTITLE = "Frequency", POSITION = [x0,y0,x0+dx,y0+dy], COLOR = 1, XCHARSIZE = 1.5, YCHARSIZE = 1.5, CHARSIZE = 1.5, XSTYLE = 1, THICK = 4, XTHICK = 10, YTHICK = 10
+
+DEVICE, /CLOSE
+
+;save as ps
+
+!P.FONT = 1
+
+TVLCT, [[255],[255],[255]], 1
+SET_PLOT, 'ps'
+DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/density_OIV/elec_dens_histogram_pres.eps', /ENCAPSULATED
 
 PLOT, x_hist, D_hist, PSYM = 10, XTITLE = "Electron Density (cm^-3)", YTITLE = "Frequency", POSITION = [x0,y0,x0+dx,y0+dy], COLOR = 1, XCHARSIZE = 1.5, YCHARSIZE = 1.5, CHARSIZE = 1.5, XSTYLE = 1, THICK = 4, XTHICK = 10, YTHICK = 10
 

@@ -290,8 +290,34 @@ PRINT, "limit_velocity_052046_Oiv"
 PRINT, N_ELEMENTS(limit_velocity_052046_Oiv) ;2660
 PRINT, limit_velocity_052046_Oiv
 
+;all velocity lines--40-1000 km/s
+limit_all_e_dens_052046_Oiv = WHERE((limit_vel_width_052046_Oiv GE 40) AND (limit_p_int_Oiv GE new_peak_min) AND (limit_vel_width_052046_Oiv LE 1000) AND (limit_lw_Oiv GE 0) AND (limit_sig_p_int_Oiv GE 0) AND (limit_sig_lw_Oiv GE 0) AND (ABS(limit_velocity_052046_Oiv LE (limit_gamma_052046_Oiv/limit_wave0_052046_Oiv) * 3e5)), COMPLEMENT = not_limit_Oiv_all_e_dens_052046, count, /NULL)
+PRINT, "limit_all_e_dens_052046_Oiv--limit_vel_width_Oiv"
+PRINT, N_ELEMENTS(limit_vel_width_052046_Oiv[limit_all_e_dens_052046_Oiv])
+PRINT, limit_vel_width_052046_Oiv[limit_all_e_dens_052046_Oiv] ;430
+
+PRINT, "limit_all_e_dens_052046_Oiv--limit_p_int_Oiv"
+PRINT, N_ELEMENTS(limit_p_int_Oiv[limit_all_e_dens_052046_Oiv])
+PRINT, limit_p_int_Oiv[limit_all_e_dens_052046_Oiv] ;430
+
+PRINT, "limit_all_e_dens_052046_Oiv--limit_velocity_Oiv"
+PRINT, N_ELEMENTS(limit_velocity_052046_Oiv[limit_all_e_dens_052046_Oiv])
+PRINT, ABS(limit_velocity_052046_Oiv[limit_all_e_dens_052046_Oiv]) ;430
+
+PRINT, "limit_all_e_dens_052046_Oiv--limit_lw_Oiv"
+PRINT, N_ELEMENTS(limit_lw_Oiv[limit_all_e_dens_052046_Oiv])
+PRINT, limit_lw_Oiv[limit_all_e_dens_052046_Oiv] ;430
+
+PRINT, "limit_all_e_dens_052046_Oiv--limit_sig_p_int_Oiv"
+PRINT, N_ELEMENTS(limit_sig_p_int_Oiv[limit_all_e_dens_052046_Oiv])
+PRINT, limit_sig_p_int_Oiv[limit_all_e_dens_052046_Oiv] ;430
+
+PRINT, "limit_all_e_dens_052046_Oiv--limit_sig_lw_Oiv"
+PRINT, N_ELEMENTS(limit_sig_lw_Oiv[limit_all_e_dens_052046_Oiv])
+PRINT, limit_sig_lw_Oiv[limit_all_e_dens_052046_Oiv] ;430
+
 ;highest velocity lines--80-1000 km/s
-limit_e_dens_052046_Oiv = WHERE((limit_vel_width_052046_Oiv GE 80) AND (limit_p_int_Oiv GE new_peak_min) AND (limit_vel_width_052046_Oiv LE 1000) AND (limit_lw_Oiv GE 0) AND (limit_sig_p_int_Oiv GE 0) AND (limit_sig_lw_Oiv GE 0) AND (ABS(limit_velocity_052046_Oiv LE (limit_gamma_052046_Oiv/limit_wave0_052046_Oiv) * 3e5)), COMPLEMENT = not_limit_Oiv_e_dens_052046, count)
+limit_e_dens_052046_Oiv = WHERE((limit_vel_width_052046_Oiv GE 80) AND (limit_p_int_Oiv GE new_peak_min) AND (limit_vel_width_052046_Oiv LE 1000) AND (limit_lw_Oiv GE 0) AND (limit_sig_p_int_Oiv GE 0) AND (limit_sig_lw_Oiv GE 0) AND (ABS(limit_velocity_052046_Oiv LE (limit_gamma_052046_Oiv/limit_wave0_052046_Oiv) * 3e5)), COMPLEMENT = not_limit_Oiv_e_dens_052046, count, /NULL)
 PRINT, "limit_e_dens_052046_Oiv--limit_vel_width_Oiv"
 PRINT, N_ELEMENTS(limit_vel_width_052046_Oiv[limit_e_dens_052046_Oiv])
 PRINT, limit_vel_width_052046_Oiv[limit_e_dens_052046_Oiv] ;10
@@ -317,7 +343,7 @@ PRINT, N_ELEMENTS(limit_sig_lw_Oiv[limit_e_dens_052046_Oiv])
 PRINT, limit_sig_lw_Oiv[limit_e_dens_052046_Oiv] ;10
 
 ;70-80 km/s velocity lines
-limit_70_80_e_dens_052046_Oiv = WHERE((limit_vel_width_052046_Oiv GE 70) AND (limit_p_int_Oiv GE new_peak_min) AND (limit_vel_width_052046_Oiv LE 80) AND (limit_lw_Oiv GE 0) AND (limit_sig_p_int_Oiv GE 0) AND (limit_sig_lw_Oiv GE 0) AND (ABS(limit_velocity_052046_Oiv LE (limit_gamma_052046_Oiv/limit_wave0_052046_Oiv) * 3e5)), COMPLEMENT = not_limit_Oiv_70_80_e_dens_052046, count)
+limit_70_80_e_dens_052046_Oiv = WHERE((limit_vel_width_052046_Oiv GE 70) AND (limit_p_int_Oiv GE new_peak_min) AND (limit_vel_width_052046_Oiv LE 80) AND (limit_lw_Oiv GE 0) AND (limit_sig_p_int_Oiv GE 0) AND (limit_sig_lw_Oiv GE 0) AND (ABS(limit_velocity_052046_Oiv LE (limit_gamma_052046_Oiv/limit_wave0_052046_Oiv) * 3e5)), COMPLEMENT = not_limit_Oiv_70_80_e_dens_052046, count, /NULL)
 PRINT, "limit_70_80_e_dens_052046_Oiv--limit_vel_width_Oiv"
 PRINT, N_ELEMENTS(limit_vel_width_052046_Oiv[limit_70_80_e_dens_052046_Oiv])
 PRINT, limit_vel_width_052046_Oiv[limit_70_80_e_dens_052046_Oiv] ;19
@@ -343,7 +369,7 @@ PRINT, N_ELEMENTS(limit_sig_lw_Oiv[limit_70_80_e_dens_052046_Oiv])
 PRINT, limit_sig_lw_Oiv[limit_70_80_e_dens_052046_Oiv] ;19
 
 ;60-70 km/s velocity lines
-limit_60_70_e_dens_052046_Oiv = WHERE((limit_vel_width_052046_Oiv GE 60) AND (limit_p_int_Oiv GE new_peak_min) AND (limit_vel_width_052046_Oiv LE 70) AND (limit_lw_Oiv GE 0) AND (limit_sig_p_int_Oiv GE 0) AND (limit_sig_lw_Oiv GE 0) AND (ABS(limit_velocity_052046_Oiv LE (limit_gamma_052046_Oiv/limit_wave0_052046_Oiv) * 3e5)), COMPLEMENT = not_limit_Oiv_60_70_e_dens_052046, count)
+limit_60_70_e_dens_052046_Oiv = WHERE((limit_vel_width_052046_Oiv GE 60) AND (limit_p_int_Oiv GE new_peak_min) AND (limit_vel_width_052046_Oiv LE 70) AND (limit_lw_Oiv GE 0) AND (limit_sig_p_int_Oiv GE 0) AND (limit_sig_lw_Oiv GE 0) AND (ABS(limit_velocity_052046_Oiv LE (limit_gamma_052046_Oiv/limit_wave0_052046_Oiv) * 3e5)), COMPLEMENT = not_limit_Oiv_60_70_e_dens_052046, count, /NULL)
 PRINT, "limit_60_70_e_dens_052046_Oiv--limit_vel_width_Oiv"
 PRINT, N_ELEMENTS(limit_vel_width_052046_Oiv[limit_60_70_e_dens_052046_Oiv])
 PRINT, limit_vel_width_052046_Oiv[limit_60_70_e_dens_052046_Oiv] ;67
@@ -369,7 +395,7 @@ PRINT, N_ELEMENTS(limit_sig_lw_Oiv[limit_60_70_e_dens_052046_Oiv])
 PRINT, limit_sig_lw_Oiv[limit_60_70_e_dens_052046_Oiv] ;67
 
 ;50-60 km/s velocity lines
-limit_50_60_e_dens_052046_Oiv = WHERE((limit_vel_width_052046_Oiv GE 50) AND (limit_p_int_Oiv GE new_peak_min) AND (limit_vel_width_052046_Oiv LE 60) AND (limit_lw_Oiv GE 0) AND (limit_sig_p_int_Oiv GE 0) AND (limit_sig_lw_Oiv GE 0) AND (ABS(limit_velocity_052046_Oiv LE (limit_gamma_052046_Oiv/limit_wave0_052046_Oiv) * 3e5)), COMPLEMENT = not_limit_Oiv_50_60_e_dens_052046, count)
+limit_50_60_e_dens_052046_Oiv = WHERE((limit_vel_width_052046_Oiv GE 50) AND (limit_p_int_Oiv GE new_peak_min) AND (limit_vel_width_052046_Oiv LE 60) AND (limit_lw_Oiv GE 0) AND (limit_sig_p_int_Oiv GE 0) AND (limit_sig_lw_Oiv GE 0) AND (ABS(limit_velocity_052046_Oiv LE (limit_gamma_052046_Oiv/limit_wave0_052046_Oiv) * 3e5)), COMPLEMENT = not_limit_Oiv_50_60_e_dens_052046, count, /NULL)
 PRINT, "limit_50_60_e_dens_052046_Oiv--limit_vel_width_Oiv"
 PRINT, N_ELEMENTS(limit_vel_width_052046_Oiv[limit_50_60_e_dens_052046_Oiv])
 PRINT, limit_vel_width_052046_Oiv[limit_50_60_e_dens_052046_Oiv] ;100
@@ -395,7 +421,7 @@ PRINT, N_ELEMENTS(limit_sig_lw_Oiv[limit_50_60_e_dens_052046_Oiv])
 PRINT, limit_sig_lw_Oiv[limit_50_60_e_dens_052046_Oiv] ;100
 
 ;40-50 km/s velocity lines
-limit_40_50_e_dens_052046_Oiv = WHERE((limit_vel_width_052046_Oiv GE 40) AND (limit_p_int_Oiv GE new_peak_min) AND (limit_vel_width_052046_Oiv LE 50) AND (limit_lw_Oiv GE 0) AND (limit_sig_p_int_Oiv GE 0) AND (limit_sig_lw_Oiv GE 0) AND (ABS(limit_velocity_052046_Oiv LE (limit_gamma_052046_Oiv/limit_wave0_052046_Oiv) * 3e5)), COMPLEMENT = not_limit_Oiv_40_50_e_dens_052046, count)
+limit_40_50_e_dens_052046_Oiv = WHERE((limit_vel_width_052046_Oiv GE 40) AND (limit_p_int_Oiv GE new_peak_min) AND (limit_vel_width_052046_Oiv LE 50) AND (limit_lw_Oiv GE 0) AND (limit_sig_p_int_Oiv GE 0) AND (limit_sig_lw_Oiv GE 0) AND (ABS(limit_velocity_052046_Oiv LE (limit_gamma_052046_Oiv/limit_wave0_052046_Oiv) * 3e5)), COMPLEMENT = not_limit_Oiv_40_50_e_dens_052046, count, /NULL)
 PRINT, "limit_40_50_e_dens_052046_Oiv--limit_vel_width_Oiv"
 PRINT, N_ELEMENTS(limit_vel_width_052046_Oiv[limit_40_50_e_dens_052046_Oiv])
 PRINT, limit_vel_width_052046_Oiv[limit_40_50_e_dens_052046_Oiv] ;234
@@ -422,183 +448,190 @@ PRINT, limit_sig_lw_Oiv[limit_40_50_e_dens_052046_Oiv] ;234
 
 ;calculate total integrated intensity (TII)
 
-limit_It_O_052046 = (sqrt(2.0*!dpi)*limit_p_int_Oiv[limit_e_dens_052046_Oiv]*limit_lw_Oiv[limit_e_dens_052046_Oiv]) ;total integrated intensity 
-PRINT, "limit_It_O_052046"
-PRINT, limit_It_O_052046
+;limit_It_O_052046 = (sqrt(2.0*!dpi)*limit_p_int_Oiv[limit_e_dens_052046_Oiv]*limit_lw_Oiv[limit_e_dens_052046_Oiv]) ;total integrated intensity 
+;PRINT, "limit_It_O_052046"
+;PRINT, limit_It_O_052046
 
 ;calculate integrated intensity uncertainty
 
-limit_int_int_unc_O_052046 = [2.0*!dpi*((limit_p_int_Oiv[limit_e_dens_052046_Oiv])^2*(limit_sig_lw_Oiv[limit_e_dens_052046_Oiv])^2+(limit_lw_Oiv[limit_e_dens_052046_Oiv])^2*(limit_sig_p_int_Oiv[limit_e_dens_052046_Oiv])^2)]^0.5
-PRINT, "limit_int_int_unc_O_052046"
-PRINT, limit_int_int_unc_O_052046
+;limit_int_int_unc_O_052046 = [2.0*!dpi*((limit_p_int_Oiv[limit_e_dens_052046_Oiv])^2*(limit_sig_lw_Oiv[limit_e_dens_052046_Oiv])^2+(limit_lw_Oiv[limit_e_dens_052046_Oiv])^2*(limit_sig_p_int_Oiv[limit_e_dens_052046_Oiv])^2)]^0.5
+;PRINT, "limit_int_int_unc_O_052046"
+;PRINT, limit_int_int_unc_O_052046
 
-PRINT, 'SNR by dividing total integrated intensity by uncertainty'
+;PRINT, 'SNR by dividing total integrated intensity by uncertainty'
 
 ;calculate SNR
 
-limit_SNR_0_O_052046 = (limit_It_O_052046/limit_int_int_unc_O_052046)
-PRINT, "limit_SNR_0_O_052046"
-PRINT, limit_SNR_0_O_052046
+;limit_SNR_0_O_052046 = (limit_It_O_052046/limit_int_int_unc_O_052046)
+;PRINT, "limit_SNR_0_O_052046"
+;PRINT, limit_SNR_0_O_052046
 
-PRINT, 'SNR rearrangement'
+;PRINT, 'SNR rearrangement'
 
 ;calculate SNR after rearrangement
 
-neg = -0.5
-limit_SNR_O_052046 = (((limit_sig_p_int_Oiv[limit_e_dens_052046_Oiv])^2/(limit_p_int_Oiv[limit_e_dens_052046_Oiv])^2)+((limit_sig_lw_Oiv[limit_e_dens_052046_Oiv])^2/(limit_lw_Oiv[limit_e_dens_052046_Oiv])^2))^neg
-PRINT, "limit_SNR_O_052046"
-PRINT, limit_SNR_O_052046
+;neg = -0.5
+;limit_SNR_O_052046 = (((limit_sig_p_int_Oiv[limit_e_dens_052046_Oiv])^2/(limit_p_int_Oiv[limit_e_dens_052046_Oiv])^2)+((limit_sig_lw_Oiv[limit_e_dens_052046_Oiv])^2/(limit_lw_Oiv[limit_e_dens_052046_Oiv])^2))^neg
+;PRINT, "limit_SNR_O_052046"
+;PRINT, limit_SNR_O_052046
 
-PRINT, SIZE(limit_SNR_O_052046) ;10
-limit_SNR2_O_052046 = WHERE((limit_SNR_O_052046 LT 100), count) ;removes infinity
-PRINT, SIZE(limit_SNR_O_052046[limit_SNR2_O_052046]) ;10
+;PRINT, SIZE(limit_SNR_O_052046) ;10
+;limit_SNR2_O_052046 = WHERE((limit_SNR_O_052046 LT 100), count) ;removes infinity
+;PRINT, SIZE(limit_SNR_O_052046[limit_SNR2_O_052046]) ;10
 
 ;calculate total integrated intensity (TII) 70-80 km/s
 
-limit_70_80_It_O_052046 = (sqrt(2.0*!dpi)*limit_p_int_Oiv[limit_70_80_e_dens_052046_Oiv]*limit_lw_Oiv[limit_70_80_e_dens_052046_Oiv]) ;total integrated intensity 
-PRINT, "limit_70_80_It_O_052046"
-PRINT, limit_70_80_It_O_052046
+;limit_70_80_It_O_052046 = (sqrt(2.0*!dpi)*limit_p_int_Oiv[limit_70_80_e_dens_052046_Oiv]*limit_lw_Oiv[limit_70_80_e_dens_052046_Oiv]) ;total integrated intensity 
+;PRINT, "limit_70_80_It_O_052046"
+;PRINT, limit_70_80_It_O_052046
 
 ;calculate integrated intensity uncertainty 70-80 km/s
 
-limit_70_80_int_int_unc_O_052046 = [2.0*!dpi*((limit_p_int_Oiv[limit_70_80_e_dens_052046_Oiv])^2*(limit_sig_lw_Oiv[limit_70_80_e_dens_052046_Oiv])^2+(limit_lw_Oiv[limit_70_80_e_dens_052046_Oiv])^2*(limit_sig_p_int_Oiv[limit_70_80_e_dens_052046_Oiv])^2)]^0.5
-PRINT, "limit_70_80_int_int_unc_O_052046"
-PRINT, limit_70_80_int_int_unc_O_052046
+;limit_70_80_int_int_unc_O_052046 = [2.0*!dpi*((limit_p_int_Oiv[limit_70_80_e_dens_052046_Oiv])^2*(limit_sig_lw_Oiv[limit_70_80_e_dens_052046_Oiv])^2+(limit_lw_Oiv[limit_70_80_e_dens_052046_Oiv])^2*(limit_sig_p_int_Oiv[limit_70_80_e_dens_052046_Oiv])^2)]^0.5
+;PRINT, "limit_70_80_int_int_unc_O_052046"
+;PRINT, limit_70_80_int_int_unc_O_052046
 
-PRINT, 'SNR by dividing total integrated intensity by uncertainty'
+;PRINT, 'SNR by dividing total integrated intensity by uncertainty'
 
 ;calculate SNR 70-80 km/s
 
-limit_70_80_SNR_0_O_052046 = (limit_70_80_It_O_052046/limit_70_80_int_int_unc_O_052046)
-PRINT, "limit_70_80_SNR_0_O_052046"
-PRINT, limit_70_80_SNR_0_O_052046
+;limit_70_80_SNR_0_O_052046 = (limit_70_80_It_O_052046/limit_70_80_int_int_unc_O_052046)
+;PRINT, "limit_70_80_SNR_0_O_052046"
+;PRINT, limit_70_80_SNR_0_O_052046
 
-PRINT, 'SNR rearrangement'
+;PRINT, 'SNR rearrangement'
 
 ;calculate SNR after rearrangement 70-80 km/s
 
-neg = -0.5
-limit_70_80_SNR_O_052046 = (((limit_sig_p_int_Oiv[limit_70_80_e_dens_052046_Oiv])^2/(limit_p_int_Oiv[limit_70_80_e_dens_052046_Oiv])^2)+((limit_sig_lw_Oiv[limit_70_80_e_dens_052046_Oiv])^2/(limit_lw_Oiv[limit_70_80_e_dens_052046_Oiv])^2))^neg
-PRINT, "limit_70_80_SNR_O_052046"
-PRINT, limit_70_80_SNR_O_052046
+;neg = -0.5
+;limit_70_80_SNR_O_052046 = (((limit_sig_p_int_Oiv[limit_70_80_e_dens_052046_Oiv])^2/(limit_p_int_Oiv[limit_70_80_e_dens_052046_Oiv])^2)+((limit_sig_lw_Oiv[limit_70_80_e_dens_052046_Oiv])^2/(limit_lw_Oiv[limit_70_80_e_dens_052046_Oiv])^2))^neg
+;PRINT, "limit_70_80_SNR_O_052046"
+;PRINT, limit_70_80_SNR_O_052046
 
-PRINT, SIZE(limit_70_80_SNR_O_052046) ;19
-limit_70_80_SNR2_O_052046 = WHERE((limit_70_80_SNR_O_052046 LT 100), count) ;removes infinity
-PRINT, SIZE(limit_70_80_SNR_O_052046[limit_70_80_SNR2_O_052046]) ;19
+;PRINT, SIZE(limit_70_80_SNR_O_052046) ;19
+;limit_70_80_SNR2_O_052046 = WHERE((limit_70_80_SNR_O_052046 LT 100), count) ;removes infinity
+;PRINT, SIZE(limit_70_80_SNR_O_052046[limit_70_80_SNR2_O_052046]) ;19
 
 ;calculate total integrated intensity (TII) 60-70 km/s
 
-limit_60_70_It_O_052046 = (sqrt(2.0*!dpi)*limit_p_int_Oiv[limit_60_70_e_dens_052046_Oiv]*limit_lw_Oiv[limit_60_70_e_dens_052046_Oiv]) ;total integrated intensity 
-PRINT, "limit_60_70_It_O_052046"
-PRINT, limit_60_70_It_O_052046
+;limit_60_70_It_O_052046 = (sqrt(2.0*!dpi)*limit_p_int_Oiv[limit_60_70_e_dens_052046_Oiv]*limit_lw_Oiv[limit_60_70_e_dens_052046_Oiv]) ;total integrated intensity 
+;PRINT, "limit_60_70_It_O_052046"
+;PRINT, limit_60_70_It_O_052046
 
 ;calculate integrated intensity uncertainty 60-70 km/s
 
-limit_60_70_int_int_unc_O_052046 = [2.0*!dpi*((limit_p_int_Oiv[limit_60_70_e_dens_052046_Oiv])^2*(limit_sig_lw_Oiv[limit_60_70_e_dens_052046_Oiv])^2+(limit_lw_Oiv[limit_60_70_e_dens_052046_Oiv])^2*(limit_sig_p_int_Oiv[limit_60_70_e_dens_052046_Oiv])^2)]^0.5
-PRINT, "limit_60_70_int_int_unc_O_052046"
-PRINT, limit_60_70_int_int_unc_O_052046
+;limit_60_70_int_int_unc_O_052046 = [2.0*!dpi*((limit_p_int_Oiv[limit_60_70_e_dens_052046_Oiv])^2*(limit_sig_lw_Oiv[limit_60_70_e_dens_052046_Oiv])^2+(limit_lw_Oiv[limit_60_70_e_dens_052046_Oiv])^2*(limit_sig_p_int_Oiv[limit_60_70_e_dens_052046_Oiv])^2)]^0.5
+;PRINT, "limit_60_70_int_int_unc_O_052046"
+;PRINT, limit_60_70_int_int_unc_O_052046
 
-PRINT, 'SNR by dividing total integrated intensity by uncertainty'
+;PRINT, 'SNR by dividing total integrated intensity by uncertainty'
 
 ;calculate SNR 60-70 km/s
 
-limit_60_70_SNR_0_O_052046 = (limit_60_70_It_O_052046/limit_60_70_int_int_unc_O_052046)
-PRINT, "limit_60_70_SNR_0_O_052046"
-PRINT, limit_60_70_SNR_0_O_052046
+;limit_60_70_SNR_0_O_052046 = (limit_60_70_It_O_052046/limit_60_70_int_int_unc_O_052046)
+;PRINT, "limit_60_70_SNR_0_O_052046"
+;PRINT, limit_60_70_SNR_0_O_052046
 
-PRINT, 'SNR rearrangement'
+;PRINT, 'SNR rearrangement'
 
 ;calculate SNR after rearrangement 60-70 km/s
 
-neg = -0.5
-limit_60_70_SNR_O_052046 = (((limit_sig_p_int_Oiv[limit_60_70_e_dens_052046_Oiv])^2/(limit_p_int_Oiv[limit_60_70_e_dens_052046_Oiv])^2)+((limit_sig_lw_Oiv[limit_60_70_e_dens_052046_Oiv])^2/(limit_lw_Oiv[limit_60_70_e_dens_052046_Oiv])^2))^neg
-PRINT, "limit_60_70_SNR_O_052046"
-PRINT, limit_60_70_SNR_O_052046
+;neg = -0.5
+;limit_60_70_SNR_O_052046 = (((limit_sig_p_int_Oiv[limit_60_70_e_dens_052046_Oiv])^2/(limit_p_int_Oiv[limit_60_70_e_dens_052046_Oiv])^2)+((limit_sig_lw_Oiv[limit_60_70_e_dens_052046_Oiv])^2/(limit_lw_Oiv[limit_60_70_e_dens_052046_Oiv])^2))^neg
+;PRINT, "limit_60_70_SNR_O_052046"
+;PRINT, limit_60_70_SNR_O_052046
 
-PRINT, SIZE(limit_60_70_SNR_O_052046) ;67
-limit_60_70_SNR2_O_052046 = WHERE((limit_60_70_SNR_O_052046 LT 100), count) ;removes infinity
-PRINT, SIZE(limit_60_70_SNR_O_052046[limit_60_70_SNR2_O_052046]) ;67
+;PRINT, SIZE(limit_60_70_SNR_O_052046) ;67
+;limit_60_70_SNR2_O_052046 = WHERE((limit_60_70_SNR_O_052046 LT 100), count) ;removes infinity
+;PRINT, SIZE(limit_60_70_SNR_O_052046[limit_60_70_SNR2_O_052046]) ;67
 
 ;calculate total integrated intensity (TII) 50-60 km/s
 
-limit_50_60_It_O_052046 = (sqrt(2.0*!dpi)*limit_p_int_Oiv[limit_50_60_e_dens_052046_Oiv]*limit_lw_Oiv[limit_50_60_e_dens_052046_Oiv]) ;total integrated intensity 
-PRINT, "limit_50_60_It_O_052046"
-PRINT, limit_50_60_It_O_052046
+;limit_50_60_It_O_052046 = (sqrt(2.0*!dpi)*limit_p_int_Oiv[limit_50_60_e_dens_052046_Oiv]*limit_lw_Oiv[limit_50_60_e_dens_052046_Oiv]) ;total integrated intensity 
+;PRINT, "limit_50_60_It_O_052046"
+;PRINT, limit_50_60_It_O_052046
 
 ;calculate integrated intensity uncertainty 50-60 km/s
 
-limit_50_60_int_int_unc_O_052046 = [2.0*!dpi*((limit_p_int_Oiv[limit_50_60_e_dens_052046_Oiv])^2*(limit_sig_lw_Oiv[limit_50_60_e_dens_052046_Oiv])^2+(limit_lw_Oiv[limit_50_60_e_dens_052046_Oiv])^2*(limit_sig_p_int_Oiv[limit_50_60_e_dens_052046_Oiv])^2)]^0.5
-PRINT, "limit_50_60_int_int_unc_O_052046"
-PRINT, limit_50_60_int_int_unc_O_052046
+;limit_50_60_int_int_unc_O_052046 = [2.0*!dpi*((limit_p_int_Oiv[limit_50_60_e_dens_052046_Oiv])^2*(limit_sig_lw_Oiv[limit_50_60_e_dens_052046_Oiv])^2+(limit_lw_Oiv[limit_50_60_e_dens_052046_Oiv])^2*(limit_sig_p_int_Oiv[limit_50_60_e_dens_052046_Oiv])^2)]^0.5
+;PRINT, "limit_50_60_int_int_unc_O_052046"
+;PRINT, limit_50_60_int_int_unc_O_052046
 
-PRINT, 'SNR by dividing total integrated intensity by uncertainty'
+;PRINT, 'SNR by dividing total integrated intensity by uncertainty'
 
 ;calculate SNR 50-60 km/s
 
-limit_50_60_SNR_0_O_052046 = (limit_50_60_It_O_052046/limit_50_60_int_int_unc_O_052046)
-PRINT, "limit_50_60_SNR_0_O_052046"
-PRINT, limit_50_60_SNR_0_O_052046
+;limit_50_60_SNR_0_O_052046 = (limit_50_60_It_O_052046/limit_50_60_int_int_unc_O_052046)
+;PRINT, "limit_50_60_SNR_0_O_052046"
+;PRINT, limit_50_60_SNR_0_O_052046
 
-PRINT, 'SNR rearrangement'
+;PRINT, 'SNR rearrangement'
 
 ;calculate SNR after rearrangement 50-60 km/s
 
-neg = -0.5
-limit_50_60_SNR_O_052046 = (((limit_sig_p_int_Oiv[limit_50_60_e_dens_052046_Oiv])^2/(limit_p_int_Oiv[limit_50_60_e_dens_052046_Oiv])^2)+((limit_sig_lw_Oiv[limit_50_60_e_dens_052046_Oiv])^2/(limit_lw_Oiv[limit_50_60_e_dens_052046_Oiv])^2))^neg
-PRINT, "limit_50_60_SNR_O_052046"
-PRINT, limit_50_60_SNR_O_052046
+;neg = -0.5
+;limit_50_60_SNR_O_052046 = (((limit_sig_p_int_Oiv[limit_50_60_e_dens_052046_Oiv])^2/(limit_p_int_Oiv[limit_50_60_e_dens_052046_Oiv])^2)+((limit_sig_lw_Oiv[limit_50_60_e_dens_052046_Oiv])^2/(limit_lw_Oiv[limit_50_60_e_dens_052046_Oiv])^2))^neg
+;PRINT, "limit_50_60_SNR_O_052046"
+;PRINT, limit_50_60_SNR_O_052046
 
-PRINT, SIZE(limit_50_60_SNR_O_052046) ;100
-limit_50_60_SNR2_O_052046 = WHERE((limit_50_60_SNR_O_052046 LT 100), count) ;removes infinity
-PRINT, SIZE(limit_50_60_SNR_O_052046[limit_50_60_SNR2_O_052046]) ;100
+;PRINT, SIZE(limit_50_60_SNR_O_052046) ;100
+;limit_50_60_SNR2_O_052046 = WHERE((limit_50_60_SNR_O_052046 LT 100), count) ;removes infinity
+;PRINT, SIZE(limit_50_60_SNR_O_052046[limit_50_60_SNR2_O_052046]) ;100
 
 ;calculate total integrated intensity (TII) 40-50 km/s
 
-limit_40_50_It_O_052046 = (sqrt(2.0*!dpi)*limit_p_int_Oiv[limit_40_50_e_dens_052046_Oiv]*limit_lw_Oiv[limit_40_50_e_dens_052046_Oiv]) ;total integrated intensity 
-PRINT, "limit_40_50_It_O_052046"
-PRINT, limit_40_50_It_O_052046
+;limit_40_50_It_O_052046 = (sqrt(2.0*!dpi)*limit_p_int_Oiv[limit_40_50_e_dens_052046_Oiv]*limit_lw_Oiv[limit_40_50_e_dens_052046_Oiv]) ;total integrated intensity 
+;PRINT, "limit_40_50_It_O_052046"
+;PRINT, limit_40_50_It_O_052046
 
 ;calculate integrated intensity uncertainty 40-50 km/s
 
-limit_40_50_int_int_unc_O_052046 = [2.0*!dpi*((limit_p_int_Oiv[limit_40_50_e_dens_052046_Oiv])^2*(limit_sig_lw_Oiv[limit_40_50_e_dens_052046_Oiv])^2+(limit_lw_Oiv[limit_40_50_e_dens_052046_Oiv])^2*(limit_sig_p_int_Oiv[limit_40_50_e_dens_052046_Oiv])^2)]^0.5
-PRINT, "limit_40_50_int_int_unc_O_052046"
-PRINT, limit_40_50_int_int_unc_O_052046
+;limit_40_50_int_int_unc_O_052046 = [2.0*!dpi*((limit_p_int_Oiv[limit_40_50_e_dens_052046_Oiv])^2*(limit_sig_lw_Oiv[limit_40_50_e_dens_052046_Oiv])^2+(limit_lw_Oiv[limit_40_50_e_dens_052046_Oiv])^2*(limit_sig_p_int_Oiv[limit_40_50_e_dens_052046_Oiv])^2)]^0.5
+;PRINT, "limit_40_50_int_int_unc_O_052046"
+;PRINT, limit_40_50_int_int_unc_O_052046
 
-PRINT, 'SNR by dividing total integrated intensity by uncertainty'
+;PRINT, 'SNR by dividing total integrated intensity by uncertainty'
 
 ;calculate SNR 40-50 km/s
 
-limit_40_50_SNR_0_O_052046 = (limit_40_50_It_O_052046/limit_40_50_int_int_unc_O_052046)
-PRINT, "limit_40_50_SNR_0_O_052046"
-PRINT, limit_40_50_SNR_0_O_052046
+;limit_40_50_SNR_0_O_052046 = (limit_40_50_It_O_052046/limit_40_50_int_int_unc_O_052046)
+;PRINT, "limit_40_50_SNR_0_O_052046"
+;PRINT, limit_40_50_SNR_0_O_052046
 
-PRINT, 'SNR rearrangement'
+;PRINT, 'SNR rearrangement'
 
 ;calculate SNR after rearrangement 40-50 km/s
 
-neg = -0.5
-limit_40_50_SNR_O_052046 = (((limit_sig_p_int_Oiv[limit_40_50_e_dens_052046_Oiv])^2/(limit_p_int_Oiv[limit_40_50_e_dens_052046_Oiv])^2)+((limit_sig_lw_Oiv[limit_40_50_e_dens_052046_Oiv])^2/(limit_lw_Oiv[limit_40_50_e_dens_052046_Oiv])^2))^neg
-PRINT, "limit_40_50_SNR_O_052046"
-PRINT, limit_40_50_SNR_O_052046
+;neg = -0.5
+;limit_40_50_SNR_O_052046 = (((limit_sig_p_int_Oiv[limit_40_50_e_dens_052046_Oiv])^2/(limit_p_int_Oiv[limit_40_50_e_dens_052046_Oiv])^2)+((limit_sig_lw_Oiv[limit_40_50_e_dens_052046_Oiv])^2/(limit_lw_Oiv[limit_40_50_e_dens_052046_Oiv])^2))^neg
+;PRINT, "limit_40_50_SNR_O_052046"
+;PRINT, limit_40_50_SNR_O_052046
 
-PRINT, SIZE(limit_40_50_SNR_O_052046) ;234
-limit_40_50_SNR2_O_052046 = WHERE((limit_40_50_SNR_O_052046 LT 100), count) ;removes infinity
-PRINT, SIZE(limit_40_50_SNR_O_052046[limit_40_50_SNR2_O_052046]) ;234
+;PRINT, SIZE(limit_40_50_SNR_O_052046) ;234
+;limit_40_50_SNR2_O_052046 = WHERE((limit_40_50_SNR_O_052046 LT 100), count) ;removes infinity
+;PRINT, SIZE(limit_40_50_SNR_O_052046[limit_40_50_SNR2_O_052046]) ;234
 
 ;save parameters from FOR loop
 
 sfname2_limit = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/052046/O_IV/limit_sigma_coeff_arr_052046_Oiv.sav'
-SAVE, limit_e_dens_052046_Oiv, limit_It_O_052046, limit_int_int_unc_O_052046, limit_SNR_0_O_052046, limit_SNR_O_052046, limit_SNR2_O_052046, limit_70_80_e_dens_052046_Oiv, limit_70_80_It_O_052046, limit_70_80_int_int_unc_O_052046, limit_70_80_SNR_0_O_052046, limit_70_80_SNR_O_052046, limit_70_80_SNR2_O_052046,limit_60_70_e_dens_052046_Oiv, limit_60_70_It_O_052046, limit_60_70_int_int_unc_O_052046, limit_60_70_SNR_0_O_052046, limit_60_70_SNR_O_052046, limit_60_70_SNR2_O_052046,limit_50_60_e_dens_052046_Oiv, limit_50_60_It_O_052046, limit_50_60_int_int_unc_O_052046, limit_50_60_SNR_0_O_052046, limit_50_60_SNR_O_052046, limit_50_60_SNR2_O_052046, limit_40_50_e_dens_052046_Oiv, limit_40_50_It_O_052046, limit_40_50_int_int_unc_O_052046, limit_40_50_SNR_0_O_052046, limit_40_50_SNR_O_052046, limit_40_50_SNR2_O_052046, FILENAME = sfname2_limit
+SAVE, limit_all_e_dens_052046_Oiv, limit_e_dens_052046_Oiv, limit_70_80_e_dens_052046_Oiv, limit_60_70_e_dens_052046_Oiv, limit_50_60_e_dens_052046_Oiv, limit_40_50_e_dens_052046_Oiv, limit_vel_width_052046_Oiv, limit_velocity_052046_Oiv, p_int, sig_lw, lw, sig_p_int, FILENAME = sfname2_limit
+
+;limit_e_dens_052046_Oiv, limit_It_O_052046, limit_int_int_unc_O_052046, limit_SNR_0_O_052046, limit_SNR_O_052046, limit_SNR2_O_052046, limit_70_80_e_dens_052046_Oiv, limit_70_80_It_O_052046, limit_70_80_int_int_unc_O_052046, limit_70_80_SNR_0_O_052046, limit_70_80_SNR_O_052046, limit_70_80_SNR2_O_052046,limit_60_70_e_dens_052046_Oiv, limit_60_70_It_O_052046, limit_60_70_int_int_unc_O_052046, limit_60_70_SNR_0_O_052046, limit_60_70_SNR_O_052046, limit_60_70_SNR2_O_052046,limit_50_60_e_dens_052046_Oiv, limit_50_60_It_O_052046, limit_50_60_int_int_unc_O_052046, limit_50_60_SNR_0_O_052046, limit_50_60_SNR_O_052046, limit_50_60_SNR2_O_052046, limit_40_50_e_dens_052046_Oiv, limit_40_50_It_O_052046, limit_40_50_int_int_unc_O_052046, limit_40_50_SNR_0_O_052046, limit_40_50_SNR_O_052046, limit_40_50_SNR2_O_052046
 
 ;===============================================================================
 ;calculate total integrated intensity (TII)
 
 It_O_052046 = (sqrt(2.0*!dpi)*p_int*lw) ;total integrated intensity 
+PRINT, "It_O_052046"
+PRINT, It_O_052046
+PRINT, SIZE(It_O_052046) ;1D,2660
 
 ;calculate integrated intensity uncertainty
 
 int_int_unc_O_052046 = [2.0*!dpi*((p_int)^2*(sig_lw)^2+(lw)^2*(sig_p_int)^2)]^0.5
+PRINT, "int_int_unc_O_052046"
 PRINT, int_int_unc_O_052046
+PRINT, SIZE(int_int_unc_O_052046) ;1D,2660
 
 PRINT, 'SNR by dividing total integrated intensity by uncertainty'
 

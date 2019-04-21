@@ -245,16 +245,104 @@ sig_lw = sig2[coeff_arr_004121_Siv2_clean]
 lw = two[coeff_arr_004121_Siv2_clean]
 sig_p_int = sig0[coeff_arr_004121_Siv2_clean]
 
+;===============================================================================
+;for Wheaton College's Women in STEM Conference
+
+WINDOW, XSIZE = 900, YSIZE = 700
+PLOT, lambda1403_004121_Siv[185:310], cut_004121_Siv[185:310], XSTYLE = 1
+
+!P.FONT = 1
+
+TVLCT, [[255],[255],[255]], 1
+SET_PLOT, 'ps'
+DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/004121/S_IV/siv.eps', /ENCAPSULATED
+
+PLOT, lambda1403_004121_Siv[185:310], cut_004121_Siv[185:310], XCHARSIZE = 1.5, YCHARSIZE = 1.5, CHARSIZE = 1.5, XSTYLE = 1, THICK = 4, POSITION = [x0,y0,x0+dx,y0+dy], COLOR = 1, XTHICK = 10, YTHICK = 10
+
+DEVICE, /CLOSE
+;===============================================================================
+
+;===============================================================================
+;introduce limit to parameter values to see how they contribute to
+;electron density
+;from detection_obs#.pro (gamma_004121 & new_peak_min)
+
+rfname2_limit = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/004121/iso_vars_safe_004121.sav'
+RESTORE, rfname2_limit;, /VERBOSE
+
+limit_gamma_004121_Siv = gamma_004121
+limit_wave0_004121_Siv = wave0_004121_Siv
+
+limit_p_int_Siv = zero[coeff_arr_004121_Siv2_clean]
+PRINT, "limit_p_int_Siv"
+PRINT, N_ELEMENTS(limit_p_int_Siv) ;421
+PRINT, limit_p_int_Siv
+
+limit_sig_p_int_Siv = sig0[coeff_arr_004121_Siv2_clean]
+PRINT, "limit_sig_p_int_Siv"
+PRINT, N_ELEMENTS(limit_sig_p_int_Siv) ;421
+PRINT, limit_sig_p_int_Siv
+
+limit_lw_Siv = two[coeff_arr_004121_Siv2_clean]
+PRINT, "limit_lw_Siv"
+PRINT, N_ELEMENTS(limit_lw_Siv) ;421
+PRINT, limit_lw_Siv
+
+limit_sig_lw_Siv = sig2[coeff_arr_004121_Siv2_clean]
+PRINT, "limit_sig_lw_Siv"
+PRINT, N_ELEMENTS(limit_sig_lw_Siv) ;421
+PRINT, limit_sig_lw_Siv
+
+limit_vel_width_004121_Siv = (two[coeff_arr_004121_Siv2_clean]/limit_wave0_004121_Siv) * 3e5 * sqrt(2) ;exponential line width--km*s^-1
+PRINT, "limit_vel_width_004121_Siv"
+PRINT, N_ELEMENTS(limit_vel_width_004121_Siv) ;421
+PRINT, limit_vel_width_004121_Siv
+
+limit_velocity_004121_Siv = ((one[coeff_arr_004121_Siv2_clean]-limit_wave0_004121_Siv)/limit_wave0_004121_Siv) * 3e5 ;doppler shift--km*s^-1, pos-away, neg-toward
+PRINT, "limit_velocity_004121_Siv"
+PRINT, N_ELEMENTS(limit_velocity_004121_Siv) ;421
+PRINT, limit_velocity_004121_Siv
+
+;all velocity lines--40-1000 km/s
+limit_all_e_dens_004121_Siv = WHERE((limit_vel_width_004121_Siv GE 40) AND (limit_p_int_Siv GE new_peak_min) AND (limit_vel_width_004121_Siv LE 1000) AND (limit_lw_Siv GE 0) AND (limit_sig_p_int_Siv GE 0) AND (limit_sig_lw_Siv GE 0) AND (ABS(limit_velocity_004121_Siv LE (limit_gamma_004121_Siv/limit_wave0_004121_Siv) * 3e5)), COMPLEMENT = not_limit_Siv_all_e_dens_004121, count, /NULL)
+PRINT, "limit_all_e_dens_004121_Siv--limit_vel_width_Siv"
+PRINT, N_ELEMENTS(limit_vel_width_004121_Siv[limit_all_e_dens_004121_Siv])
+PRINT, limit_vel_width_004121_Siv[limit_all_e_dens_004121_Siv] ;0
+
+PRINT, "limit_all_e_dens_004121_Siv--limit_p_int_Siv"
+PRINT, N_ELEMENTS(limit_p_int_Siv[limit_all_e_dens_004121_Siv])
+PRINT, limit_p_int_Siv[limit_all_e_dens_004121_Siv] ;0
+
+;REMOVE ABS() B/C NULL
+PRINT, "limit_all_e_dens_004121_Siv--limit_velocity_Siv"
+PRINT, N_ELEMENTS(limit_velocity_004121_Siv[limit_all_e_dens_004121_Siv])
+PRINT, limit_velocity_004121_Siv[limit_all_e_dens_004121_Siv] ;0
+
+PRINT, "limit_all_e_dens_004121_Siv--limit_lw_Siv"
+PRINT, N_ELEMENTS(limit_lw_Siv[limit_all_e_dens_004121_Siv])
+PRINT, limit_lw_Siv[limit_all_e_dens_004121_Siv] ;0
+
+PRINT, "limit_all_e_dens_004121_Siv--limit_sig_p_int_Siv"
+PRINT, N_ELEMENTS(limit_sig_p_int_Siv[limit_all_e_dens_004121_Siv])
+PRINT, limit_sig_p_int_Siv[limit_all_e_dens_004121_Siv] ;0
+
+PRINT, "limit_all_e_dens_004121_Siv--limit_sig_lw_Siv"
+PRINT, N_ELEMENTS(limit_sig_lw_Siv[limit_all_e_dens_004121_Siv])
+PRINT, limit_sig_lw_Siv[limit_all_e_dens_004121_Siv] ;0
+
 ;calculate total integrated intensity (TII)
 
 It_S_004121 = (sqrt(2.0*!dpi)*p_int*lw) ;total integrated intensity 
-
-PRINT, 'integrated intensity uncertainty'
+PRINT, "It_S_004121"
+PRINT, It_S_004121
+PRINT, SIZE(It_S_004121) ;1D,421
 
 ;calculate integrated intensity uncertainty
 
 int_int_unc_S_004121 = [2.0*!dpi*((p_int)^2*(sig_lw)^2+(lw)^2*(sig_p_int)^2)]^0.5
+PRINT, "int_int_unc_S_004121"
 PRINT, int_int_unc_S_004121
+PRINT, SIZE(int_int_unc_S_004121) ;1D,421
 
 PRINT, 'SNR by dividing total integrated intensity by uncertainty'
 
@@ -314,7 +402,7 @@ PRINT, 'MEAN: ', MOM[0] & PRINT, 'VARIANCE: ', MOM[1] & PRINT, 'SKEWNESS: ', MOM
 ;save parameters from FOR loop
 
 sfname2 = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/004121/S_IV/sigma_coeff_arr_004121_Siv.sav'
-SAVE, coeff_004121_Siv2, inst_unc_S_004121, sigma_coeff, sigma_coeff_arr, coeff_arr_004121_Siv2, It_S_004121, int_int_unc_S_004121, SNR_0_S_004121, SNR_S_004121, SNR2_S_004121, FILENAME = sfname2
+SAVE, coeff_004121_Siv2, inst_unc_S_004121, sigma_coeff, sigma_coeff_arr, coeff_arr_004121_Siv2, It_S_004121, int_int_unc_S_004121, SNR_0_S_004121, SNR_S_004121, SNR2_S_004121, limit_all_e_dens_004121_Siv, limit_vel_width_004121_Siv, limit_velocity_004121_Siv, p_int, sig_lw, lw, sig_p_int, FILENAME = sfname2
 
 OBJ_DESTROY, dataRast_004121_Siv
 OBJ_DESTROY, data1400_004121_Siv

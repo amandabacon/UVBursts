@@ -3,12 +3,13 @@
 ;Written by: Amanda Bacon (amandabacon@bennington.edu)
 ;Date: 2018/09/15
 ;USING SI IV 1394 LINE, APPLY 4-PARAMETER SINGLE GAUSSIAN FIT (SGF) TO
-;EACH SPECTRA OVER 400 STEP RASTER TO MAKE A SCATTER PLOT OF PEAK
-;INTENSITY VS LINE WIDTH OF APPLY A CUT IN 4-D PARAMETER SPACE TO GET UVB POPULATION REGION
+;EACH SPECTRA OVER 400-STEP RASTER TO MAKE A SCATTER PLOT OF PEAK
+;INTENSITY VS LINE WIDTH AND APPLY A CUT IN 4-D PARAMETER SPACE TO GET
+;UVB POPULATION REGION. THIS CODE IS USED TO DETECT UV BURSTS.
 
-;PRO detection_163205
+PRO detection_163205
 
-;load the data
+;load the data (http://iris.lmsal.com/search/)
 
 IRast_163205 = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/AR11974/20140215_163205/iris_l2_20140215_163205_3800258296_raster_t000_r00000.fits'
 
@@ -152,33 +153,33 @@ coeff_arr_163205 = DBLARR(4, n_img_163205, n_ypos_163205)
 
 ;FOR loop with cut array and coeff_arr_163205 above
 
-;TIC
-;FOR i = 0, n_img_163205-1 DO BEGIN
-;	FOR j = 0, n_ypos_163205-1 DO BEGIN
-;		PLOT, lambda1394_163205[19:173], nspectraRast1394_163205[*,j,i], XRANGE = [1391.3, 1396.2], TITLE = 'AR11974_163205 Gaussian Fit', XTITLE = 'Wavelength', YTITLE = 'Intensity'
-;		CATCH, Error_status
-;		IF Error_status NE 0 THEN BEGIN
-;		PRINT, 'ERROR INDEX: ', Error_status
-;		PRINT, 'ERROR MSG: ', !ERROR_STATE.MSG
-;		ENDIF
-;		YFIT_163205 = MPFITPEAK(lambda1394_163205[19:173], nspectraRast1394_163205[*,j,i], coeff_163205, NTERMS = 4, STATUS = status, ERRMSG = errmsg)
-;		IF STATUS LE 0 THEN message, errmsg
-;		OPLOT, lambda1394_163205[19:173], YFIT_163205, COLOR = 170, LINESTYLE = 2, THICK = 5
+TIC
+FOR i = 0, n_img_163205-1 DO BEGIN
+	FOR j = 0, n_ypos_163205-1 DO BEGIN
+		PLOT, lambda1394_163205[19:173], nspectraRast1394_163205[*,j,i], XRANGE = [1391.3, 1396.2], TITLE = 'AR11974_163205 Gaussian Fit', XTITLE = 'Wavelength', YTITLE = 'Intensity'
+		CATCH, Error_status
+		IF Error_status NE 0 THEN BEGIN
+		PRINT, 'ERROR INDEX: ', Error_status
+		PRINT, 'ERROR MSG: ', !ERROR_STATE.MSG
+		ENDIF
+		YFIT_163205 = MPFITPEAK(lambda1394_163205[19:173], nspectraRast1394_163205[*,j,i], coeff_163205, NTERMS = 4, STATUS = status, ERRMSG = errmsg)
+		IF STATUS LE 0 THEN message, errmsg
+		OPLOT, lambda1394_163205[19:173], YFIT_163205, COLOR = 170, LINESTYLE = 2, THICK = 5
 ;		WAIT, 0.05 ;chance to see fits
-;		coeff_arr_163205[*,i,j] = coeff_163205
-;		CATCH, Error_status
-;		IF Error_status NE 0 THEN BEGIN
-;		PRINT, 'ERROR INDEX: ', Error_status
-;		PRINT, 'ERROR MSG: ', !ERROR_STATE.MSG
-;		ENDIF 
-;	ENDFOR
-;ENDFOR
-;TOC ;Time elapsed: ~39.09 min
+		coeff_arr_163205[*,i,j] = coeff_163205
+		CATCH, Error_status
+		IF Error_status NE 0 THEN BEGIN
+		PRINT, 'ERROR INDEX: ', Error_status
+		PRINT, 'ERROR MSG: ', !ERROR_STATE.MSG
+		ENDIF 
+	ENDFOR
+ENDFOR
+TOC ;Time elapsed: ~39.09 min
 
 ;save parameters from nested FOR loop
 
-;sfname = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/163205/coeff_arr_163205.sav'
-;SAVE, coeff_avg_163205, coeff_163205, spectraRast1394_163205, nspectraRast1394_163205, coeff_arr_163205, wave0_163205, FILENAME = sfname
+sfname = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/163205/coeff_arr_163205.sav'
+SAVE, coeff_avg_163205, coeff_163205, spectraRast1394_163205, nspectraRast1394_163205, coeff_arr_163205, wave0_163205, FILENAME = sfname
 
 ;restore coeff_arr_163205
 
@@ -253,24 +254,24 @@ OPLOT, psym = 3, vel_width_163205[cut_ind_163205], coeff_arr_peak_163205[cut_ind
 
 ;save as png
 
-;TVLCT, [[0], [0], [0]], 1
-;!P.BACKGROUND = 1
-;WINDOW, XSIZE = 900, YSIZE = 700, RETAIN = 2
-;TVLCT, [[255], [255], [255]], 0
-;PLOT, psym = 3, vel_width_163205, coeff_arr_163205[0,*,*], XTITLE = 'Line Width [km*s^-1]', YTITLE = 'Peak Instensity [Arb. Units]', TITLE = 'Scatter Plot of Intensity vs Width AR11974_163205', /XLOG, /YLOG, XRANGE = [10e-3,10e6], POSITION = [x0,y0,x0+dx,y0+dy], COLOR = 0, XTHICK = 4, YTHICK = 4, XSTYLE = 1, THICK = 4, CHARSIZE = 1.8, XCHARSIZE = 1.45, YCHARSIZE = 1.45
-;screenshot = TVRD(TRUE = 1)
-;WRITE_PNG, '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/163205/intensity_plot_163205.png', screenshot
+TVLCT, [[0], [0], [0]], 1
+!P.BACKGROUND = 1
+WINDOW, XSIZE = 900, YSIZE = 700, RETAIN = 2
+TVLCT, [[255], [255], [255]], 0
+PLOT, psym = 3, vel_width_163205, coeff_arr_163205[0,*,*], XTITLE = 'Line Width [km*s^-1]', YTITLE = 'Peak Instensity [Arb. Units]', TITLE = 'Scatter Plot of Intensity vs Width AR11974_163205', /XLOG, /YLOG, XRANGE = [10e-3,10e6], POSITION = [x0,y0,x0+dx,y0+dy], COLOR = 0, XTHICK = 4, YTHICK = 4, XSTYLE = 1, THICK = 4, CHARSIZE = 1.8, XCHARSIZE = 1.45, YCHARSIZE = 1.45
+screenshot = TVRD(TRUE = 1)
+WRITE_PNG, '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/163205/intensity_plot_163205.png', screenshot
 
-;TVLCT, [[0], [0], [0]], 1
-;!P.BACKGROUND = 1
+TVLCT, [[0], [0], [0]], 1
+!P.BACKGROUND = 1
 
-;WINDOW, XSIZE = 900, YSIZE = 700, RETAIN = 2
-;TVLCT, [[255], [255], [255]], 0
-;PLOT, psym = 3, vel_width_163205[not_cut_ind_163205], coeff_arr_peak_163205[not_cut_ind_163205], XTITLE = 'Line Width [km*s^-1]', YTITLE = 'Peak Instensity [Arb. Units]', TITLE = 'Scatter Plot of Intensity vs Width AR11974_163205', /XLOG, /YLOG, XRANGE = [10e-3,10e6], POSITION = [x0,y0,x0+dx,y0+dy], COLOR = 0, XTHICK = 4, YTHICK = 4, XSTYLE = 1, THICK = 4, CHARSIZE = 1.8, XCHARSIZE = 1.45, YCHARSIZE = 1.45
-;TVLCT, [[255], [0], [0]], 255
-;OPLOT, psym = 3, vel_width_163205[cut_ind_163205], coeff_arr_peak_163205[cut_ind_163205], COLOR = 255
-;screenshot = TVRD(TRUE = 1)
-;WRITE_PNG, '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/163205/cut_intensity_plot_163205.png', screenshot
+WINDOW, XSIZE = 900, YSIZE = 700, RETAIN = 2
+TVLCT, [[255], [255], [255]], 0
+PLOT, psym = 3, vel_width_163205[not_cut_ind_163205], coeff_arr_peak_163205[not_cut_ind_163205], XTITLE = 'Line Width [km*s^-1]', YTITLE = 'Peak Instensity [Arb. Units]', TITLE = 'Scatter Plot of Intensity vs Width AR11974_163205', /XLOG, /YLOG, XRANGE = [10e-3,10e6], POSITION = [x0,y0,x0+dx,y0+dy], COLOR = 0, XTHICK = 4, YTHICK = 4, XSTYLE = 1, THICK = 4, CHARSIZE = 1.8, XCHARSIZE = 1.45, YCHARSIZE = 1.45
+TVLCT, [[255], [0], [0]], 255
+OPLOT, psym = 3, vel_width_163205[cut_ind_163205], coeff_arr_peak_163205[cut_ind_163205], COLOR = 255
+screenshot = TVRD(TRUE = 1)
+WRITE_PNG, '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/163205/cut_intensity_plot_163205.png', screenshot
 
 ;save as ps
 
