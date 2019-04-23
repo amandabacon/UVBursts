@@ -316,7 +316,7 @@ RESTORE, rfname_vel
 ;RESTORE, rfname16_vel
 
 ;===============================================================================
-;load diagnostic model
+;load electron density diagnostic model
 
 rfname_dens = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/density_OIV/si4_o4_dens_diagnostic.sav'
 RESTORE, rfname_dens
@@ -327,7 +327,7 @@ RESTORE, rfname_dens
 array_004121_O = [[It_O_004121],[int_int_unc_O_004121],[limit_vel_width_004121_Oiv],[limit_velocity_004121_Oiv],[SNR_O_004121],[testt]]
 PRINT, SIZE(array_004121_O) ;2D,464
 
-array_004121_Si = [[It_Si_004121],[int_int_unc_Si_004121],[limit_vel_width_004121],[limit_velocity_004121],[UVB_ind_004121]];,[p_int],[sig_lw],[lw],[sig_p_int]]
+array_004121_Si = [[It_Si_004121],[int_int_unc_Si_004121],[limit_vel_width_004121],[limit_velocity_004121],[UVB_ind_004121]]
 PRINT, SIZE(array_004121_Si) ;2D,471
 
 array_004121_S = [[It_S_004121],[int_int_unc_S_004121],[limit_vel_width_004121_Siv],[limit_velocity_004121_Siv],[SNR_S_004121]]
@@ -498,6 +498,9 @@ PRINT, SIZE(array_004121_S) ;2D,421
 ;array_232931_S = [[It_S_232931],[int_int_unc_S_232931],[limit_vel_width_232931_Siv],[limit_velocity_232931_Siv],[SNR_S_232931]]
 ;PRINT, SIZE(array_232931_S) ;2D,189
 
+;===============================================================================
+;below is how to index the arrays:
+
 ;PRINT, array_232931_S
 ;PRINT, '1st item in all arrays'
 ;PRINT, array_232931_S[0,*]
@@ -513,75 +516,62 @@ PRINT, SIZE(array_004121_S) ;2D,421
 ;PRINT, array_232931_S[*,4]
 
 ;===============================================================================
-;WHERE function testing  
+;WHERE function testing for UVB maps
 
-;test = array_232931_Si[*,0]
-;test1 = WHERE((test GE 3.0), count)
-;PRINT, count ;213
-;PRINT, test[test1]
+vel_width = array_004121_Si[*,2]
+uvb_index = array_004121_Si[*,4]
 
-;test11 = array_232931_Si[*,2]
-;test2 = WHERE((test11 GE 40.0) AND (test11 LT 50.0), count)
-;PRINT, count ;124
-;PRINT, test11[test2]
-
-;test3 = WHERE((test GE 3.0) AND (test11 GE 40.0) AND (test11 LT 50.0), count)
-;PRINT, count ;114
-;PRINT, test11[test3]
-;PRINT, test[test3]
-
-test12 = array_004121_Si[*,2]
-uu = array_004121_Si[*,4]
-test4 = WHERE((test12 GE 50.0) AND (test12 LT 60.0) AND (uu GE 0.0), count)
-;PRINT, count ;163
-;PRINT, test12[test4]
-;PRINT, uu[test4]
-
-;u = array_232931_Si[*,4]
-;test5 = WHERE((test11 GE 40.0) AND (test11 LT 50.0) AND (u GE 0.0), count)
-;PRINT, count ;124
-;PRINT, test11[test5]
-;PRINT, u[test5]
-
-test6 = WHERE((test12 GE 40.0) AND (test12 LT 50.0) AND (uu GE 0.0), count)
+vel_40_50 = WHERE((vel_width GE 40.0) AND (vel_width LT 50.0) AND (uvb_index GE 0.0), count)
 ;PRINT, count ;66
-;PRINT, test12[test6]
-;PRINT, uu[test6]
+;PRINT, vel_width[vel_40_50]
+;PRINT, uvb_index[vel_40_50]
 
-test7 = WHERE((test12 GE 60.0) AND (test12 LT 70.0) AND (uu GE 0.0), count)
+vel_50_60 = WHERE((vel_width GE 50.0) AND (vel_width LT 60.0) AND (uvb_index GE 0.0), count)
+;PRINT, count ;163
+;PRINT, vel_width[vel_50_60]
+;PRINT, uvb_index[vel_50_60]
+
+vel_60_70 = WHERE((vel_width GE 60.0) AND (vel_width LT 70.0) AND (uvb_index GE 0.0), count)
 ;PRINT, count ;127
-;PRINT, test12[test7]
-;PRINT, uu[test7]
+;PRINT, vel_width[vel_60_70]
+;PRINT, uvb_index[vel_60_70]
 
-test8 = WHERE((test12 GE 70.0) AND (test12 LT 80.0) AND (uu GE 0.0), count)
+vel_70_80 = WHERE((vel_width GE 70.0) AND (vel_width LT 80.0) AND (uvb_index GE 0.0), count)
 ;PRINT, count ;76
-;PRINT, test12[test8]
-;PRINT, uu[test8]
+;PRINT, vel_width[vel_70_80]
+;PRINT, uvb_index[vel_70_80]
 
-test9 = WHERE((test12 GE 80.0) AND (test12 LT 1000.0) AND (uu GE 0.0), count)
-PRINT, count ;
-;PRINT, test12[test9]
-;PRINT, uu[test9]
-
-;the counts above are the same for isolate_obs#.pro, the only
-;difference is the points on the map...
+vel_80_1000 = WHERE((vel_width GE 80.0) AND (vel_width LT 1000.0) AND (uvb_index GE 0.0), count)
+;PRINT, count ;39
+;PRINT, vel_width[vel_80_1000]
+;PRINT, uvb_index[vel_80_1000]
 
 ;===============================================================================
 ;line width vs density 
 
-;Just want everything in relation to o iv. Basically "throwing away"
-;data that doesn't match with o iv.
+;Just want everything in relation to O IV. Basically "throwing away"
+;data that doesn't match with O IV. We could have filled in
+;missing data with a -999 if we did it the other way. 
 y = array_004121_O[*,5]
 x = array_004121_Si[*,4]
-openw, 1, 'test.csv'
+openw, 1, 'table.csv'
 FOR i = 0, N_ELEMENTS(y)-1 DO BEGIN
    var = WHERE((x EQ y[i]),count)
 ;   PRINT, x[var], y[i]
 ;   PRINT, count ;464 checked
-;   [oiv[i],si_TII[var]]; for ith line in oiv, get si iv info
    printf, 1, x[var], y[i], It_Si_004121[var], int_int_unc_Si_004121[var], limit_vel_width_004121[var], limit_velocity_004121[var], It_O_004121[i], int_int_unc_O_004121[i], limit_vel_width_004121_Oiv[i], limit_velocity_004121_Oiv[i], SNR_O_004121[i], FORMAT = "(I7,' , ',I7,' , ',f100.9,' , ',f100.9,' , ',f100.9,' , ',f100.9,' , ',f100.9,' , ',f100.9,' , ',f100.9,' , ',f100.9,' , ',f100.9)";HEADER = ['Si_IV_UVB',' , ','O_IV_UVB']; Si_IV_UVB[var], O_IV_UVB[i], It_Si_004121[var], int_int_unc_Si_004121[var], limit_vel_width_004121[var], limit_velocity_004121[var], It_O_004121[i], int_int_unc_O_004121[i], limit_vel_width_004121_Oiv[i], limit_velocity_004121_Oiv[i], SNR_O_004121[i]
 ENDFOR
 close, 1
+
+;initial thoughts when trying to use QGIS
+openw, 2, 'coordx.csv'
+printf, 2, SolarX1400_004121, FORMAT = "(f100.9)"
+close, 2
+
+;initial thoughts when trying to use QGIS
+openw, 3, 'coordy.csv'
+printf, 3, SolarY1400_004121, FORMAT = "(f100.9)"
+close, 3
 
 ;check excel has right elements
 ;PRINT, It_Si_004121
@@ -594,48 +584,48 @@ close, 1
 ;PRINT, limit_velocity_004121_Oiv
 ;PRINT, SNR_O_004121
 
-csv = READ_CSV('test.csv')
+csv = READ_CSV('table.csv')
 ;PRINT, csv
-col_0 = csv.(0)
-col_1 = csv.(1)
-col_2 = csv.(2)
-col_3 = csv.(3)
-col_4 = csv.(4)
-col_5 = csv.(5)
-col_6 = csv.(6)
-col_7 = csv.(7)
-col_8 = csv.(8)
-col_9 = csv.(9)
-col_10 = csv.(10)
-ttt = WHERE((col_0 EQ 31049) AND (col_1 EQ 31049) AND (col_2 GE 0.0) AND (col_3 GE 0.0) AND (col_4 GE 0.0) AND (col_5 GE 0.0) AND (col_6 GE 0.0) AND (col_7 GE 0.0) AND (col_8 GE 0.0) AND (col_9 GE 0.0) AND (col_10 GE 0.0))
-;PRINT, col_0[ttt]
-;PRINT, col_1[ttt]
-;PRINT, col_2[ttt]
-;PRINT, col_3[ttt]
-;PRINT, col_4[ttt]
-;PRINT, col_5[ttt]
-;PRINT, col_6[ttt]
-;PRINT, col_7[ttt]
-;PRINT, col_8[ttt]
-;PRINT, col_9[ttt]
-;PRINT, col_10[ttt]
-rrr = WHERE((col_10 GE 3.0) AND (col_10 LT 1000) AND (col_6 GE 0.0) AND (col_2 GE 0.0))
+col_si_uvb = csv.(0) ;Si IV UVB
+col_o_uvb = csv.(1) ;O IV UVB
+col_si_tii = csv.(2) ;Si IV TII
+col_si_tii_u = csv.(3) ;Si IV TII uncertainty
+col_si_vel_w = csv.(4) ;Si IV vel_width
+col_si_vel = csv.(5) ;Si IV velocity
+col_o_tii = csv.(6) ;O IV TII
+col_o_tii_u = csv.(7) ;O IV TII uncertainty
+col_o_vel_w = csv.(8) ;O IV vel_width
+col_o_vel = csv.(9) ;O IV velocity
+col_o_snr = csv.(10) ;O IV SNR
+table_limit = WHERE((col_si_uvb EQ 31049) AND (col_o_uvb EQ 31049) AND (col_si_tii GE 0.0) AND (col_si_tii_u GE 0.0) AND (col_si_vel_w GE 0.0) AND (col_si_vel GE 0.0) AND (col_o_tii GE 0.0) AND (col_o_tii_u GE 0.0) AND (col_o_vel_w GE 0.0) AND (col_o_vel GE 0.0) AND (col_o_snr GE 0.0))
+;PRINT, col_si_uvb[table_limit]
+;PRINT, col_o_uvb[table_limit]
+;PRINT, col_si_tii[table_limit]
+;PRINT, col_si_tii_u[table_limit]
+;PRINT, col_si_vel_w[table_limit]
+;PRINT, col_si_vel[table_limit]
+;PRINT, col_o_tii[table_limit]
+;PRINT, col_o_tii_u[table_limit]
+;PRINT, col_o_vel_w[table_limit]
+;PRINT, col_o_vel[table_limit]
+;PRINT, col_o_snr[table_limit]
+ratio_limit = WHERE((col_o_snr GE 3.0) AND (col_o_snr LT 1000) AND (col_o_tii GE 0.0) AND (col_si_tii GE 0.0))
 PRINT, 'SNR O'
-PRINT, col_10[rrr]
+PRINT, col_o_snr[ratio_limit]
 PRINT, 'TII O'
-PRINT, col_6[rrr]
+PRINT, col_o_tii[ratio_limit]
 PRINT, 'TII Si IV'
-PRINT, col_2[rrr]
+PRINT, col_si_tii[ratio_limit]
 
 ;double check above matches old way (and checked with master_TII.pro):
 ;snr_cut = array_004121_O[*,4]
 ;tii_cut = array_004121_O[*,0]
 ;oiv_cut_004121 = WHERE((snr_cut GE 3.0) AND (snr_cut LT 1000) AND (tii_cut GE 0.0), count)
 ;PRINT, snr_cut[oiv_cut_004121]
-;PRINT, 'se'
+;PRINT, 'next'
 ;PRINT, tii_cut[oiv_cut_004121]
 
-ratio_004121 = (col_2[rrr]/col_6[rrr])
+ratio_004121 = (col_si_tii[ratio_limit]/col_o_tii[ratio_limit])
 PRINT, "ratio"
 PRINT, N_ELEMENTS(ratio_004121)
 PRINT, ratio_004121
@@ -680,8 +670,10 @@ WINDOW, XSIZE = 900, YSIZE = 700
 PLOT, psym = 3, lw, e_density[electron_dens_arr_004121], XTITLE = 'Line Width [km*s^-1]', YTITLE = 'Electron Density [cm^-1]', TITLE = 'Scatter Plot of Line Width vs Electron Density', POSITION = [x0,y0,x0+dx,y0+dy]
 ;m = regress(lw,e_density[electron_dens_arr_004121],const=b,correlation=r,ftest=f,yfit=yregress)
 ;OPLOT,lw,yregress
+
 ;===============================================================================
-;velocity maps
+;velocity maps--used as a cross-check to ensure isolate_obs# maps were
+;the same. They are the same!
 
 ;byte-scaling and saturation
 
@@ -691,7 +683,7 @@ n_sort_c_004121 = N_ELEMENTS(sort_c_004121)
 
 ;despike
 
-coeff_arr_004121_clean = IRIS_PREP_DESPIKE(REFORM(coeff_arr_004121[0,*,*]), niter = 1000, min_std = 2.8, sigmas = 2.5, mode = 'both')
+coeff_arr_004121_clean = IRIS_PREP_DESPIKE(REFORM(coeff_arr_004121[0,*,*]), niter = 1000, min_std = 2.8, sigmas = 2.5, mode = 'both') ;coeff_arr_004121 comes from save file rfname2 and targets peak intensity 
 
 ;BYTSCL() TO SHOW UVB OVERPLOT IN RED
 
@@ -701,11 +693,21 @@ byte_scale_004121_60_70 = BYTSCL(coeff_arr_004121_clean, MIN = 5, MAX = 75, TOP 
 byte_scale_004121_70_80 = BYTSCL(coeff_arr_004121_clean, MIN = 5, MAX = 75, TOP = 254)
 byte_scale_004121_80_1000 = BYTSCL(coeff_arr_004121_clean, MIN = 5, MAX = 75, TOP = 254)
 
-byte_scale_004121_40_50[uu[test6]] = 255 
-byte_scale_004121_50_60[uu[test4]] = 255  
-byte_scale_004121_60_70[uu[test7]] = 255 
-byte_scale_004121_70_80[uu[test8]] = 255
-byte_scale_004121_80_1000[uu[test9]] = 255
+;PRINT, SIZE(byte_scale_004121_40_50)
+;PRINT, uvb_index
+;PRINT, '40-50'
+PRINT, uvb_index[vel_40_50]
+;PRINT, N_ELEMENTS(SolarX1400_004121) ;1842
+;PRINT, SolarX1400_004121
+;PRINT, N_ELEMENTS(SolarY1400_004121) ;1093--slit length
+;PRINT, SolarY1400_004121
+
+byte_scale_004121_40_50[uvb_index[vel_40_50]] = 255
+;PRINT, byte_scale_004121_40_50[uvb_index[vel_40_50]]
+byte_scale_004121_50_60[uvb_index[vel_50_60]] = 255  
+byte_scale_004121_60_70[uvb_index[vel_60_70]] = 255 
+byte_scale_004121_70_80[uvb_index[vel_70_80]] = 255
+byte_scale_004121_80_1000[uvb_index[vel_80_1000]] = 255
 ;byte_scale_004121[array_004121_Si[*,4]] = 255 ;works--all UVBs
 
 
@@ -730,6 +732,8 @@ TVLCT, [[255], [255], [255]], 1
 
 COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,75], /YLOG, YTICKS = 10, POSITION = [0.32,0.91,0.70,0.92], /TOP, COLOR = 1
 
+;-------------------------------------------------------------------------------
+
 ;40-50 km/s velocity
 SET_PLOT, 'ps'
 DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/density_OIV/table_intensity_40_50_UVB_004121.eps', /ENCAPSULATED
@@ -750,6 +754,8 @@ TVLCT, [[0], [0], [0]], 1
 COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,75], /YLOG, YTICKS = 10, POSITION = [0.32,0.91,0.70,0.92], /TOP, COLOR = 1
 
 DEVICE, /CLOSE
+
+;-------------------------------------------------------------------------------
 
 ;50-60 km/s velocity
 SET_PLOT, 'ps'
@@ -772,6 +778,8 @@ COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,7
 
 DEVICE, /CLOSE
 
+;-------------------------------------------------------------------------------
+
 ;60-70 km/s velocity
 SET_PLOT, 'ps'
 DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/density_OIV/table_intensity_60_70_UVB_004121.eps', /ENCAPSULATED
@@ -793,6 +801,8 @@ COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,7
 
 DEVICE, /CLOSE
 
+;-------------------------------------------------------------------------------
+
 ;70-80 km/s velocity
 SET_PLOT, 'ps'
 DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/density_OIV/table_intensity_70_80_UVB_004121.eps', /ENCAPSULATED
@@ -813,6 +823,8 @@ TVLCT, [[0], [0], [0]], 1
 COLORBAR, FORMAT = '(F0.2)', TITLE = "Intensity [Arbitrary Units]", RANGE = [5,75], /YLOG, YTICKS = 10, POSITION = [0.32,0.91,0.70,0.92], /TOP, COLOR = 1
 
 DEVICE, /CLOSE
+
+;-------------------------------------------------------------------------------
 
 ;80-1000 km/s velocity
 SET_PLOT, 'ps'
