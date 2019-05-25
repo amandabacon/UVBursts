@@ -2,9 +2,9 @@
 ;Name: detection_050655_1.pro
 ;Written by: Amanda Bacon (amandabacon@bennington.edu)
 ;Date: 2018/09/30
-;USING SI IV 1394 LINE, APPLY 4-PARAMETER SINGLE GAUSSIAN FIT (SGF) TO
+;USING Si IV 1394 LINE, APPLY 4-PARAMETER SINGLE GAUSSIAN FIT (SGF) TO
 ;EACH SPECTRA OVER 400-STEP RASTER TO MAKE A SCATTER PLOT OF PEAK
-;INTENSITY VS LINE WIDTH AND APPLY A CUT IN 4-D PARAMETER SPACE TO GET
+;INTENSITY VS LINE WIDTH. THEN APPLY A CUT IN 4-D PARAMETER SPACE TO GET
 ;UVB POPULATION REGION. THIS CODE IS USED TO DETECT UV BURSTS.
 
 PRO detection_050655_1
@@ -21,7 +21,7 @@ dataRast_050655_1 = IRIS_OBJ(IRast_050655_1)
 
 data1400_050655_1 = IRIS_SJI(SJI1400_050655_1)
 
-;load images/profiles (WANT SI IV 1394)
+;load images/profiles (WANT Si IV 1394)
 
 dataRast_050655_1->SHOW_LINES
 spectraRast1394_050655_1 = dataRast_050655_1->GETVAR(2, /LOAD)
@@ -46,9 +46,10 @@ SolarY1400_050655_1 = data1400_050655_1->YSCALE()
 exp_arrRast_050655_1 = dataRast_050655_1->GETEXP() ;no 0s exposures--2 s exp
 ;PRINT, exp_arrRast_050655_1
 
-;get every data point in each lambda, y-pos, and image
+;get every data point in each wavelength (lambda), y-pos (slit), and
+;image (400-step)
 
-cube1394_050655_1 = spectraRast1394_050655_1[*,*,*] ;SIZE: 3D, 193,1093,400, float
+cube1394_050655_1 = spectraRast1394_050655_1[*,*,*] ;SIZE: 3D,193,1093,400,float
 ;PRINT, SIZE(cube1394_050655_1)
 
 ;count the number of images of original cube
@@ -70,7 +71,7 @@ nx = DOUBLE(N_ELEMENTS(array1400_050655_1[*,0]))
 ny = DOUBLE(N_ELEMENTS(array1400_050655_1[0,*]))
 ;**********************************
 
-;number of elements in wavelength, ypos, and image of original cube
+;number of elements in wavelength, slit position, and 400-step image of original cube
 
 n_img1394_050655_1 = N_ELEMENTS(spectraRast1394_050655_1[0,0,*]) ;400 images
 n_wav1394_050655_1 = N_ELEMENTS(spectraRast1394_050655_1[*,0,0]) ;193 wavelengths b/w 1391-1395
@@ -81,7 +82,7 @@ n_ypos1394_050655_1 = N_ELEMENTS(spectraRast1394_050655_1[0,*,0]) ;1093 y-positi
 cut_050655_1 = MEAN(MEAN(spectraRast1394_050655_1, DIMENSION = 2), DIMENSION = 2) ;SIZE: 1D, 193, float
 ;PRINT, SIZE(cut_050655_1)
 
-;PLOT, cut_050655_1
+;PLOT, cut_050655_1 ;this plot shows the overscan that you should remove
 
 spectra1394_050655_1 = cut_050655_1[19:173]
 
@@ -102,7 +103,8 @@ FOR i = 0, nImages1394_050655_1-1 DO BEGIN
 nspectraRast1394_050655_1[*,*,i] = nspectraRast1394_050655_1[*,*,i]/exp_arrRast_050655_1[i]
 ENDFOR
 
-;get average Si IV line profile of entire observation in order to get lambda0
+;get average Si IV line profile of entire observation in order to get
+;lambda0 (rest wavelength)
 
 avg_prof_050655_1 = MEAN(MEAN(nspectraRast1394_050655_1, DIMENSION = 2), DIMENSION = 2)
 
@@ -147,7 +149,7 @@ dy = (1.0/nr)*(1.0-(2.0*y0))
 ;STOP
 ;**********************************
 
-;create array to hold coeff paramters from FOR loop, images, & y-pos
+;create array to hold coeff parameters from FOR loop, images, & y-pos
 
 coeff_arr_050655_1 = DBLARR(4, n_img_050655_1, n_ypos_050655_1)
 
@@ -159,7 +161,7 @@ FOR i = 0, n_img_050655_1-1 DO BEGIN
 		PLOT, lambda1394_050655_1[19:173], nspectraRast1394_050655_1[*,j,i], XRANGE = [1391.3, 1396.2], TITLE = 'AR11974_050655_1 Gaussian Fit', XTITLE = 'Wavelength', YTITLE = 'Intensity'
 		YFIT_050655_1 = MPFITPEAK(lambda1394_050655_1[19:173], nspectraRast1394_050655_1[*,j,i], coeff_050655_1, NTERMS = 4, STATUS = status, ERRMSG = errmsg)
 		OPLOT, lambda1394_050655_1[19:173], YFIT_050655_1, COLOR = 170, LINESTYLE = 2, THICK = 5
-;		WAIT, 0.05 ;chance to see fits
+		WAIT, 0.05 ;chance to see fits
 		coeff_arr_050655_1[*,i,j] = coeff_050655_1
 	ENDFOR
 ENDFOR
@@ -175,7 +177,7 @@ SAVE, coeff_avg_050655_1, coeff_050655_1, spectraRast1394_050655_1, nspectraRast
 rfname = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/050655/raster1/coeff_arr_050655_1.sav'
 RESTORE, rfname, /VERBOSE
 
-;get effective and binning spectrograph
+;get effective area and binning spectrograph
 
 oea = 2.10179 ;at 1395 angstrom--cm^2--original effective area
 oasr = 0.02544 ;A/pxl original average spectral resolution
@@ -200,11 +202,13 @@ PRINT, WHERE(ea_struct.lambda EQ 139.5) ;390
 new_peak_min = orig_peak_min*(efarea[0]/oea)*(ave_spec_res/oasr)
 PRINT, new_peak_min ;4.4066863
 
-;velocity conversion
+;0-peak intensity, 1-central wavelength , 2-line width , 3-background
+
+;velocity conversion--exponential line width
 
 vel_width_050655_1 = (coeff_arr_050655_1[2,*,*]/wave0_050655_1) * 3e5 * sqrt(2)
 
-;perform limits
+;perform limits--peak intensity
 
 coeff_arr_peak_050655_1 = coeff_arr_050655_1[0,*,*]
 
@@ -219,7 +223,9 @@ gamma_050655_1 = MAX([lam2_050655_1,lam1_050655_1])
 ;PRINT, gamma_050655_1
 ;PRINT, (gamma_050655_1/wave0_050655_1)
 
-velocity_050655_1 = ((coeff_arr_050655_1[1,*,*]-wave0_050655_1)/wave0_050655_1) * 3e5 ; from param_maps
+velocity_050655_1 = ((coeff_arr_050655_1[1,*,*]-wave0_050655_1)/wave0_050655_1) * 3e5 ; from param_maps--doppler shift
+
+;apply cut in 4-D parameter space to isolate UVB
 
 cut_ind_050655_1 = WHERE((coeff_arr_peak_050655_1 GE new_peak_min) AND (vel_width_050655_1 GE 40) AND (vel_width_050655_1 LE 1000) AND (ABS(velocity_050655_1 LE (gamma_050655_1/wave0_050655_1) * 3e5)), COMPLEMENT = not_cut_ind_050655_1, count)
 
@@ -247,7 +253,7 @@ TVLCT, [[0], [0], [0]], 1
 !P.BACKGROUND = 1
 WINDOW, XSIZE = 900, YSIZE = 700, RETAIN = 2
 TVLCT, [[255], [255], [255]], 0
-PLOT, psym = 3, vel_width_050655_1, coeff_arr_050655_1[0,*,*], XTITLE = 'Line Width [km*s^-1]', YTITLE = 'Peak Instensity [Arb. Units]', TITLE = 'Scatter Plot of Intensity vs Width AR11974_050655_1', /XLOG, /YLOG, XRANGE = [10e-3,10e6], POSITION = [x0,y0,x0+dx,y0+dy], COLOR = 0, XTHICK = 4, YTHICK = 4, XSTYLE = 1, THICK = 4, CHARSIZE = 1.8, XCHARSIZE = 1.45, YCHARSIZE = 1.45
+PLOT, psym = 3, vel_width_050655_1, coeff_arr_050655_1[0,*,*], XTITLE = 'Line Width [km*s^-1]', YTITLE = 'Peak Instensity [Arb. Units]', TITLE = 'Scatter Plot of Intensity vs Width AR11974_050655_1', /XLOG, /YLOG, XRANGE = [10e-3,10e5], POSITION = [x0,y0,x0+dx,y0+dy], COLOR = 0, XTHICK = 4, YTHICK = 4, XSTYLE = 1, THICK = 4, CHARSIZE = 1.8, XCHARSIZE = 1.45, YCHARSIZE = 1.45, SYMSIZE = 10
 screenshot = TVRD(TRUE = 1)
 WRITE_PNG, '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/050655/raster1/intensity_plot_050655_1.png', screenshot
 
@@ -256,9 +262,9 @@ TVLCT, [[0], [0], [0]], 1
 
 WINDOW, XSIZE = 900, YSIZE = 700, RETAIN = 2
 TVLCT, [[255], [255], [255]], 0
-PLOT, psym = 3, vel_width_050655_1[not_cut_ind_050655_1], coeff_arr_peak_050655_1[not_cut_ind_050655_1], XTITLE = 'Line Width [km*s^-1]', YTITLE = 'Peak Instensity [Arb. Units]', TITLE = 'Scatter Plot of Intensity vs Width AR11974_050655_1', /XLOG, /YLOG, XRANGE = [10e-3,10e6], POSITION = [x0,y0,x0+dx,y0+dy], COLOR = 0, XTHICK = 4, YTHICK = 4, XSTYLE = 1, THICK = 4, CHARSIZE = 1.8, XCHARSIZE = 1.45, YCHARSIZE = 1.45
-TVLCT, [[255], [0], [0]], 255
-OPLOT, psym = 3, vel_width_050655_1[cut_ind_050655_1], coeff_arr_peak_050655_1[cut_ind_050655_1], COLOR = 255
+PLOT, psym = 3, vel_width_050655_1[not_cut_ind_050655_1], coeff_arr_peak_050655_1[not_cut_ind_050655_1], XTITLE = 'Line Width [km*s^-1]', YTITLE = 'Peak Instensity [Arb. Units]', TITLE = 'Scatter Plot of Intensity vs Width AR11974_050655_1', /XLOG, /YLOG, XRANGE = [10e-3,10e5], POSITION = [x0,y0,x0+dx,y0+dy], COLOR = 0, XTHICK = 4, YTHICK = 4, XSTYLE = 1, THICK = 4, CHARSIZE = 1.8, XCHARSIZE = 1.45, YCHARSIZE = 1.45, SYMSIZE = 10, YRANGE = [10e-3,10e9]
+TVLCT, [[173], [255], [47]], 173
+OPLOT, psym = 3, vel_width_050655_1[cut_ind_050655_1], coeff_arr_peak_050655_1[cut_ind_050655_1], COLOR = 173
 screenshot = TVRD(TRUE = 1)
 WRITE_PNG, '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/050655/raster1/cut_intensity_plot_050655_1.png', screenshot
 
@@ -269,7 +275,28 @@ WRITE_PNG, '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/050655
 SET_PLOT, 'ps'
 DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 0, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/050655/raster1/intensity_plot_050655_1.eps', /ENCAPSULATED
 
-PLOT, psym = 3, vel_width_050655_1, coeff_arr_050655_1[0,*,*], XTITLE = 'Line Width [km*s^-1]', YTITLE = 'Peak Instensity [Arb. Units]', TITLE = 'Scatter Plot of Intensity vs Width AR11974_050655_1', /XLOG, /YLOG, XRANGE = [10e-3,10e6], POSITION = [x0,y0,x0+dx,y0+dy], XSTYLE = 1, THICK = 4, CHARSIZE = 1.8, XCHARSIZE = 1.35, YCHARSIZE = 1.4, YTHICK = 10, XTHICK = 10
+PLOT, psym = 3, vel_width_050655_1, coeff_arr_050655_1[0,*,*], XTITLE = 'Line Width [km*s^-1]', YTITLE = 'Peak Instensity [Arb. Units]', TITLE = 'Scatter Plot of Intensity vs Width AR11974_050655_1', /XLOG, /YLOG, XRANGE = [10e-3,10e6], POSITION = [x0,y0,x0+dx,y0+dy], XSTYLE = 1, THICK = 4, CHARSIZE = 1.8, XCHARSIZE = 1.35, YCHARSIZE = 1.4, YTHICK = 10, XTHICK = 10, YRANGE = [10e-3,10e9]
+
+TVLCT, [[0], [0], [0]], 1
+!P.BACKGROUND = 1
+
+!P.FONT = 1
+
+SET_PLOT, 'ps'
+DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 0, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/050655/raster1/intensity_plot_050655_1_thesis.eps', /ENCAPSULATED
+
+TVLCT, [[255],[255],[255]], 255
+PLOT, psym = 3, vel_width_050655_1, coeff_arr_050655_1[0,*,*], XTITLE = 'Line Width [km*s^-1]', YTITLE = 'Peak Instensity [Arb. Units]', /XLOG, /YLOG, XRANGE = [10e-3,10e5], POSITION = [x0,y0,x0+dx,y0+dy], XSTYLE = 1, THICK = 10, CHARSIZE = 1.8, XCHARSIZE = 1.35, YCHARSIZE = 1.4, YTHICK = 10, XTHICK = 10, YRANGE = [10e-3,10e9], COLOR = 255, SYMSIZE = 10
+
+!P.FONT = 1
+
+SET_PLOT, 'ps'
+DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/050655/raster1/cut_intensity_plot_050655_1_thesis.eps', /ENCAPSULATED
+
+TVLCT, [[255],[255],[255]], 255
+PLOT, psym = 3, vel_width_050655_1[not_cut_ind_050655_1], coeff_arr_peak_050655_1[not_cut_ind_050655_1], XTITLE = 'Line Width [km*s^-1]', YTITLE = 'Peak Instensity [Arb. Units]', TITLE = 'Scatter Plot of Intensity vs Width AR11974_050655_1', /XLOG, /YLOG, XRANGE = [10e-3,10e5], POSITION = [x0,y0,x0+dx,y0+dy], XSTYLE = 1, THICK = 10, CHARSIZE = 1.8, XCHARSIZE = 1.35, YCHARSIZE = 1.4, YTHICK = 10, XTHICK = 10, YRANGE = [10e-3,10e9], COLOR = 255, SYMSIZE = 10
+TVLCT, [[173], [255], [47]], 173
+OPLOT, psym = 3, vel_width_050655_1[cut_ind_050655_1], coeff_arr_peak_050655_1[cut_ind_050655_1], COLOR = 173
 
 TVLCT, [[0], [0], [0]], 1
 !P.BACKGROUND = 1

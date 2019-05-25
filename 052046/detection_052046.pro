@@ -2,9 +2,9 @@
 ;Name: detection_052046.pro
 ;Written by: Amanda Bacon (amandabacon@bennington.edu)
 ;Date: 2018/09/07
-;USING SI IV 1394 LINE, APPLY 4-PARAMETER SINGLE GAUSSIAN FIT (SGF) TO
+;USING Si IV 1394 LINE, APPLY 4-PARAMETER SINGLE GAUSSIAN FIT (SGF) TO
 ;EACH SPECTRA OVER 400-STEP RASTER TO MAKE A SCATTER PLOT OF PEAK
-;INTENSITY VS LINE WIDTH AND APPLY A CUT IN 4-D PARAMETER SPACE TO GET
+;INTENSITY VS LINE WIDTH. THEN APPLY A CUT IN 4-D PARAMETER SPACE TO GET
 ;UVB POPULATION REGION. THIS CODE IS USED TO DETECT UV BURSTS.
 
 PRO detection_052046
@@ -21,7 +21,7 @@ dataRast_052046 = IRIS_OBJ(IRast_052046)
 
 data1400_052046 = IRIS_SJI(SJI1400_052046)
 
-;load images/profiles (WANT SI IV 1394)
+;load images/profiles (WANT Si IV 1394)
 
 dataRast_052046->SHOW_LINES
 spectraRast1394_052046 = dataRast_052046->GETVAR(2, /LOAD)
@@ -46,9 +46,10 @@ SolarY1400_052046 = data1400_052046->YSCALE()
 exp_arrRast_052046 = dataRast_052046->GETEXP() ;clean--no 0s exposures--8s
 ;PRINT, exp_arrRast_052046
 
-;get every data point in each lambda, y-pos, and image
+;get every data point in each wavelength (lambda), y-pos (slit), and
+;image (400-step)
 
-cube1394_052046 = spectraRast1394_052046[*,*,*] ;SIZE: 3D, 194,1092,400, float
+cube1394_052046 = spectraRast1394_052046[*,*,*] ;SIZE: 3D,194,1092,400,float
 ;PRINT, SIZE(cube1394_052046)
 
 ;count the number of images of original cube
@@ -70,7 +71,7 @@ nx = DOUBLE(N_ELEMENTS(array1400_052046[*,0]))
 ny = DOUBLE(N_ELEMENTS(array1400_052046[0,*]))
 ;**********************************
 
-;number of elements in wavelength, ypos, and image of original cube
+;number of elements in wavelength, slit position, and 400-step image of original cube
 
 n_img1394_052046 = N_ELEMENTS(spectraRast1394_052046[0,0,*]) ;400 images
 n_wav1394_052046 = N_ELEMENTS(spectraRast1394_052046[*,0,0]) ;194 wavelengths b/w 1391-1395
@@ -85,7 +86,7 @@ cut_052046 = MEAN(MEAN(spectraRast1394_052046, DIMENSION = 2), DIMENSION = 2) ;S
 
 spectra1394_052046 = cut_052046[20:170]
 
-;PLOT, spectra1394_052046
+;PLOT, spectra1394_052046 ;this plot shows the overscan that you should remove
 
 nspectraRast1394_052046 = spectraRast1394_052046[20:170,*,*]
 
@@ -102,7 +103,8 @@ FOR i = 0, nImages1394_052046-1 DO BEGIN
 nspectraRast1394_052046[*,*,i] = nspectraRast1394_052046[*,*,i]/exp_arrRast_052046[i]
 ENDFOR
 
-;get average Si IV line profile of entire observation in order to get lambda0
+;get average Si IV line profile of entire observation in order to get
+;lambda0 (rest wavelength)
 
 avg_prof_052046 = MEAN(MEAN(nspectraRast1394_052046, DIMENSION = 2), DIMENSION = 2)
 
@@ -147,7 +149,7 @@ dy = (1.0/nr)*(1.0-(2.0*y0))
 ;STOP
 ;**********************************
 
-;create array to hold coeff paramters from FOR loop, images, & y-pos
+;create array to hold coeff parameters from FOR loop, images, & y-pos
 
 coeff_arr_052046 = DBLARR(4, n_img_052046, n_ypos_052046)
 
@@ -175,7 +177,7 @@ SAVE, coeff_avg_052046, coeff_052046, spectraRast1394_052046, nspectraRast1394_0
 rfname = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/052046/coeff_arr_052046.sav'
 RESTORE, rfname, /VERBOSE
 
-;get effective and binning spectrograph
+;get effective area and binning spectrograph
 
 oea = 2.10179 ;at 1395 angstrom--cm^2--original effective area
 oasr = 0.02544 ;A/pxl original average spectral resolution
@@ -200,11 +202,13 @@ PRINT, WHERE(ea_struct.lambda EQ 139.5) ;390
 new_peak_min = orig_peak_min*(efarea[0]/oea)*(ave_spec_res/oasr)
 PRINT, new_peak_min ;4.4851847
 
-;velocity conversion
+;0-peak intensity, 1-central wavelength , 2-line width , 3-background
+
+;velocity conversion--exponential line width
 
 vel_width_052046 = (coeff_arr_052046[2,*,*]/wave0_052046) * 3e5 * sqrt(2)
 
-;perform limits
+;perform limits--peak intensity
 
 coeff_arr_peak_052046 = coeff_arr_052046[0,*,*]
 
@@ -219,7 +223,9 @@ gamma_052046 = MAX([lam2_052046,lam1_052046])
 ;PRINT, gamma_052046
 ;PRINT, (gamma_052046/wave0_052046)
 
-velocity_052046 = ((coeff_arr_052046[1,*,*]-wave0_052046)/wave0_052046) * 3e5 ; from param_maps
+velocity_052046 = ((coeff_arr_052046[1,*,*]-wave0_052046)/wave0_052046) * 3e5 ; from param_maps--doppler shift
+
+;apply cut in 4-D parameter space to isolate UVB
 
 cut_ind_052046 = WHERE((coeff_arr_peak_052046 GE new_peak_min) AND (vel_width_052046 GE 40) AND (vel_width_052046 LE 1000) AND (ABS(velocity_052046 LE (gamma_052046/wave0_052046) * 3e5)), COMPLEMENT = not_cut_ind_052046, count)
 

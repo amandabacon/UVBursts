@@ -7,7 +7,7 @@
 ;TO GET 4 PARAMETERS, INSTRUMENTAL UNCERTAINTIES, POISSON NOISE, TIIs,
 ;SNRs, THEN CREATE A HISTOGRAM OF SNR VALUE FREQUENCY. 
 
-;PRO Siv_isolate_061606
+PRO Siv_isolate_061606
 
 ;restore Si IV UVB indices and other variables
 
@@ -233,6 +233,12 @@ PRINT, SIZE(coeff_arr_061606_Siv2) ;2D,4,431
 one = coeff_arr_061606_Siv2[1,*,*]
 coeff_arr_061606_Siv2_clean = WHERE((one GT 1404.0) AND (one LT 1404.9), count, COMPLEMENT = non)
 
+;get UVB indices for S IV
+
+UVB_ind_Siv_061606 = UVB_ind_061606[coeff_arr_061606_Siv2_clean]
+PRINT, UVB_ind_Siv_061606
+PRINT, N_ELEMENTS(UVB_ind_Siv_061606) ;352
+
 PRINT, SIZE(coeff_arr_061606_Siv2_clean) ;1D,352
 
 zero = coeff_arr_061606_Siv2[0,*,*]
@@ -240,10 +246,10 @@ sig2 = sigma_coeff_arr[2,*,*]
 two = coeff_arr_061606_Siv2[2,*,*]
 sig0 = sigma_coeff_arr[0,*,*]
 
-p_int = zero[coeff_arr_061606_Siv2_clean]
-sig_lw = sig2[coeff_arr_061606_Siv2_clean]
-lw = two[coeff_arr_061606_Siv2_clean]
-sig_p_int = sig0[coeff_arr_061606_Siv2_clean]
+p_int_061606_Siv = zero[coeff_arr_061606_Siv2_clean]
+sig_lw_061606_Siv = sig2[coeff_arr_061606_Siv2_clean]
+lw_061606_Siv = two[coeff_arr_061606_Siv2_clean]
+sig_p_int_061606_Siv = sig0[coeff_arr_061606_Siv2_clean]
 ;===============================================================================
 ;introduce limit to parameter values to see how they contribute to
 ;electron density
@@ -287,14 +293,14 @@ PRINT, limit_velocity_061606_Siv
 
 ;calculate total integrated intensity (TII)
 
-It_S_061606 = (sqrt(2.0*!dpi)*p_int*lw) ;total integrated intensity 
+It_S_061606 = (sqrt(2.0*!dpi)*p_int_061606_Siv*lw_061606_Siv) ;total integrated intensity 
 PRINT, "It_S_061606"
 PRINT, It_S_061606
 PRINT, SIZE(It_S_061606) ;1D,352
 
 ;calculate integrated intensity uncertainty
 
-int_int_unc_S_061606 = [2.0*!dpi*((p_int)^2*(sig_lw)^2+(lw)^2*(sig_p_int)^2)]^0.5
+int_int_unc_S_061606 = [2.0*!dpi*((p_int_061606_Siv)^2*(sig_lw_061606_Siv)^2+(lw_061606_Siv)^2*(sig_p_int_061606_Siv)^2)]^0.5
 PRINT, "int_int_unc_S_061606"
 PRINT, int_int_unc_S_061606
 PRINT, SIZE(int_int_unc_S_061606) ;1D,352
@@ -311,11 +317,11 @@ PRINT, 'SNR rearrangement'
 ;calculate SNR after rearrangement
 
 neg = -0.5
-SNR_S_061606 = (((sig_p_int)^2/(p_int)^2)+((sig_lw)^2/(lw)^2))^neg
+SNR_S_061606 = (((sig_p_int_061606_Siv)^2/(p_int_061606_Siv)^2)+((sig_lw_061606_Siv)^2/(lw_061606_Siv)^2))^neg
 PRINT, SNR_S_061606
 
 PRINT, SIZE(SNR_S_061606) ;352
-SNR2_S_061606 = WHERE((SNR_S_061606 LT 100), count) ;removes infinity
+SNR2_S_061606 = WHERE((SNR_S_061606 LT 10000), count) ;removes infinity
 PRINT, SIZE(SNR_S_061606[SNR2_S_061606]) ;348
 
 ;make histogram of SNRs and frequencies at which they occur
@@ -357,7 +363,7 @@ PRINT, 'MEAN: ', MOM[0] & PRINT, 'VARIANCE: ', MOM[1] & PRINT, 'SKEWNESS: ', MOM
 ;save parameters from FOR loop
 
 sfname2 = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/061606/S_IV/sigma_coeff_arr_061606_Siv.sav'
-SAVE, coeff_061606_Siv2, inst_unc_S_061606, sigma_coeff, sigma_coeff_arr, coeff_arr_061606_Siv2, It_S_061606, int_int_unc_S_061606, SNR_0_S_061606, SNR_S_061606, SNR2_S_061606, limit_vel_width_061606_Siv, limit_velocity_061606_Siv, p_int, sig_lw, lw, sig_p_int, FILENAME = sfname2
+SAVE, coeff_061606_Siv2, inst_unc_S_061606, sigma_coeff, sigma_coeff_arr, coeff_arr_061606_Siv2, It_S_061606, int_int_unc_S_061606, SNR_0_S_061606, SNR_S_061606, SNR2_S_061606, limit_vel_width_061606_Siv, limit_velocity_061606_Siv, p_int_061606_Siv, sig_lw_061606_Siv, lw_061606_Siv, sig_p_int_061606_Siv, UVB_ind_Siv_061606, FILENAME = sfname2
 
 OBJ_DESTROY, dataRast_061606_Siv
 OBJ_DESTROY, data1400_061606_Siv

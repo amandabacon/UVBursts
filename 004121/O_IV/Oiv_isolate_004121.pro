@@ -7,7 +7,7 @@
 ;TO GET 4 PARAMETERS, INSTRUMENTAL UNCERTAINTIES, POISSON NOISE, TIIs,
 ;SNRs, THEN CREATE A HISTOGRAM OF SNR VALUE FREQUENCY. 
 
-;PRO Oiv_isolate_004121
+PRO Oiv_isolate_004121
 
 ;restore Si IV UVB indices and other variables
 
@@ -173,7 +173,10 @@ PRINT, UVB_ind_ry_004121_Oiv
 
 UVB_ind_r_004121_Oiv = REFORM(UVB_ind_ry_004121_Oiv[0,*]) ;1D 471
 UVB_ind_y_004121_Oiv = REFORM(UVB_ind_ry_004121_Oiv[1,*]) ;1D 471
-PRINT, UVB_ind_004121
+PRINT, 'x'
+PRINT, UVB_ind_r_004121_Oiv
+PRINT, 'y'
+PRINT, UVB_ind_y_004121_Oiv
 
 ;pull out all green rectangle UVB pop. indices
 
@@ -187,6 +190,7 @@ coeff_arr_004121_Oiv = DBLARR(4,UVB_size_004121_Oiv)
 
 ;FOR loop with cut array and coeff_arr_004121_Oiv above
 
+;x and y cooridnates of uvb indices
 TIC
 FOR i = 0, UVB_size_004121_Oiv-1 DO BEGIN
 	PLOT, lambda1403_004121_Oiv[19:140], REFORM(nspectraRast1403_004121_Oiv[*,UVB_ind_y_004121_Oiv[i],UVB_ind_r_004121_Oiv[i]]), XRANGE = [1398.2, 1406.8], TITLE = 'AR11974_004121_Oiv Gaussian Fit', XTITLE = 'Wavelength', YTITLE = 'Intensity'
@@ -242,9 +246,11 @@ PRINT, SIZE(coeff_arr_004121_Oiv2) ;2D,4,471
 one = coeff_arr_004121_Oiv2[1,*,*]
 coeff_arr_004121_Oiv2_clean = WHERE((one GT 1400.6) AND (one LT 1401.6), count, COMPLEMENT = non)
 
-testt = UVB_ind_004121[coeff_arr_004121_Oiv2_clean]
-PRINT, testt
-PRINT, N_ELEMENTS(testt) ;464---WORKS???!?!?!?
+;get UVB indices for O IV
+
+UVB_ind_Oiv_004121 = UVB_ind_004121[coeff_arr_004121_Oiv2_clean]
+PRINT, UVB_ind_Oiv_004121
+PRINT, N_ELEMENTS(UVB_ind_Oiv_004121) ;464
 
 ;PRINT, "coeff_arr_004121_Oiv2_clean"
 ;PRINT, one[coeff_arr_004121_Oiv2_clean]
@@ -264,18 +270,18 @@ sig0 = sigma_coeff_arr[0,*,*] ;uncertainty in peak intensity
 ;PRINT, "sig0"
 ;PRINT, sig0
 
-p_int = zero[coeff_arr_004121_Oiv2_clean]
-;PRINT, "p_int"
-;PRINT, p_int
-sig_lw = sig2[coeff_arr_004121_Oiv2_clean]
-;PRINT, "sig_lw"
-;PRINT, sig_lw
-lw = two[coeff_arr_004121_Oiv2_clean]
-;PRINT, "lw"
-;PRINT, lw
-sig_p_int = sig0[coeff_arr_004121_Oiv2_clean]
-;PRINT, "sig_p_int"
-;PRINT, sig_p_int
+p_int_004121_Oiv = zero[coeff_arr_004121_Oiv2_clean]
+;PRINT, "p_int_004121_Oiv"
+;PRINT, p_int_004121_Oiv
+sig_lw_004121_Oiv = sig2[coeff_arr_004121_Oiv2_clean]
+;PRINT, "sig_lw_004121_Oiv"
+;PRINT, sig_lw_004121_Oiv
+lw_004121_Oiv = two[coeff_arr_004121_Oiv2_clean]
+;PRINT, "lw_004121_Oiv"
+;PRINT, lw_004121_Oiv
+sig_p_int_004121_Oiv = sig0[coeff_arr_004121_Oiv2_clean]
+;PRINT, "sig_p_int_004121_Oiv"
+;PRINT, sig_p_int_004121_Oiv
 
 ;===============================================================================
 ;introduce limit to parameter values to see how they contribute to
@@ -754,9 +760,10 @@ PRINT, ((limit_vel_width_004121_Oiv[347]+limit_vel_width_004121_Oiv[348])/2)
 
 ;sav = [limit_60_70_e_dens_004121_Oiv, limit_60_70_It_O_004121, limit_60_70_int_int_unc_O_004121, limit_60_70_SNR_0_O_004121, limit_60_70_SNR_O_004121, limit_60_70_SNR2_O_004121]
 
+;old save file where the variables are now in sigma_coeff_arr_004121_Oiv.sav
 ;IF sav NE 0 THEN BEGIN
-sfname2_limit = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/004121/O_IV/limit_sigma_coeff_arr_004121_Oiv.sav'
-SAVE, limit_all_e_dens_004121_Oiv, limit_e_dens_004121_Oiv, limit_70_80_e_dens_004121_Oiv, limit_60_70_e_dens_004121_Oiv, limit_50_60_e_dens_004121_Oiv, limit_40_50_e_dens_004121_Oiv, limit_vel_width_004121_Oiv, limit_velocity_004121_Oiv, p_int, sig_lw, lw, sig_p_int, testt, FILENAME = sfname2_limit
+;sfname2_limit = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/004121/O_IV/limit_sigma_coeff_arr_004121_Oiv.sav'
+;SAVE, limit_all_e_dens_004121_Oiv, limit_e_dens_004121_Oiv, limit_70_80_e_dens_004121_Oiv, limit_60_70_e_dens_004121_Oiv, limit_50_60_e_dens_004121_Oiv, limit_40_50_e_dens_004121_Oiv, limit_vel_width_004121_Oiv, limit_velocity_004121_Oiv, p_int, sig_lw, lw, sig_p_int, UVB_ind_Oiv_004121, FILENAME = sfname2_limit
 
 ;limit_It_O_004121, limit_int_int_unc_O_004121, limit_SNR_0_O_004121, limit_SNR_O_004121, limit_SNR2_O_004121, limit_70_80_It_O_004121, limit_70_80_int_int_unc_O_004121, limit_70_80_SNR_0_O_004121, limit_70_80_SNR_O_004121, limit_70_80_SNR2_O_004121, limit_60_70_It_O_004121, limit_60_70_int_int_unc_O_004121, limit_60_70_SNR_0_O_004121, limit_60_70_SNR_O_004121, limit_60_70_SNR2_O_004121, limit_50_60_It_O_004121, limit_50_60_int_int_unc_O_004121, limit_50_60_SNR_0_O_004121, limit_50_60_SNR_O_004121, limit_50_60_SNR2_O_004121, limit_40_50_It_O_004121, limit_40_50_int_int_unc_O_004121, limit_40_50_SNR_0_O_004121, limit_40_50_SNR_O_004121, limit_40_50_SNR2_O_004121,
 ;ENDIF
@@ -766,14 +773,14 @@ SAVE, limit_all_e_dens_004121_Oiv, limit_e_dens_004121_Oiv, limit_70_80_e_dens_0
 ;===============================================================================
 ;calculate total integrated intensity (TII)
 
-It_O_004121 = (sqrt(2.0*!dpi)*p_int*lw) ;total integrated intensity 
+It_O_004121 = (sqrt(2.0*!dpi)*p_int_004121_Oiv*lw_004121_Oiv) ;total integrated intensity 
 PRINT, "It_O_004121"
 PRINT, It_O_004121
 PRINT, SIZE(It_O_004121) ;1D,464
 
 ;calculate integrated intensity uncertainty
 
-int_int_unc_O_004121 = [2.0*!dpi*((p_int)^2*(sig_lw)^2+(lw)^2*(sig_p_int)^2)]^0.5
+int_int_unc_O_004121 = [2.0*!dpi*((p_int_004121_Oiv)^2*(sig_lw_004121_Oiv)^2+(lw_004121_Oiv)^2*(sig_p_int_004121_Oiv)^2)]^0.5
 PRINT, "int_int_unc_O_004121"
 PRINT, int_int_unc_O_004121
 PRINT, SIZE(int_int_unc_O_004121) ;1D,464
@@ -790,11 +797,11 @@ PRINT, 'SNR rearrangement'
 ;calculate SNR after rearrangement
 
 neg = -0.5
-SNR_O_004121 = (((sig_p_int)^2/(p_int)^2)+((sig_lw)^2/(lw)^2))^neg
+SNR_O_004121 = (((sig_p_int_004121_Oiv)^2/(p_int_004121_Oiv)^2)+((sig_lw_004121_Oiv)^2/(lw_004121_Oiv)^2))^neg
 PRINT, SNR_O_004121
 
 PRINT, SIZE(SNR_O_004121) ;1D,464
-SNR2_O_004121 = WHERE((SNR_O_004121 LT 100), count) ;removes infinity
+SNR2_O_004121 = WHERE((SNR_O_004121 LT 10000), count) ;removes infinity
 PRINT, SIZE(SNR_O_004121[SNR2_O_004121]) ;1D,464
 
 ;make histogram of SNRs and frequencies at which they occur
@@ -836,7 +843,7 @@ PRINT, 'MEAN: ', MOM[0] & PRINT, 'VARIANCE: ', MOM[1] & PRINT, 'SKEWNESS: ', MOM
 ;save parameters from FOR loop
 
 sfname2 = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/004121/O_IV/sigma_coeff_arr_004121_Oiv.sav'
-SAVE, coeff_004121_Oiv2, inst_unc_O_004121, sigma_coeff, sigma_coeff_arr, coeff_arr_004121_Oiv2, It_O_004121, int_int_unc_O_004121, SNR_0_O_004121, SNR_O_004121, SNR2_O_004121, FILENAME = sfname2
+SAVE, coeff_004121_Oiv2, inst_unc_O_004121, sigma_coeff, sigma_coeff_arr, coeff_arr_004121_Oiv2, It_O_004121, int_int_unc_O_004121, SNR_0_O_004121, SNR_O_004121, SNR2_O_004121, limit_vel_width_004121_Oiv, limit_velocity_004121_Oiv, p_int_004121_Oiv, sig_lw_004121_Oiv, lw_004121_Oiv, sig_p_int_004121_Oiv, UVB_ind_Oiv_004121, FILENAME = sfname2
 
 OBJ_DESTROY, dataRast_004121_Oiv
 OBJ_DESTROY, data1400_004121_Oiv

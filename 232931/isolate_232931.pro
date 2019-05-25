@@ -6,7 +6,7 @@
 ;REGION, THEN MANUALLY ITERATING THROUGH SPECTRA LOOKING FOR SIGNS OF NI II
 ;ABSORPTION TO USE FOR ANALYSIS PART OF PROJECT.
 
-;PRO isolate_232931
+PRO isolate_232931
 
 ;restore variables
 
@@ -125,10 +125,10 @@ sig2 = sigma_coeff_arr[2,*,*]
 two = coeff_arr_232931_UV[2,*,*]
 sig0 = sigma_coeff_arr[0,*,*]
 
-p_int = zero[coeff_arr_232931_UV_clean]
-sig_lw = sig2[coeff_arr_232931_UV_clean]
-lw = two[coeff_arr_232931_UV_clean]
-sig_p_int = sig0[coeff_arr_232931_UV_clean]
+p_int_232931 = zero[coeff_arr_232931_UV_clean]
+sig_lw_232931 = sig2[coeff_arr_232931_UV_clean]
+lw_232931 = two[coeff_arr_232931_UV_clean]
+sig_p_int_232931 = sig0[coeff_arr_232931_UV_clean]
 
 ;===============================================================================
 ;introduce limit to parameter values to see how they contribute to
@@ -329,84 +329,25 @@ PRINT, "limit_40_50_e_dens_232931--limit_sig_lw"
 PRINT, N_ELEMENTS(limit_sig_lw[limit_40_50_e_dens_232931])
 PRINT, limit_sig_lw[limit_40_50_e_dens_232931] ;124
 
-;calculate total integrated intensity 80-1000 km/s
-
-;limit_It_Si_232931 = (sqrt(2.0*!dpi)*limit_p_int[limit_e_dens_232931]*limit_lw[limit_e_dens_232931]) ;total integrated intensity 
-;PRINT, "limit_It_Si_232931"
-;PRINT, limit_It_Si_232931
-
-;calculate integrated intensity uncertainty 80-1000 km/s
-
-;limit_int_int_unc_Si_232931 = [2.0*!dpi*((limit_p_int[limit_e_dens_232931])^2*(limit_sig_lw[limit_e_dens_232931])^2+(limit_lw[limit_e_dens_232931])^2*(limit_sig_p_int[limit_e_dens_232931])^2)]^0.5
-;PRINT, "limit_int_int_unc_Si_232931"
-;PRINT, limit_int_int_unc_Si_232931
-
-;calculate total integrated intensity 70-80 km/s
-
-;limit_70_80_It_Si_232931 = (sqrt(2.0*!dpi)*limit_p_int[limit_70_80_e_dens_232931]*limit_lw[limit_70_80_e_dens_232931]) ;total integrated intensity 
-;PRINT, "limit_70_80_It_Si_232931"
-;PRINT, limit_70_80_It_Si_232931
-
-;calculate integrated intensity uncertainty 70-80 km/s
-
-;limit_70_80_int_int_unc_Si_232931 = [2.0*!dpi*((limit_p_int[limit_70_80_e_dens_232931])^2*(limit_sig_lw[limit_70_80_e_dens_232931])^2+(limit_lw[limit_70_80_e_dens_232931])^2*(limit_sig_p_int[limit_70_80_e_dens_232931])^2)]^0.5
-;PRINT, "limit_70_80_int_int_unc_Si_232931"
-;PRINT, limit_70_80_int_int_unc_Si_232931
-
-;calculate total integrated intensity 60-70 km/s
-
-;limit_60_70_It_Si_232931 = (sqrt(2.0*!dpi)*limit_p_int[limit_60_70_e_dens_232931]*limit_lw[limit_60_70_e_dens_232931]) ;total integrated intensity 
-;PRINT, "limit_60_70_It_Si_232931"
-;PRINT, limit_60_70_It_Si_232931
-
-;calculate integrated intensity uncertainty 60-70 km/s
-
-;limit_60_70_int_int_unc_Si_232931 = [2.0*!dpi*((limit_p_int[limit_60_70_e_dens_232931])^2*(limit_sig_lw[limit_60_70_e_dens_232931])^2+(limit_lw[limit_60_70_e_dens_232931])^2*(limit_sig_p_int[limit_60_70_e_dens_232931])^2)]^0.5
-;PRINT, "limit_60_70_int_int_unc_Si_232931"
-;PRINT, limit_60_70_int_int_unc_Si_232931
-
-;calculate total integrated intensity 50-60 km/s
-
-;limit_50_60_It_Si_232931 = (sqrt(2.0*!dpi)*limit_p_int[limit_50_60_e_dens_232931]*limit_lw[limit_50_60_e_dens_232931]) ;total integrated intensity 
-;PRINT, "limit_50_60_It_Si_232931"
-;PRINT, limit_50_60_It_Si_232931
-
-;calculate integrated intensity uncertainty 50-60 km/s
-
-;limit_50_60_int_int_unc_Si_232931 = [2.0*!dpi*((limit_p_int[limit_50_60_e_dens_232931])^2*(limit_sig_lw[limit_50_60_e_dens_232931])^2+(limit_lw[limit_50_60_e_dens_232931])^2*(limit_sig_p_int[limit_50_60_e_dens_232931])^2)]^0.5
-;PRINT, "limit_50_60_int_int_unc_Si_232931"
-;PRINT, limit_50_60_int_int_unc_Si_232931
-
-;calculate total integrated intensity 40-50 km/s
-
-;limit_40_50_It_Si_232931 = (sqrt(2.0*!dpi)*limit_p_int[limit_40_50_e_dens_232931]*limit_lw[limit_40_50_e_dens_232931]) ;total integrated intensity 
-;PRINT, "limit_40_50_It_Si_232931"
-;PRINT, limit_40_50_It_Si_232931
-
-;calculate integrated intensity uncertainty 40-50 km/s
-
-;limit_40_50_int_int_unc_Si_232931 = [2.0*!dpi*((limit_p_int[limit_40_50_e_dens_232931])^2*(limit_sig_lw[limit_40_50_e_dens_232931])^2+(limit_lw[limit_40_50_e_dens_232931])^2*(limit_sig_p_int[limit_40_50_e_dens_232931])^2)]^0.5
-;PRINT, "limit_40_50_int_int_unc_Si_232931"
-;PRINT, limit_40_50_int_int_unc_Si_232931
-
 ;save parameters from FOR loop
 
-sfname_UV_limit = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/232931/limit_IT_UV_232931.sav'
-SAVE, limit_all_e_dens_232931, limit_e_dens_232931, limit_70_80_e_dens_232931, limit_60_70_e_dens_232931, limit_50_60_e_dens_232931, limit_40_50_e_dens_232931, limit_vel_width_232931, limit_velocity_232931, p_int, sig_lw, lw, sig_p_int, FILENAME = sfname_UV_limit
+;moved to other file
+;sfname_UV_limit = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/232931/limit_IT_UV_232931.sav'
+;SAVE, limit_all_e_dens_232931, limit_e_dens_232931, limit_70_80_e_dens_232931, limit_60_70_e_dens_232931, limit_50_60_e_dens_232931, limit_40_50_e_dens_232931, limit_vel_width_232931, limit_velocity_232931, p_int, sig_lw, lw, sig_p_int, FILENAME = sfname_UV_limit
 
 ;limit_e_dens_232931, limit_It_Si_232931, limit_int_int_unc_Si_232931, limit_70_80_e_dens_232931, limit_70_80_It_Si_232931, limit_70_80_int_int_unc_Si_232931, limit_60_70_e_dens_232931, limit_60_70_It_Si_232931, limit_60_70_int_int_unc_Si_232931, limit_50_60_e_dens_232931, limit_50_60_It_Si_232931, limit_50_60_int_int_unc_Si_232931, limit_40_50_e_dens_232931, limit_40_50_It_Si_232931, limit_40_50_int_int_unc_Si_232931
 
 ;===============================================================================
 ;calculate total integrated intensity
 
-It_Si_232931 = (sqrt(2.0*!dpi)*p_int*lw) ;total integrated intensity 
+It_Si_232931 = (sqrt(2.0*!dpi)*p_int_232931*lw_232931) ;total integrated intensity 
 PRINT, "It_Si_232931"
 PRINT, It_Si_232931
 PRINT, SIZE(It_Si_232931) ;1D,228
 
 ;calculate integrated intensity uncertainty
 
-int_int_unc_Si_232931 = [2.0*!dpi*((p_int)^2*(sig_lw)^2+(lw)^2*(sig_p_int)^2)]^0.5
+int_int_unc_Si_232931 = [2.0*!dpi*((p_int_232931)^2*(sig_lw_232931)^2+(lw_232931)^2*(sig_p_int_232931)^2)]^0.5
 PRINT, "int_int_unc_Si_232931"
 PRINT, int_int_unc_Si_232931
 PRINT, SIZE(int_int_unc_Si_232931) ;1D,228
@@ -414,7 +355,7 @@ PRINT, SIZE(int_int_unc_Si_232931) ;1D,228
 ;save parameters from FOR loop
 
 sfname_UV = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/232931/IT_UV_232931.sav'
-SAVE, coeff_232931_UV, inst_unc_Si_232931, sigma_coeff, sigma_coeff_arr, coeff_arr_232931_UV, It_Si_232931, int_int_unc_Si_232931, FILENAME = sfname_UV
+SAVE, coeff_232931_UV, inst_unc_Si_232931, sigma_coeff, sigma_coeff_arr, coeff_arr_232931_UV, It_Si_232931, int_int_unc_Si_232931, limit_vel_width_232931, limit_velocity_232931, p_int_232931, sig_lw_232931, lw_232931, sig_p_int_232931, FILENAME = sfname_UV
 
 ;===============================================================================
 

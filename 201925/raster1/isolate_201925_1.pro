@@ -6,69 +6,69 @@
 ;REGION, THEN MANUALLY ITERATING THROUGH SPECTRA LOOKING FOR SIGNS OF NI II
 ;ABSORPTION TO USE FOR ANALYSIS PART OF PROJECT.
 
-;PRO isolate_201925_1
+PRO isolate_201925_1
 
 ;restore variables
 
-;rfname = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/201925/raster1/all_vars_201925_1.sav'
-;RESTORE, rfname
+rfname = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/201925/raster1/all_vars_201925_1.sav'
+RESTORE, rfname
 
 ;ARRAY_INDICES to convert 1D index to 2D (ypos and raster)
 
-;raster_201925_1 = N_ELEMENTS(nspectraRast1394_201925_1[0,0,*]) ;400
-;yposition_201925_1 = N_ELEMENTS(nspectraRast1394_201925_1[0,*,0]) ;1093
-;PRINT, yposition_201925_1
+raster_201925_1 = N_ELEMENTS(nspectraRast1394_201925_1[0,0,*]) ;400
+yposition_201925_1 = N_ELEMENTS(nspectraRast1394_201925_1[0,*,0]) ;1093
+PRINT, yposition_201925_1
 
-;cut_ind_ry_201925_1 = ARRAY_INDICES([raster_201925_1,yposition_201925_1], cut_ind_201925_1, /DIMENSIONS)
-;PRINT, SIZE(cut_ind_ry_201925_1) ;2D 2,6448 where 2 is [raster,ypos]
+cut_ind_ry_201925_1 = ARRAY_INDICES([raster_201925_1,yposition_201925_1], cut_ind_201925_1, /DIMENSIONS)
+PRINT, SIZE(cut_ind_ry_201925_1) ;2D 2,6448 where 2 is [raster,ypos]
 
-;cut_ind_r_201925_1 = REFORM(cut_ind_ry_201925_1[0,*]) ;1D 6448
-;PRINT, SIZE(cut_ind_r_201925_1)
-;cut_ind_y_201925_1 = REFORM(cut_ind_ry_201925_1[1,*]) ;1D 6448
-;PRINT, SIZE(cut_ind_y_201925_1)
+cut_ind_r_201925_1 = REFORM(cut_ind_ry_201925_1[0,*]) ;1D 6448
+PRINT, SIZE(cut_ind_r_201925_1)
+cut_ind_y_201925_1 = REFORM(cut_ind_ry_201925_1[1,*]) ;1D 6448
+PRINT, SIZE(cut_ind_y_201925_1)
 
 ;pull out all green rectangle UVB pop. indices
 
-;cut_size_201925_1 = N_ELEMENTS(cut_ind_201925_1) ;6448
-;PRINT, cut_size_201925_1
-;cut_ind_r_s_201925_1 = N_ELEMENTS(cut_ind_r_201925_1) ;6448
-;PRINT, cut_ind_r_s_201925_1
-;cut_ind_y_s_201925_1 = N_ELEMENTS(cut_ind_y_201925_1) ;6448
-;PRINT, cut_ind_y_s_201925_1
+cut_size_201925_1 = N_ELEMENTS(cut_ind_201925_1) ;6448
+PRINT, cut_size_201925_1
+cut_ind_r_s_201925_1 = N_ELEMENTS(cut_ind_r_201925_1) ;6448
+PRINT, cut_ind_r_s_201925_1
+cut_ind_y_s_201925_1 = N_ELEMENTS(cut_ind_y_201925_1) ;6448
+PRINT, cut_ind_y_s_201925_1
 
-;is_absorb_201925_1 = LONARR(cut_size_201925_1)
+is_absorb_201925_1 = LONARR(cut_size_201925_1)
 
-;TIC
-;FOR i = 0, cut_size_201925_1-1 DO BEGIN
-;	WINDOW, XSIZE = 900, YSIZE = 700
-;	PLOT, lambda1394_201925_1[19:173], REFORM(nspectraRast1394_201925_1[*,cut_ind_y_201925_1[i],cut_ind_r_201925_1[i]]), XTITLE = 'Wavelength['+STRING("305B)+']', YTITLE = 'Instensity [Arb. Units]', XRANGE = [1392.2,1395.3], POSITION = [x0,y0,x0+dx,y0+dy]
-;	PLOTS, [1393.35,1393.35], !Y.CRANGE, COLOR = 170, THICK = 3, LINESTYLE = 1
-;	ch = ''
-;	PRINT, i
-;	READ, ch, PROMPT = 'UVB?: '
-;		IF ch EQ 'y' THEN BEGIN
-;		is_absorb_201925_1[i] = 1
-;		ind_absorb_201925_1 = WHERE(is_absorb_201925_1 EQ 1)
-;		UVB_ind_201925_1 = cut_ind_201925_1[ind_absorb_201925_1]
-;		ENDIF
-;		IF ch EQ 'q' THEN BREAK
-;ENDFOR
-;PRINT, 'VALUE LEFT OFF: ', i
-;TOC ;1.81 hrs
+TIC
+FOR i = 0, cut_size_201925_1-1 DO BEGIN
+	WINDOW, XSIZE = 900, YSIZE = 700
+	PLOT, lambda1394_201925_1[19:173], REFORM(nspectraRast1394_201925_1[*,cut_ind_y_201925_1[i],cut_ind_r_201925_1[i]]), XTITLE = 'Wavelength['+STRING("305B)+']', YTITLE = 'Instensity [Arb. Units]', XRANGE = [1392.2,1395.3], POSITION = [x0,y0,x0+dx,y0+dy]
+	PLOTS, [1393.35,1393.35], !Y.CRANGE, COLOR = 170, THICK = 3, LINESTYLE = 1
+	ch = ''
+	PRINT, i
+	READ, ch, PROMPT = 'UVB?: '
+		IF ch EQ 'y' THEN BEGIN
+		is_absorb_201925_1[i] = 1
+		ind_absorb_201925_1 = WHERE(is_absorb_201925_1 EQ 1)
+		UVB_ind_201925_1 = cut_ind_201925_1[ind_absorb_201925_1]
+		ENDIF
+		IF ch EQ 'q' THEN BREAK
+ENDFOR
+PRINT, 'VALUE LEFT OFF: ', i
+TOC ;1.81 hrs
 
 ;save new params
 
-;sfname = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/201925/raster1/iso_vars_201925_1.sav'
-;SAVE, UVB_ind_201925_1, is_absorb_201925_1, ind_absorb_201925_1, FILENAME = sfname
+sfname = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/201925/raster1/iso_vars_201925_1.sav'
+SAVE, UVB_ind_201925_1, is_absorb_201925_1, ind_absorb_201925_1, FILENAME = sfname
 
-;sfname_safe = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/201925/raster1/iso_vars_safe_201925_1.sav'
-;SAVE, /VARIABLES, FILENAME = sfname_safe
+sfname_safe = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/201925/raster1/iso_vars_safe_201925_1.sav'
+SAVE, /VARIABLES, FILENAME = sfname_safe
 
 rfname2 = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/201925/raster1/iso_vars_safe_201925_1.sav'
 RESTORE, rfname2
 
-;rfname3 = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/201925/raster1/iso_vars_201925_1.sav'
-;RESTORE, rfname3
+rfname3 = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/201925/raster1/iso_vars_201925_1.sav'
+RESTORE, rfname3
 
 ;===============================================================================
 
@@ -120,16 +120,17 @@ PRINT, N_ELEMENTS(coeff_arr_201925_1_UV_clean) ;315 (1389....)
 ;sig_lw = sigma_coeff_arr[2,*,*]
 ;lw = coeff_arr_201925_1_UV[2,*,*]
 ;sig_p_int = sigma_coeff_arr[0,*,*]
+;old
 
 zero = coeff_arr_201925_1_UV[0,*,*] 
 sig2 = sigma_coeff_arr[2,*,*] 
 two = coeff_arr_201925_1_UV[2,*,*]
 sig0 = sigma_coeff_arr[0,*,*]
 
-p_int = zero[coeff_arr_201925_1_UV_clean]
-sig_lw = sig2[coeff_arr_201925_1_UV_clean]
-lw = two[coeff_arr_201925_1_UV_clean]
-sig_p_int = sig0[coeff_arr_201925_1_UV_clean]
+p_int_201925_1 = zero[coeff_arr_201925_1_UV_clean]
+sig_lw_201925_1 = sig2[coeff_arr_201925_1_UV_clean]
+lw_201925_1 = two[coeff_arr_201925_1_UV_clean]
+sig_p_int_201925_1 = sig0[coeff_arr_201925_1_UV_clean]
 
 ;===============================================================================
 ;introduce limit to parameter values to see how they contribute to
@@ -330,84 +331,25 @@ PRINT, "limit_40_50_e_dens_201925_1--limit_sig_lw"
 PRINT, N_ELEMENTS(limit_sig_lw[limit_40_50_e_dens_201925_1])
 PRINT, limit_sig_lw[limit_40_50_e_dens_201925_1] ;40
 
-;calculate total integrated intensity 80-1000 km/s
-
-;limit_It_Si_201925_1 = (sqrt(2.0*!dpi)*limit_p_int[limit_e_dens_201925_1]*limit_lw[limit_e_dens_201925_1]) ;total integrated intensity 
-;PRINT, "limit_It_Si_201925_1"
-;PRINT, limit_It_Si_201925_1
-
-;calculate integrated intensity uncertainty 80-1000 km/s
-
-;limit_int_int_unc_Si_201925_1 = [2.0*!dpi*((limit_p_int[limit_e_dens_201925_1])^2*(limit_sig_lw[limit_e_dens_201925_1])^2+(limit_lw[limit_e_dens_201925_1])^2*(limit_sig_p_int[limit_e_dens_201925_1])^2)]^0.5
-;PRINT, "limit_int_int_unc_Si_201925_1"
-;PRINT, limit_int_int_unc_Si_201925_1
-
-;calculate total integrated intensity 70-80 km/s
-
-;limit_70_80_It_Si_201925_1 = (sqrt(2.0*!dpi)*limit_p_int[limit_70_80_e_dens_201925_1]*limit_lw[limit_70_80_e_dens_201925_1]) ;total integrated intensity 
-;PRINT, "limit_70_80_It_Si_201925_1"
-;PRINT, limit_70_80_It_Si_201925_1
-
-;calculate integrated intensity uncertainty 70-80 km/s
-
-;limit_70_80_int_int_unc_Si_201925_1 = [2.0*!dpi*((limit_p_int[limit_70_80_e_dens_201925_1])^2*(limit_sig_lw[limit_70_80_e_dens_201925_1])^2+(limit_lw[limit_70_80_e_dens_201925_1])^2*(limit_sig_p_int[limit_70_80_e_dens_201925_1])^2)]^0.5
-;PRINT, "limit_70_80_int_int_unc_Si_201925_1"
-;PRINT, limit_70_80_int_int_unc_Si_201925_1
-
-;calculate total integrated intensity 60-70 km/s
-
-;limit_60_70_It_Si_201925_1 = (sqrt(2.0*!dpi)*limit_p_int[limit_60_70_e_dens_201925_1]*limit_lw[limit_60_70_e_dens_201925_1]) ;total integrated intensity 
-;PRINT, "limit_60_70_It_Si_201925_1"
-;PRINT, limit_60_70_It_Si_201925_1
-
-;calculate integrated intensity uncertainty 60-70 km/s
-
-;limit_60_70_int_int_unc_Si_201925_1 = [2.0*!dpi*((limit_p_int[limit_60_70_e_dens_201925_1])^2*(limit_sig_lw[limit_60_70_e_dens_201925_1])^2+(limit_lw[limit_60_70_e_dens_201925_1])^2*(limit_sig_p_int[limit_60_70_e_dens_201925_1])^2)]^0.5
-;PRINT, "limit_60_70_int_int_unc_Si_201925_1"
-;PRINT, limit_60_70_int_int_unc_Si_201925_1
-
-;calculate total integrated intensity 50-60 km/s
-
-;limit_50_60_It_Si_201925_1 = (sqrt(2.0*!dpi)*limit_p_int[limit_50_60_e_dens_201925_1]*limit_lw[limit_50_60_e_dens_201925_1]) ;total integrated intensity 
-;PRINT, "limit_50_60_It_Si_201925_1"
-;PRINT, limit_50_60_It_Si_201925_1
-
-;calculate integrated intensity uncertainty 50-60 km/s
-
-;limit_50_60_int_int_unc_Si_201925_1 = [2.0*!dpi*((limit_p_int[limit_50_60_e_dens_201925_1])^2*(limit_sig_lw[limit_50_60_e_dens_201925_1])^2+(limit_lw[limit_50_60_e_dens_201925_1])^2*(limit_sig_p_int[limit_50_60_e_dens_201925_1])^2)]^0.5
-;PRINT, "limit_50_60_int_int_unc_Si_201925_1"
-;PRINT, limit_50_60_int_int_unc_Si_201925_1
-
-;calculate total integrated intensity 40-50 km/s
-
-;limit_40_50_It_Si_201925_1 = (sqrt(2.0*!dpi)*limit_p_int[limit_40_50_e_dens_201925_1]*limit_lw[limit_40_50_e_dens_201925_1]) ;total integrated intensity 
-;PRINT, "limit_40_50_It_Si_201925_1"
-;PRINT, limit_40_50_It_Si_201925_1
-
-;calculate integrated intensity uncertainty 40-50 km/s
-
-;limit_40_50_int_int_unc_Si_201925_1 = [2.0*!dpi*((limit_p_int[limit_40_50_e_dens_201925_1])^2*(limit_sig_lw[limit_40_50_e_dens_201925_1])^2+(limit_lw[limit_40_50_e_dens_201925_1])^2*(limit_sig_p_int[limit_40_50_e_dens_201925_1])^2)]^0.5
-;PRINT, "limit_40_50_int_int_unc_Si_201925_1"
-;PRINT, limit_40_50_int_int_unc_Si_201925_1
-
 ;save parameters from FOR loop
 
-sfname_UV_limit = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/201925/raster1/limit_IT_UV_201925_1.sav'
-SAVE, limit_all_e_dens_201925_1, limit_e_dens_201925_1, limit_70_80_e_dens_201925_1, limit_60_70_e_dens_201925_1, limit_50_60_e_dens_201925_1, limit_40_50_e_dens_201925_1, limit_vel_width_201925_1, limit_velocity_201925_1, p_int, sig_lw, lw, sig_p_int, FILENAME = sfname_UV_limit
+;moved to other file
+;sfname_UV_limit = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/201925/raster1/limit_IT_UV_201925_1.sav'
+;SAVE, limit_all_e_dens_201925_1, limit_e_dens_201925_1, limit_70_80_e_dens_201925_1, limit_60_70_e_dens_201925_1, limit_50_60_e_dens_201925_1, limit_40_50_e_dens_201925_1, limit_vel_width_201925_1, limit_velocity_201925_1, p_int, sig_lw, lw, sig_p_int, FILENAME = sfname_UV_limit
 
 ;limit_e_dens_201925_1, limit_It_Si_201925_1, limit_int_int_unc_Si_201925_1, limit_70_80_e_dens_201925_1, limit_70_80_It_Si_201925_1, limit_70_80_int_int_unc_Si_201925_1, limit_60_70_e_dens_201925_1, limit_60_70_It_Si_201925_1, limit_60_70_int_int_unc_Si_201925_1, limit_50_60_e_dens_201925_1, limit_50_60_It_Si_201925_1, limit_50_60_int_int_unc_Si_201925_1, limit_40_50_e_dens_201925_1, limit_40_50_It_Si_201925_1, limit_40_50_int_int_unc_Si_201925_1
 
 ;===============================================================================
 ;calculate total integrated intensity
 
-It_Si_201925_1 = (sqrt(2.0*!dpi)*p_int*lw) ;total integrated intensity 
+It_Si_201925_1 = (sqrt(2.0*!dpi)*p_int_201925_1*lw_201925_1) ;total integrated intensity 
 PRINT, "It_Si_201925_1"
 PRINT, It_Si_201925_1
 PRINT, SIZE(It_Si_201925_1) ;1D,315
 
 ;calculate integrated intensity uncertainty
 
-int_int_unc_Si_201925_1 = [2.0*!dpi*((p_int)^2*(sig_lw)^2+(lw)^2*(sig_p_int)^2)]^0.5
+int_int_unc_Si_201925_1 = [2.0*!dpi*((p_int_201925_1)^2*(sig_lw_201925_1)^2+(lw_201925_1)^2*(sig_p_int_201925_1)^2)]^0.5
 PRINT, "int_int_unc_Si_201925_1"
 PRINT, int_int_unc_Si_201925_1
 PRINT, SIZE(int_int_unc_Si_201925_1) ;1D,315
@@ -415,7 +357,7 @@ PRINT, SIZE(int_int_unc_Si_201925_1) ;1D,315
 ;save parameters from FOR loop
 
 sfname_UV = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/201925/raster1/IT_UV_201925_1.sav'
-SAVE, coeff_201925_1_UV, inst_unc_Si_201925_1, sigma_coeff, sigma_coeff_arr, coeff_arr_201925_1_UV, It_Si_201925_1, int_int_unc_Si_201925_1, FILENAME = sfname_UV
+SAVE, coeff_201925_1_UV, inst_unc_Si_201925_1, sigma_coeff, sigma_coeff_arr, coeff_arr_201925_1_UV, It_Si_201925_1, int_int_unc_Si_201925_1, limit_vel_width_201925_1, limit_velocity_201925_1, p_int_201925_1, sig_lw_201925_1, lw_201925_1, sig_p_int_201925_1, FILENAME = sfname_UV
 
 ;===============================================================================
 

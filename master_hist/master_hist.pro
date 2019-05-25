@@ -6,7 +6,7 @@
 ;ORDER TO CREATE ONE MASTER HISTOGRAM OF ALL SNRs AND THE FREQUENCY OF
 ;APPEARANCE OF O IV EMISSION LINE IN UVB SPECTRA.
 
-;PRO master_hist
+PRO master_hist
 
 ;restore 004121 TIIs, SNRs, etc.
 
@@ -24,9 +24,9 @@ num_five = WHERE((SNR_O_004121[SNR2_O_004121] GT 5.0), count) ;47
 PRINT, SIZE(num_five)
 num_ten = WHERE((SNR_O_004121[SNR2_O_004121] GT 10.0), count) ;12
 PRINT, SIZE(num_ten)
-num_twenty = WHERE((SNR_O_004121[SNR2_O_004121] GT 20.0), count) ;3
+num_twenty = WHERE((SNR_O_004121[SNR2_O_004121] GT 20.0), count) ;0
 PRINT, SIZE(num_twenty)
-num_forty = WHERE((SNR_O_004121[SNR2_O_004121] GT 40.0), count) ;3
+num_forty = WHERE((SNR_O_004121[SNR2_O_004121] GT 40.0), count) ;0
 PRINT, SIZE(num_forty)
 
 ;restore 050655 TIIs, SNRs, etc.
@@ -47,7 +47,7 @@ num2_ten = WHERE((SNR_O_050655[SNR2_O_050655] GT 10.0), count) ;15
 PRINT, SIZE(num2_ten)
 num2_twenty = WHERE((SNR_O_050655[SNR2_O_050655] GT 20.0), count) ;1
 PRINT, SIZE(num2_twenty)
-num2_forty = WHERE((SNR_O_050655[SNR2_O_050655] GT 40.0), count) ;3
+num2_forty = WHERE((SNR_O_050655[SNR2_O_050655] GT 40.0), count) ;0
 PRINT, SIZE(num2_forty)
 
 ;restore 050655_1 TIIs, SNRs, etc.
@@ -64,11 +64,11 @@ num3_three = WHERE((SNR_O_050655_1[SNR2_O_050655_1] GT 3.0), count) ;109
 PRINT, SIZE(num3_three)
 num3_five = WHERE((SNR_O_050655_1[SNR2_O_050655_1] GT 5.0), count) ;47
 PRINT, SIZE(num3_five)
-num3_ten = WHERE((SNR_O_050655_1[SNR2_O_050655_1] GT 10.0), count) ;3
+num3_ten = WHERE((SNR_O_050655_1[SNR2_O_050655_1] GT 10.0), count) ;0
 PRINT, SIZE(num3_ten)
-num3_twenty = WHERE((SNR_O_050655_1[SNR2_O_050655_1] GT 20.0), count) ;3
+num3_twenty = WHERE((SNR_O_050655_1[SNR2_O_050655_1] GT 20.0), count) ;0
 PRINT, SIZE(num3_twenty)
-num3_forty = WHERE((SNR_O_050655_1[SNR2_O_050655_1] GT 40.0), count) ;3
+num3_forty = WHERE((SNR_O_050655_1[SNR2_O_050655_1] GT 40.0), count) ;0
 PRINT, SIZE(num3_forty)
 
 ;restore 052046 TIIs, SNRs, etc.
@@ -110,7 +110,7 @@ num5_ten = WHERE((SNR_O_061606[SNR2_O_061606] GT 10.0), count) ;18
 PRINT, SIZE(num5_ten)
 num5_twenty = WHERE((SNR_O_061606[SNR2_O_061606] GT 20.0), count) ;1
 PRINT, SIZE(num5_twenty)
-num5_forty = WHERE((SNR_O_061606[SNR2_O_061606] GT 40.0), count) ;3
+num5_forty = WHERE((SNR_O_061606[SNR2_O_061606] GT 40.0), count) ;0
 PRINT, SIZE(num5_forty)
 
 ;restore 114951 TIIs, SNRs, etc.
@@ -152,7 +152,7 @@ num7_ten = WHERE((SNR_O_122033[SNR2_O_122033] GT 10.0), count) ;57
 PRINT, SIZE(num7_ten)
 num7_twenty = WHERE((SNR_O_122033[SNR2_O_122033] GT 20.0), count) ;5
 PRINT, SIZE(num7_twenty)
-num7_forty = WHERE((SNR_O_122033[SNR2_O_122033] GT 40.0), count) ;3
+num7_forty = WHERE((SNR_O_122033[SNR2_O_122033] GT 40.0), count) ;0
 PRINT, SIZE(num7_forty)
 
 ;restore 160806 TIIs, SNRs, etc.
@@ -173,7 +173,7 @@ num8_ten = WHERE((SNR_O_160806[SNR2_O_160806] GT 10.0), count) ;7
 PRINT, SIZE(num8_ten)
 num8_twenty = WHERE((SNR_O_160806[SNR2_O_160806] GT 20.0), count) ;1
 PRINT, SIZE(num8_twenty)
-num8_forty = WHERE((SNR_O_160806[SNR2_O_160806] GT 40.0), count) ;3
+num8_forty = WHERE((SNR_O_160806[SNR2_O_160806] GT 40.0), count) ;0
 PRINT, SIZE(num8_forty)
 
 ;restore 163205 TIIs, SNRs, etc.
@@ -192,9 +192,9 @@ num9_five = WHERE((SNR_O_163205[SNR2_O_163205] GT 5.0), count) ;21
 PRINT, SIZE(num9_five)
 num9_ten = WHERE((SNR_O_163205[SNR2_O_163205] GT 10.0), count) ;1
 PRINT, SIZE(num9_ten)
-num9_twenty = WHERE((SNR_O_163205[SNR2_O_163205] GT 20.0), count) ;3
+num9_twenty = WHERE((SNR_O_163205[SNR2_O_163205] GT 20.0), count) ;0
 PRINT, SIZE(num9_twenty)
-num9_forty = WHERE((SNR_O_163205[SNR2_O_163205] GT 40.0), count) ;3
+num9_forty = WHERE((SNR_O_163205[SNR2_O_163205] GT 40.0), count) ;0
 PRINT, SIZE(num9_forty)
 
 ;restore 174905 TIIs, SNRs, etc.
@@ -215,7 +215,7 @@ num10_ten = WHERE((SNR_O_174905[SNR2_O_174905] GT 10.0), count) ;95
 PRINT, SIZE(num10_ten)
 num10_twenty = WHERE((SNR_O_174905[SNR2_O_174905] GT 20.0), count) ;10
 PRINT, SIZE(num10_twenty)
-num10_forty = WHERE((SNR_O_174905[SNR2_O_174905] GT 40.0), count) ;3
+num10_forty = WHERE((SNR_O_174905[SNR2_O_174905] GT 40.0), count) ;0
 PRINT, SIZE(num10_forty)
 
 ;restore 181205 TIIs, SNRs, etc.
@@ -234,9 +234,9 @@ num11_five = WHERE((SNR_O_181205[SNR2_O_181205] GT 5.0), count) ;41
 PRINT, SIZE(num11_five)
 num11_ten = WHERE((SNR_O_181205[SNR2_O_181205] GT 10.0), count) ;3
 PRINT, SIZE(num11_ten)
-num11_twenty = WHERE((SNR_O_181205[SNR2_O_181205] GT 20.0), count) ;3
+num11_twenty = WHERE((SNR_O_181205[SNR2_O_181205] GT 20.0), count) ;0
 PRINT, SIZE(num11_twenty)
-num11_forty = WHERE((SNR_O_181205[SNR2_O_181205] GT 40.0), count) ;3
+num11_forty = WHERE((SNR_O_181205[SNR2_O_181205] GT 40.0), count) ;0
 PRINT, SIZE(num11_forty)
 
 ;restore 201925 TIIs, SNRs, etc.
@@ -255,9 +255,9 @@ num12_five = WHERE((SNR_O_201925[SNR2_O_201925] GT 5.0), count) ;13
 PRINT, SIZE(num12_five)
 num12_ten = WHERE((SNR_O_201925[SNR2_O_201925] GT 10.0), count) ;3
 PRINT, SIZE(num12_ten)
-num12_twenty = WHERE((SNR_O_201925[SNR2_O_201925] GT 20.0), count) ;3
+num12_twenty = WHERE((SNR_O_201925[SNR2_O_201925] GT 20.0), count) ;0
 PRINT, SIZE(num12_twenty)
-num12_forty = WHERE((SNR_O_201925[SNR2_O_201925] GT 40.0), count) ;3
+num12_forty = WHERE((SNR_O_201925[SNR2_O_201925] GT 40.0), count) ;0
 PRINT, SIZE(num12_forty)
 
 ;restore 201925_1 TIIs, SNRs, etc.
@@ -276,9 +276,9 @@ num13_five = WHERE((SNR_O_201925_1[SNR2_O_201925_1] GT 5.0), count) ;24
 PRINT, SIZE(num13_five)
 num13_ten = WHERE((SNR_O_201925_1[SNR2_O_201925_1] GT 10.0), count) ;7
 PRINT, SIZE(num13_ten)
-num13_twenty = WHERE((SNR_O_201925_1[SNR2_O_201925_1] GT 20.0), count) ;3
+num13_twenty = WHERE((SNR_O_201925_1[SNR2_O_201925_1] GT 20.0), count) ;0
 PRINT, SIZE(num13_twenty)
-num13_forty = WHERE((SNR_O_201925_1[SNR2_O_201925_1] GT 40.0), count) ;3
+num13_forty = WHERE((SNR_O_201925_1[SNR2_O_201925_1] GT 40.0), count) ;0
 PRINT, SIZE(num13_forty)
 
 ;restore 203906 TIIs, SNRs, etc.
@@ -297,9 +297,9 @@ num14_five = WHERE((SNR_O_203906[SNR2_O_203906] GT 5.0), count) ;224
 PRINT, SIZE(num14_five)
 num14_ten = WHERE((SNR_O_203906[SNR2_O_203906] GT 10.0), count) ;70
 PRINT, SIZE(num14_ten)
-num14_twenty = WHERE((SNR_O_203906[SNR2_O_203906] GT 20.0), count) ;3
+num14_twenty = WHERE((SNR_O_203906[SNR2_O_203906] GT 20.0), count) ;0
 PRINT, SIZE(num14_twenty)
-num14_forty = WHERE((SNR_O_203906[SNR2_O_203906] GT 40.0), count) ;3
+num14_forty = WHERE((SNR_O_203906[SNR2_O_203906] GT 40.0), count) ;0
 PRINT, SIZE(num14_forty)
 
 ;restore 215426 TIIs, SNRs, etc.
@@ -316,11 +316,11 @@ num15_three = WHERE((SNR_O_215426[SNR2_O_215426] GT 3.0), count) ;26
 PRINT, SIZE(num15_three)
 num15_five = WHERE((SNR_O_215426[SNR2_O_215426] GT 5.0), count) ;15
 PRINT, SIZE(num15_five)
-num15_ten = WHERE((SNR_O_215426[SNR2_O_215426] GT 10.0), count) ;3
+num15_ten = WHERE((SNR_O_215426[SNR2_O_215426] GT 10.0), count) ;0
 PRINT, SIZE(num15_ten)
-num15_twenty = WHERE((SNR_O_215426[SNR2_O_215426] GT 20.0), count) ;3
+num15_twenty = WHERE((SNR_O_215426[SNR2_O_215426] GT 20.0), count) ;0
 PRINT, SIZE(num15_twenty)
-num15_forty = WHERE((SNR_O_215426[SNR2_O_215426] GT 40.0), count) ;3
+num15_forty = WHERE((SNR_O_215426[SNR2_O_215426] GT 40.0), count) ;0
 PRINT, SIZE(num15_forty)
 
 ;restore 232931 TIIs, SNRs, etc.
@@ -339,9 +339,9 @@ num16_five = WHERE((SNR_O_232931[SNR2_O_232931] GT 5.0), count) ;10
 PRINT, SIZE(num16_five)
 num16_ten = WHERE((SNR_O_232931[SNR2_O_232931] GT 10.0), count) ;3
 PRINT, SIZE(num16_ten)
-num16_twenty = WHERE((SNR_O_232931[SNR2_O_232931] GT 20.0), count) ;3
+num16_twenty = WHERE((SNR_O_232931[SNR2_O_232931] GT 20.0), count) ;0
 PRINT, SIZE(num16_twenty)
-num16_forty = WHERE((SNR_O_232931[SNR2_O_232931] GT 40.0), count) ;3
+num16_forty = WHERE((SNR_O_232931[SNR2_O_232931] GT 40.0), count) ;0
 PRINT, SIZE(num16_forty)
 
 ;===============================================================================
@@ -394,7 +394,7 @@ SET_PLOT, 'ps'
 DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/master_hist/master_histogram.eps', /ENCAPSULATED
 
 SNR_hist = HISTOGRAM(total_SNR, BINSIZE = 0.5, LOCATIONS = x_hist)
-PLOT, x_hist, SNR_hist, PSYM = 10, XTITLE = "Signal-to-Noise", YTITLE = "Frequency", TITLE = "Master Histogram of Signal-to-Noise of AR11974", /YLOG, YRANGE = [1.0e-1,1.0e4], POSITION = [x0,y0,x0+dx,y0+dy], COLOR = 1, XCHARSIZE = 1.5, YCHARSIZE = 1.5, CHARSIZE = 1.5, XSTYLE = 1, THICK = 4, XTHICK = 10, YTHICK = 10
+PLOT, x_hist, SNR_hist, PSYM = 10, XTITLE = "Signal-to-Noise", YTITLE = "Frequency", TITLE = "Master Histogram of Signal-to-Noise of AR11974", /YLOG, YRANGE = [1.0e-1,1.0e4], POSITION = [x0,y0,x0+dx,y0+dy], COLOR = 1, XCHARSIZE = 1.5, YCHARSIZE = 1.5, CHARSIZE = 1.5, XSTYLE = 1, THICK = 10, XTHICK = 10, YTHICK = 10, CHARTHICK = 5
 
 DEVICE, /CLOSE
 
@@ -467,10 +467,10 @@ TVLCT, [[0],[0],[0]], 1
 SET_PLOT, 'ps'
 DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/master_hist/freq_histogram.eps', /ENCAPSULATED
 
-PLOT, x_arr, percent_arr, XTITLE = "Minimum Signal-to-Noise", YTITLE = "Frequency of SNR greater than or equal to Minimum", COLOR = 1, POSITION = [x0,y0,x0+dx,y0+dy], XCHARSIZE = 1.5, YCHARSIZE = 1.5, CHARSIZE = 1.5, XSTYLE = 1, THICK = 4, XTHICK = 10, YTHICK = 10
+PLOT, x_arr, percent_arr, XTITLE = "Minimum Signal-to-Noise", YTITLE = "Frequency of SNR greater than or equal to Minimum", COLOR = 1, POSITION = [x0,y0,x0+dx,y0+dy], XCHARSIZE = 1.5, YCHARSIZE = 1.5, CHARSIZE = 1.5, XSTYLE = 1, THICK = 10, XTHICK = 10, YTHICK = 10, CHARTHICK = 5
 TVLCT, r, g, b, /GET
 tvlct, r[0], g[0], b[255]
-PLOTS, [3.0,3.0], !Y.CRANGE, THICK = 3, LINESTYLE = 0
+PLOTS, [3.0,3.0], !Y.CRANGE, THICK = 10, LINESTYLE = 0
 
 DEVICE, /CLOSE
 

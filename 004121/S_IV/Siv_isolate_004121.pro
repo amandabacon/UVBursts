@@ -7,7 +7,7 @@
 ;TO GET 4 PARAMETERS, INSTRUMENTAL UNCERTAINTIES, POISSON NOISE, TIIs,
 ;SNRs, THEN CREATE A HISTOGRAM OF SNR VALUE FREQUENCY. 
 
-;PRO Siv_isolate_004121
+PRO Siv_isolate_004121
 
 ;restore Si IV UVB indices and other variables
 
@@ -233,6 +233,12 @@ PRINT, SIZE(coeff_arr_004121_Siv2) ;2D,4,471
 one = coeff_arr_004121_Siv2[1,*,*]
 coeff_arr_004121_Siv2_clean = WHERE((one GT 1404.0) AND (one LT 1404.9), count, COMPLEMENT = non)
 
+;get UVB indices for S IV
+
+UVB_ind_Siv_004121 = UVB_ind_004121[coeff_arr_004121_Siv2_clean]
+PRINT, UVB_ind_Siv_004121
+PRINT, N_ELEMENTS(UVB_ind_Siv_004121) ;421
+
 PRINT, SIZE(coeff_arr_004121_Siv2_clean) ;1D,421
 
 zero = coeff_arr_004121_Siv2[0,*,*]
@@ -240,27 +246,26 @@ sig2 = sigma_coeff_arr[2,*,*]
 two = coeff_arr_004121_Siv2[2,*,*]
 sig0 = sigma_coeff_arr[0,*,*]
 
-p_int = zero[coeff_arr_004121_Siv2_clean]
-sig_lw = sig2[coeff_arr_004121_Siv2_clean]
-lw = two[coeff_arr_004121_Siv2_clean]
-sig_p_int = sig0[coeff_arr_004121_Siv2_clean]
+p_int_004121_Siv = zero[coeff_arr_004121_Siv2_clean]
+sig_lw_004121_Siv = sig2[coeff_arr_004121_Siv2_clean]
+lw_004121_Siv = two[coeff_arr_004121_Siv2_clean]
+sig_p_int_004121_Siv = sig0[coeff_arr_004121_Siv2_clean]
 
 ;===============================================================================
 ;for Wheaton College's Women in STEM Conference
 
-WINDOW, XSIZE = 900, YSIZE = 700
-PLOT, lambda1403_004121_Siv[185:310], cut_004121_Siv[185:310], XSTYLE = 1
+;WINDOW, XSIZE = 900, YSIZE = 700
+;PLOT, lambda1403_004121_Siv[185:310], cut_004121_Siv[185:310], XSTYLE = 1
 
-!P.FONT = 1
+;!P.FONT = 1
 
-TVLCT, [[255],[255],[255]], 1
-SET_PLOT, 'ps'
-DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/004121/S_IV/siv.eps', /ENCAPSULATED
+;TVLCT, [[255],[255],[255]], 1
+;SET_PLOT, 'ps'
+;DEVICE, XSIZE = 15, YSIZE = 10, /INCHES, COLOR = 1, BITS_PER_PIXEL = 8, SET_FONT = 'TIMES', /TT_FONT, FILENAME = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/004121/S_IV/siv.eps', /ENCAPSULATED
 
-PLOT, lambda1403_004121_Siv[185:310], cut_004121_Siv[185:310], XCHARSIZE = 1.5, YCHARSIZE = 1.5, CHARSIZE = 1.5, XSTYLE = 1, THICK = 4, POSITION = [x0,y0,x0+dx,y0+dy], COLOR = 1, XTHICK = 10, YTHICK = 10
+;PLOT, lambda1403_004121_Siv[185:310], cut_004121_Siv[185:310], XCHARSIZE = 1.5, YCHARSIZE = 1.5, CHARSIZE = 1.5, XSTYLE = 1, THICK = 4, POSITION = [x0,y0,x0+dx,y0+dy], COLOR = 1, XTHICK = 10, YTHICK = 10
 
-DEVICE, /CLOSE
-;===============================================================================
+;DEVICE, /CLOSE
 
 ;===============================================================================
 ;introduce limit to parameter values to see how they contribute to
@@ -332,14 +337,14 @@ PRINT, limit_sig_lw_Siv[limit_all_e_dens_004121_Siv] ;0
 
 ;calculate total integrated intensity (TII)
 
-It_S_004121 = (sqrt(2.0*!dpi)*p_int*lw) ;total integrated intensity 
+It_S_004121 = (sqrt(2.0*!dpi)*p_int_004121_Siv*lw_004121_Siv) ;total integrated intensity 
 PRINT, "It_S_004121"
 PRINT, It_S_004121
 PRINT, SIZE(It_S_004121) ;1D,421
 
 ;calculate integrated intensity uncertainty
 
-int_int_unc_S_004121 = [2.0*!dpi*((p_int)^2*(sig_lw)^2+(lw)^2*(sig_p_int)^2)]^0.5
+int_int_unc_S_004121 = [2.0*!dpi*((p_int_004121_Siv)^2*(sig_lw_004121_Siv)^2+(lw_004121_Siv)^2*(sig_p_int_004121_Siv)^2)]^0.5
 PRINT, "int_int_unc_S_004121"
 PRINT, int_int_unc_S_004121
 PRINT, SIZE(int_int_unc_S_004121) ;1D,421
@@ -356,11 +361,11 @@ PRINT, 'SNR rearrangement'
 ;calculate SNR after rearrangement
 
 neg = -0.5
-SNR_S_004121 = (((sig_p_int)^2/(p_int)^2)+((sig_lw)^2/(lw)^2))^neg
+SNR_S_004121 = (((sig_p_int_004121_Siv)^2/(p_int_004121_Siv)^2)+((sig_lw_004121_Siv)^2/(lw_004121_Siv)^2))^neg
 PRINT, SNR_S_004121
 
 PRINT, SIZE(SNR_S_004121) ;421
-SNR2_S_004121 = WHERE((SNR_S_004121 LT 100), count) ;removes infinity
+SNR2_S_004121 = WHERE((SNR_S_004121 LT 10000), count) ;removes infinity
 PRINT, SIZE(SNR_S_004121[SNR2_S_004121]) ;421
 
 ;make histogram of SNRs and frequencies at which they occur
@@ -402,7 +407,7 @@ PRINT, 'MEAN: ', MOM[0] & PRINT, 'VARIANCE: ', MOM[1] & PRINT, 'SKEWNESS: ', MOM
 ;save parameters from FOR loop
 
 sfname2 = '/Users/physicsuser/Desktop/amandabacon/REU_CfA/data/detection/004121/S_IV/sigma_coeff_arr_004121_Siv.sav'
-SAVE, coeff_004121_Siv2, inst_unc_S_004121, sigma_coeff, sigma_coeff_arr, coeff_arr_004121_Siv2, It_S_004121, int_int_unc_S_004121, SNR_0_S_004121, SNR_S_004121, SNR2_S_004121, limit_all_e_dens_004121_Siv, limit_vel_width_004121_Siv, limit_velocity_004121_Siv, p_int, sig_lw, lw, sig_p_int, FILENAME = sfname2
+SAVE, coeff_004121_Siv2, inst_unc_S_004121, sigma_coeff, sigma_coeff_arr, coeff_arr_004121_Siv2, It_S_004121, int_int_unc_S_004121, SNR_0_S_004121, SNR_S_004121, SNR2_S_004121, limit_all_e_dens_004121_Siv, limit_vel_width_004121_Siv, limit_velocity_004121_Siv, p_int_004121_Siv, sig_lw_004121_Siv, lw_004121_Siv, sig_p_int_004121_Siv, UVB_ind_Siv_004121, FILENAME = sfname2
 
 OBJ_DESTROY, dataRast_004121_Siv
 OBJ_DESTROY, data1400_004121_Siv
